@@ -1,0 +1,270 @@
+@import 'tailwindcss';
+
+@font-face {
+	font-family: 'Satoshi';
+	src: url('/fonts/Satoshi-Variable.woff2') format('woff2');
+	font-weight: 300 900;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'Satoshi';
+	src: url('/fonts/Satoshi-VariableItalic.woff2') format('woff2');
+	font-weight: 300 900;
+	font-style: italic;
+	font-display: swap;
+}
+
+/* Note: Add this in to enable a dark them - and add CSS: .dark {}  */
+/* @custom-variant dark (&:is(.dark *)); */
+
+:root {
+	/* Responsive scaling breakpoint toggles (only one is 1 at a time) */
+	--is-mobile: 0;
+	--is-desktop: 1;
+	--is-full: 0;
+
+	/*
+	 * Grid System
+	 *
+	 * To change gap/gutter values:
+	 * 1. Import scaledVar: import { scaledVar } from '$lib/utils/responsive'
+	 * 2. Run in console: scaledVar(mobilePx, desktopPx)
+	 * 3. Paste the output below
+	 *
+	 * Example: scaledVar(16, 24) outputs the calc() for --grid-gap
+	 */
+	--grid-columns: 8;
+	/* gap: 16px mobile, 24px desktop → scaledVar(16, 24) */
+	--grid-gap: calc(
+		(4.267vw * var(--is-mobile)) + (1.667vw * var(--is-desktop)) + (24px * var(--is-full))
+	);
+	/* gutter: 20px mobile, 64px desktop → scaledVar(20, 64) */
+	--grid-gutter: calc(
+		(5.333vw * var(--is-mobile)) + (4.444vw * var(--is-desktop)) + (64px * var(--is-full))
+	);
+	--grid-max-width: 1440px;
+
+	/* Color system */
+	--background: oklch(1 0 0);
+	--foreground: oklch(0.145 0 0);
+	--card: oklch(1 0 0);
+	--card-foreground: oklch(0.145 0 0);
+	--popover: oklch(1 0 0);
+	--popover-foreground: oklch(0.145 0 0);
+	--primary: oklch(0.205 0 0);
+	--primary-foreground: oklch(0.985 0 0);
+	--secondary: oklch(0.97 0 0);
+	--secondary-foreground: oklch(0.205 0 0);
+	--muted: oklch(0.97 0 0);
+	--muted-foreground: oklch(0.556 0 0);
+	--accent: oklch(0.97 0 0);
+	--accent-foreground: oklch(0.205 0 0);
+	--destructive: oklch(0.577 0.245 27.325);
+	--destructive-foreground: oklch(1 0 0);
+	--border: oklch(0.922 0 0);
+	--input: oklch(0.922 0 0);
+	--ring: oklch(0.708 0 0);
+
+	/* Font system */
+	--font-sans: 'Satoshi', system-ui, sans-serif;
+	--font-serif: ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
+	--font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+	/* Misc */
+	--radius: 0.625rem;
+	--shadow-x: 0;
+	--shadow-y: 1px;
+	--shadow-blur: 3px;
+	--shadow-spread: 0px;
+	--shadow-opacity: 0.1;
+	--shadow-color: oklch(0 0 0);
+	--shadow-2xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
+	--shadow-xs: 0 1px 3px 0px hsl(0 0% 0% / 0.05);
+	--shadow-sm: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
+	--shadow: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 1px 2px -1px hsl(0 0% 0% / 0.1);
+	--shadow-md: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 2px 4px -1px hsl(0 0% 0% / 0.1);
+	--shadow-lg: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 4px 6px -1px hsl(0 0% 0% / 0.1);
+	--shadow-xl: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 8px 10px -1px hsl(0 0% 0% / 0.1);
+	--shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
+
+	--tracking-normal: 0em;
+	--spacing: 0.25rem;
+}
+
+@theme inline {
+	--color-background: var(--background);
+	--color-foreground: var(--foreground);
+	--color-card: var(--card);
+	--color-card-foreground: var(--card-foreground);
+	--color-popover: var(--popover);
+	--color-popover-foreground: var(--popover-foreground);
+	--color-primary: var(--primary);
+	--color-primary-foreground: var(--primary-foreground);
+	--color-secondary: var(--secondary);
+	--color-secondary-foreground: var(--secondary-foreground);
+	--color-muted: var(--muted);
+	--color-muted-foreground: var(--muted-foreground);
+	--color-accent: var(--accent);
+	--color-accent-foreground: var(--accent-foreground);
+	--color-destructive: var(--destructive);
+	--color-destructive-foreground: var(--destructive-foreground);
+	--color-border: var(--border);
+	--color-input: var(--input);
+	--color-ring: var(--ring);
+
+	--font-sans: var(--font-sans);
+	--font-mono: var(--font-mono);
+	--font-serif: var(--font-serif);
+
+	--radius-sm: calc(var(--radius) - 4px);
+	--radius-md: calc(var(--radius) - 2px);
+	--radius-lg: var(--radius);
+	--radius-xl: calc(var(--radius) + 4px);
+
+	--shadow-2xs: var(--shadow-2xs);
+	--shadow-xs: var(--shadow-xs);
+	--shadow-sm: var(--shadow-sm);
+	--shadow: var(--shadow);
+	--shadow-md: var(--shadow-md);
+	--shadow-lg: var(--shadow-lg);
+	--shadow-xl: var(--shadow-xl);
+	--shadow-2xl: var(--shadow-2xl);
+
+	/* Breakpoints for Tailwind */
+	--breakpoint-desktop: 1025px;
+}
+
+@layer base {
+	* {
+		@apply border-border outline-ring/50;
+	}
+	body {
+		@apply bg-background text-foreground;
+		font-family: var(--font-sans);
+	}
+}
+
+/* Responsive scaling breakpoints:
+   - Mobile: ≤700px (vw based on 375px design)
+   - Desktop: 701px-1440px (vw based on 1440px design)
+   - Full: >1440px (fixed px at design values)
+*/
+@media (max-width: 700px) {
+	:root {
+		--is-mobile: 1;
+		--is-desktop: 0;
+		--is-full: 0;
+		--grid-columns: 4;
+	}
+}
+@media (min-width: 1441px) {
+	:root {
+		--is-mobile: 0;
+		--is-desktop: 0;
+		--is-full: 1;
+	}
+}
+
+/* =============================================================================
+   Grid System
+
+   Usage:
+   - .grid-temp: The main grid wrapper (apply to page/section wrapper)
+   - .grid-fullbleed: Spans edge-to-edge (full bleed)
+   - .grid-main: Spans content area (respects gutters)
+   - .col-span-{n}: Span n columns (1-8 on desktop, 1-4 on mobile)
+   - .col-start-{n}: Start at column n
+
+   Structure:
+   |gutter| col col col col col col col col |gutter|
+   |<----- full (edge to edge) ----->|
+          |<----- content ----->|
+============================================================================= */
+
+.grid-content {
+	display: grid;
+	/*
+	 * Gutter columns use minmax(gutter, 1fr):
+	 * - On narrow viewports: gutters stay at minimum (--grid-gutter)
+	 * - On wide viewports: 1fr expands to center content within max-width
+	 */
+	grid-template-columns:
+		[full-start] minmax(var(--grid-gutter), 1fr)
+		[content-start] repeat(
+			var(--grid-columns),
+			minmax(
+				0,
+				calc(
+					(var(--grid-max-width) - (var(--grid-columns) - 1) * var(--grid-gap)) /
+						var(--grid-columns)
+				)
+			)
+		)
+		[content-end] minmax(var(--grid-gutter), 1fr) [full-end];
+	column-gap: var(--grid-gap);
+	row-gap: var(--grid-gap);
+}
+
+/* Full bleed - spans edge to edge */
+.grid-fullbleed {
+	grid-column: full-start / full-end;
+}
+
+/* Content - respects gutters */
+.grid-main {
+	grid-column: content-start / content-end;
+}
+
+/* Column spans */
+.col-span-1 {
+	grid-column: span 1;
+}
+.col-span-2 {
+	grid-column: span 2;
+}
+.col-span-3 {
+	grid-column: span 3;
+}
+.col-span-4 {
+	grid-column: span 4;
+}
+.col-span-5 {
+	grid-column: span 5;
+}
+.col-span-6 {
+	grid-column: span 6;
+}
+.col-span-7 {
+	grid-column: span 7;
+}
+.col-span-8 {
+	grid-column: span 8;
+}
+
+/* Column starts (within content area) */
+.col-start-1 {
+	grid-column-start: 2;
+} /* +1 because gutter is column 1 */
+.col-start-2 {
+	grid-column-start: 3;
+}
+.col-start-3 {
+	grid-column-start: 4;
+}
+.col-start-4 {
+	grid-column-start: 5;
+}
+.col-start-5 {
+	grid-column-start: 6;
+}
+.col-start-6 {
+	grid-column-start: 7;
+}
+.col-start-7 {
+	grid-column-start: 8;
+}
+.col-start-8 {
+	grid-column-start: 9;
+}
