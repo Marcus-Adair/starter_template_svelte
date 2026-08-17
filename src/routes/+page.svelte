@@ -23,6 +23,9 @@
 		<p class="section-text">
 			This section uses .grid-main so it respects the gutters. 8 columns on desktop, 4 on mobile.
 			Resize to see it change.
+			<br/>
+			<br/>
+			A max-width is applied to this text to showcase consistent line breaks across screen resizing.
 		</p>
 	</div>
 

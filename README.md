@@ -1,16 +1,16 @@
 # Svelte Starter Template
 
-A front-end focused starter template with precise typography and responsive scaling. Zero runtime cost — all transforms happen at build time.
+A front-end focused starter template with responsive scaling and precise typography. Zero runtime cost - all transforms happen at build time. This template helps with creating pixel-perfect UIs that match designs across different screen sizes.
 
 ## Features
 
 - **Responsive Scaling System** - Pixel values scale fluidly across breakpoints via Svelte preprocessor
 - **Breakpoint-Specific Styles** - `@small` and `@large` directives for mobile/desktop-only CSS
-- **Typography System** - `@text` directive for reusable text styles with auto-scaling
-- **Capsize CSS** - Auto-trims whitespace above/below text for precise vertical alignment
+- **Typography System** - `@text` directive for reusable text styles with responsive auto-scaling
+- **Capsize CSS** - Auto-trims whitespace above/below text for precise vertical alignment and design implementation
 - **Grid System** - Content grid with named lines for full-bleed and guttered layouts
-- **SvelteKit + Svelte 5** - Fast, modern framework
-- **Tailwind CSS v4** - Tailwind optionality for quick styling
+- **SvelteKit + Svelte 5** - Fast, modern framework built for performance
+- **Tailwind CSS v4** - Tailwind optionality to provide quick styling utility
 - **GSAP** - Comes with GSAP installed for animation
 
 ## Quick Start
@@ -66,8 +66,8 @@ Use `@small` and/or `@large` for styles that only apply at certain breakpoints:
 </style>
 ```
 
-- `@small` — applies at ≤700px, scales px values for mobile
-- `@large` — applies at >700px, scales px values for desktop/full
+- `@small` - applies at ≤700px, scales px values for mobile
+- `@large` - applies at >700px, scales px values for desktop/full
 
 ### Non-Scaled Values
 
@@ -122,9 +122,9 @@ Edit `src/lib/text.ts` to customize or add styles. Capsize auto-applies when the
 </div>
 ```
 
-- `.grid-content` — Main grid wrapper
-- `.grid-main` — Content area (8 cols desktop, 4 cols mobile)
-- `.grid-fullbleed` — Spans edge to edge
+- `.grid-content` - Main grid wrapper
+- `.grid-main` - Content area (8 cols desktop, 4 cols mobile)
+- `.grid-fullbleed` - Spans edge to edge
 
 Gap & Gutter values for the grid are defined in `layout.css` - use and see `scaledGridVar()` from `$lib/utils/responsive.ts` for help in changing those.
 
@@ -177,6 +177,6 @@ Whitespace trimming is auto-applied when you use `@responsive` with both `font-s
 
 ### Recommended VS Code Plugins
 
-1. **Svelte for VS Code** — Svelte/SvelteKit language support
-2. **Tailwind CSS IntelliSense** — Autocomplete for Tailwind classes
-3. **PostCSS Language Support** — Prevents errors on `@responsive`, `@small`, `@large` syntax
+1. **Svelte for VS Code** - Svelte/SvelteKit language support
+2. **Tailwind CSS IntelliSense** - Autocomplete for Tailwind classes
+3. **PostCSS Language Support** - Prevents errors on `@responsive`, `@small`, `@large` syntax
