@@ -1,11 +1,17 @@
 <!-- Demo of responsive styling with @responsive, @small, @large preprocessor -->
+<script lang="ts">
+	import { isSmall } from "$lib/utils/breakpoints.svelte";
 
+	const small = isSmall();
+
+	let dynamicLabel = $derived(small.matches ? "Mobile" : "Desktop")
+</script>
 <div class="grid-content">
 	<!-- Full bleed hero -->
 	<div class="hero grid-fullbleed bg-primary text-primary-foreground">
 		<div class="grid-content">
 			<div class="grid-main flex flex-col">
-				<h1 class="hero-title">Grid System Demo</h1>
+				<h1 class="hero-title">Responsive / Capsize / Grid Template System Demo ({dynamicLabel})</h1>
 				<p class="hero-subtitle">Full-bleed hero section. Content respects gutters.</p>
 			</div>
 		</div>
@@ -43,9 +49,9 @@
 
 	<!-- Footer info -->
 	<div class="footer-info grid-main text-muted-foreground">
-		<p>Grid: var(--grid-columns) columns, var(--grid-gap) gap, var(--grid-gutter) gutter</p>
-		<p>Desktop: 8 cols, 24px gap, 64px gutter</p>
-		<p>Mobile: 4 cols, 16px gap, 20px gutter</p>
+		<p class="footer-text">Grid: var(--grid-columns) columns, var(--grid-gap) gap, var(--grid-gutter) gutter</p>
+		<p class="footer-text">Desktop: 8 cols, 24px gap, 64px gutter</p>
+		<p class="footer-text">Mobile: 4 cols, 16px gap, 20px gutter</p>
 	</div>
 
 	<!-- Breakpoint demo -->
@@ -55,9 +61,9 @@
 			This box uses @small and @large to change layout per breakpoint.
 		</p>
 		<div class="demo-box">
-			<div class="demo-item">Item 1</div>
-			<div class="demo-item">Item 2</div>
-			<div class="demo-item">Item 3</div>
+			<span class="demo-item">Item 1</span>
+			<span class="demo-item">Item 2</span>
+			<span class="demo-item">Item 3</span>
 		</div>
 	</div>
 </div>
@@ -72,20 +78,19 @@
 
 	.hero-title {
 		@responsive {
-			font-size: 64px;
-			font-weight: 700;
-			line-height: 72px;
+			@text h1Desktop;
 			margin-bottom: 10px;
+		}
+		@small {
+			@text h1Mobile;
 		}
 	}
 
 	.hero-subtitle {
 		@responsive {
-			font-size: 20px;
-			line-height: 28px;
+			@text p1;
 			margin-top: 16px;
 		}
-		
 	}
 
 	/* Content section */
@@ -98,18 +103,18 @@
 
 	.section-title {
 		@responsive {
-			font-size: 32px;
-			line-height: 40px;
-			font-weight: 600;
+			@text h3Desktop;
 			margin-bottom: 24px;
+		}
+		@small {
+			@text h3Mobile;
 		}
 	}
 
 	.section-text {
 		border: 1px dashed blue;
 		@responsive {
-			font-size: 18px;
-			line-height: 28px;
+			@text p1;
 			max-width: 400px;
 		}
 	}
@@ -129,8 +134,7 @@
 
 	.grid-item-text {
 		@responsive {
-			font-size: 14px;
-			line-height: 20px;
+			@text p3;
 		}
 	}
 
@@ -144,8 +148,7 @@
 
 	.accent-text {
 		@responsive {
-			font-size: 18px;
-			line-height: 28px;
+			@text p1;
 		}
 	}
 
@@ -153,8 +156,15 @@
 	.footer-info {
 		@responsive {
 			padding: 40px 0;
-			font-size: 14px;
-			line-height: 20px;
+			display: flex;
+			flex-direction: column;
+			gap: 16px;
+		}
+	}
+
+	.footer-text {
+		@responsive {
+			@text p3;
 		}
 	}
 
@@ -180,10 +190,10 @@
 
 	.demo-item {
 		@responsive {
+			@text p2;
 			background: #333;
 			color: white;
 			padding: 20px;
-			font-size: 16px;
 		}
 	}
 </style>

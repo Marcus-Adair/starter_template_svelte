@@ -39,6 +39,7 @@
 		"@capsizecss/metrics": "^4.2.0",
 		"@capsizecss/unpack": "^4.0.1",
 		"clsx": "^2.1.1",
+		"gsap": "^3.15.0",
 		"tailwind-merge": "^3.6.0"
 	}
 }

@@ -10,7 +10,12 @@ export const satoshiMetrics: FontMetrics = {
 	ascent: 1010,
 	descent: -240,
 	lineGap: 100,
-	unitsPerEm: 1000
+	unitsPerEm: 1000,
+	familyName: "Satoshi Variable",
+	fullName: "Satoshi Variable Bold",
+	postscriptName: "SatoshiVariable-Bold",
+	xHeight: 500,
+	xWidthAvg: 486,
 };
 
 // Default font metrics (Satoshi)

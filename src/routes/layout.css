@@ -24,27 +24,29 @@
 	--is-mobile: 0;
 	--is-desktop: 1;
 	--is-full: 0;
+	--grid-max-width: 1440px;
 
 	/*
 	 * Grid System
 	 *
 	 * To change gap/gutter values:
-	 * 1. Import scaledVar: import { scaledVar } from '$lib/utils/responsive'
-	 * 2. Run in console: scaledVar(mobilePx, desktopPx)
+	 * 1. Import scaledGridVar: import { scaledGridVar } from '$lib/utils/responsive'
+	 * 2. Run in console: scaledGridVar(mobilePx, desktopPx)
 	 * 3. Paste the output below
 	 *
-	 * Example: scaledVar(16, 24) outputs the calc() for --grid-gap
+	 * Example: scaledGridVar(12, 24) outputs the calc() for --grid-gap
+	 * 
+	 * Note: Gaps still exists on left/right sides of grid along w/ the gutters.
 	 */
 	--grid-columns: 8;
-	/* gap: 16px mobile, 24px desktop → scaledVar(16, 24) */
+	/* gap: 12px mobile, 24px desktop → scaledGridVar(12, 24) */
 	--grid-gap: calc(
-		(4.267vw * var(--is-mobile)) + (1.667vw * var(--is-desktop)) + (24px * var(--is-full))
+		(3.2vw * var(--is-mobile)) + (1.667vw * var(--is-desktop)) + (24px * var(--is-full))
 	);
-	/* gutter: 20px mobile, 64px desktop → scaledVar(20, 64) */
+	/* gutter: 4px mobile, 24px desktop → scaledGridVar(4, 64) */
 	--grid-gutter: calc(
-		(5.333vw * var(--is-mobile)) + (4.444vw * var(--is-desktop)) + (64px * var(--is-full))
+		(1.067vw * var(--is-mobile)) + (4.444vw * var(--is-desktop)) + (64px * var(--is-full))
 	);
-	--grid-max-width: 1440px;
 
 	/* Color system */
 	--background: oklch(1 0 0);
@@ -72,7 +74,7 @@
 	--font-serif: ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
 	--font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
-	/* Misc */
+	/* Misc ... Note: these won't play into the responsive system. Use explicitly or for quick prototyping */
 	--radius: 0.625rem;
 	--shadow-x: 0;
 	--shadow-y: 1px;
@@ -282,3 +284,5 @@
 .no-capsize::after {
 	display: none !important;
 }
+
+/* CSS Class (put custom CSS classes below): */

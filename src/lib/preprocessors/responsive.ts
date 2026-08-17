@@ -1,14 +1,16 @@
 import type { PreprocessorGroup } from 'svelte/compiler';
-import { capsize, fontMetrics } from '../utils/capsize';
+import { capsize, fontMetrics } from '../utils/capsize.ts';
+import { text } from '../text.ts';
 
-// Design sizes and breakpoints (must match consts.ts and layout.css)
-const MOBILE_DESIGN_SIZE = 375;
-const DESKTOP_DESIGN_SIZE = 1440;
-const MOBILE_BREAKPOINT = 700;
+// Same as in $lib/consts.ts
+export const MOBILE_DESIGN_SIZE = 375;
+export const DESKTOP_DESIGN_SIZE = 1440;
+export const MOBILE_BREAKPOINT = 700;
 
 const pxRegex = /-?\d+(\.\d+)?px/g;
 const fontSizeRegex = /font-size:\s*(\d+(?:\.\d+)?)px/;
 const lineHeightRegex = /line-height:\s*(\d+(?:\.\d+)?)px/;
+const textDirectiveRegex = /@text\s+(\w+)\s*;?/g;
 
 /**
  * Transforms px values to responsive calc() for all breakpoints.
@@ -45,6 +47,21 @@ function transformPxValues(css: string, transform: (px: number) => string): stri
 	return css.replace(pxRegex, (match) => {
 		const px = parseFloat(match);
 		return transform(px);
+	});
+}
+
+/**
+ * Expand @text directives to their CSS definitions.
+ * @text h1; → font-size: 64px; line-height: 72px; font-weight: 700;
+ */
+function expandTextDirectives(css: string): string {
+	return css.replace(textDirectiveRegex, (_match: string, styleName: string) => {
+		const style = text[styleName];
+		if (!style) {
+			console.warn(`[responsive-preprocess] Unknown text style: "${styleName}"`);
+			return '';
+		}
+		return style;
 	});
 }
 
@@ -118,21 +135,25 @@ function processStyleContent(content: string): string {
 
 		// Process @responsive { ... }
 		newBody = newBody.replace(/@responsive\s*\{([^}]+)\}/g, (_match: string, css: string) => {
+			// First expand any @text directives
+			const expandedCss = expandTextDirectives(css);
+
 			// Check for Capsize (font-size + line-height)
 			if (!noCapsizeSelector) {
-				const capsizeValues = extractCapsizeValues(css);
+				const capsizeValues = extractCapsizeValues(expandedCss);
 				if (capsizeValues) {
 					capsizeBlocks.push(
 						generateCapsizeRules(selector, capsizeValues.fontSize, capsizeValues.lineHeight)
 					);
 				}
 			}
-			return transformPxValues(css, scaledAll);
+			return transformPxValues(expandedCss, scaledAll);
 		});
 
 		// Process @small { ... } - extract to media query
 		newBody = newBody.replace(/@small\s*\{([^}]+)\}/g, (_match: string, css: string) => {
-			const transformed = transformPxValues(css, scaledMobile);
+			const expandedCss = expandTextDirectives(css);
+			const transformed = transformPxValues(expandedCss, scaledMobile);
 			mediaBlocks.push({
 				query: `@media (max-width: ${MOBILE_BREAKPOINT}px)`,
 				rules: `${selector} { ${transformed} }`
@@ -142,7 +163,8 @@ function processStyleContent(content: string): string {
 
 		// Process @large { ... } - extract to media query
 		newBody = newBody.replace(/@large\s*\{([^}]+)\}/g, (_match: string, css: string) => {
-			const transformed = transformPxValues(css, scaledLarge);
+			const expandedCss = expandTextDirectives(css);
+			const transformed = transformPxValues(expandedCss, scaledLarge);
 			mediaBlocks.push({
 				query: `@media (min-width: ${MOBILE_BREAKPOINT + 1}px)`,
 				rules: `${selector} { ${transformed} }`
@@ -176,6 +198,7 @@ function processStyleContent(content: string): string {
  * - @responsive { ... } - scales px values across all breakpoints
  * - @small { ... } - applies styles only on mobile (≤700px), scales for mobile
  * - @large { ... } - applies styles only on desktop+ (>700px), scales for desktop/full
+ * - @text styleName; - expands to typography from text.ts (use inside @responsive)
  *
  * Capsize Integration:
  * When @responsive contains both font-size and line-height (in px),
@@ -184,12 +207,14 @@ function processStyleContent(content: string): string {
  *
  * @example
  * ```svelte
- * <p class="text">Trimmed text</p>
- * <p class="text no-capsize">Not trimmed</p>
+ * <h1 class="title">Hello</h1>
  *
  * <style>
- *   .text {
- *     @responsive { font-size: 18px; line-height: 28px; }
+ *   .title {
+ *     @responsive {
+ *       @text h1;
+ *       margin-bottom: 24px;
+ *     }
  *   }
  * </style>
  * ```

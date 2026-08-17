@@ -2,7 +2,7 @@ import tailwindcss from '@tailwindcss/vite';
 import adapter from '@sveltejs/adapter-auto';
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
-import { responsivePreprocess } from './src/lib/preprocessors/responsive';
+import { responsivePreprocess } from './src/lib/preprocessors/responsive.ts';
 
 export default defineConfig({
 	plugins: [
