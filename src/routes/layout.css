@@ -268,3 +268,17 @@
 .col-start-8 {
 	grid-column-start: 9;
 }
+
+/* =============================================================================
+   Capsize Text Trimming (Auto-applied via preprocessor)
+
+   When using @responsive with both font-size and line-height (in px),
+   the preprocessor automatically generates ::before/::after trim rules.
+
+   To opt-out, add class="no-capsize" to the element.
+============================================================================= */
+
+.no-capsize::before,
+.no-capsize::after {
+	display: none !important;
+}
