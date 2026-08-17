@@ -4,12 +4,12 @@ A front-end focused starter template with precise typography and responsive scal
 
 ## Features
 
-- **Responsive Scaling System** — Pixel values scale fluidly across breakpoints via Svelte preprocessor
-- **Breakpoint-Specific Styles** — `@small` and `@large` directives for mobile/desktop-only CSS
-- **Capsize CSS** — Auto-trims whitespace above/below text for precise vertical alignment
-- **Grid System** — Content grid with named lines for full-bleed and guttered layouts
-- **Tailwind CSS v4** — Utility-first styling
-- **SvelteKit + Svelte 5** — Fast, modern framework
+- **Responsive Scaling System** - Pixel values scale fluidly across breakpoints via Svelte preprocessor
+- **Breakpoint-Specific Styles** - `@small` and `@large` directives for mobile/desktop-only CSS
+- **Capsize CSS** - Auto-trims whitespace above/below text for precise vertical alignment
+- **Grid System** - Content grid with named lines for full-bleed and guttered layouts
+- **SvelteKit + Svelte 5** - Fast, modern framework
+- **Tailwind CSS v4** - Tailwind optionality for quick styling
 
 ## Quick Start
 
@@ -28,41 +28,39 @@ Use `@responsive` in your `<style>` blocks to auto-scale px values across breakp
 <h1 class="title">Scales fluidly</h1>
 
 <style>
-  .title {
-    @responsive {
-      font-size: 48px;
-      margin-bottom: 24px;
-    }
-  }
+	.title {
+		@responsive {
+			font-size: 48px;
+			margin-bottom: 24px;
+		}
+	}
 </style>
 ```
 
 **Breakpoints:**
+
 - Mobile: ≤700px (scales based on 375px design)
 - Desktop: 701-1440px (scales based on 1440px design)
 - Full: >1440px (fixed px values)
 
 ### Breakpoint-Specific Styles
 
-Use `@small` and `@large` for styles that only apply at certain breakpoints:
+Use `@small` and/or `@large` for styles that only apply at certain breakpoints:
 
 ```svelte
 <div class="container">...</div>
 
 <style>
-  .container {
-    display: flex;
-    @responsive {
-      padding: 24px;
-      gap: 16px;
-    }
-    @small {
-      flex-direction: column;
-    }
-    @large {
-      flex-direction: row;
-    }
-  }
+	.container {
+		display: flex;
+		@responsive {
+			padding: 24px;
+			gap: 16px;
+		}
+		@small {
+			flex-direction: column;
+		}
+	}
 </style>
 ```
 
@@ -75,12 +73,12 @@ Put CSS outside `@responsive` to keep values fixed:
 
 ```svelte
 <style>
-  .box {
-    border: 1px solid black;  /* stays 1px */
-    @responsive {
-      padding: 20px;          /* scaled */
-    }
-  }
+	.box {
+		border: 1px solid black; /* stays 1px */
+		@responsive {
+			padding: 20px; /* scaled */
+		}
+	}
 </style>
 ```
 
@@ -88,8 +86,8 @@ Put CSS outside `@responsive` to keep values fixed:
 
 ```svelte
 <div class="grid-content">
-  <div class="grid-main">Respects gutters</div>
-  <div class="grid-fullbleed">Edge to edge</div>
+	<div class="grid-main">Respects gutters</div>
+	<div class="grid-fullbleed">Edge to edge</div>
 </div>
 ```
 
@@ -106,12 +104,12 @@ Whitespace trimming is auto-applied when you use `@responsive` with both `font-s
 <p class="text no-capsize">Opt out with no-capsize class</p>
 
 <style>
-  .text {
-    @responsive {
-      font-size: 18px;
-      line-height: 28px;
-    }
-  }
+	.text {
+		@responsive {
+			font-size: 18px;
+			line-height: 28px;
+		}
+	}
 </style>
 ```
 
