@@ -1,16 +1,15 @@
 import { browser } from '$app/environment';
 import { goto } from '$app/navigation';
+import { MIN_DURATION, TRANS_DURATION } from '$lib/consts';
 
-const TRANS_DURATION = 350; // Match GSAP duration (0.25s) in Preloader.svelte
-const MIN_DURATION = 700; // 2x the TRANS_DURATION so trans-in and trans-out shows
 
 let active = $state(false);
 let minDurationMet = $state(true); // Skip initial preloader
 let isNavigatingInternally = false;
-
-let assetsReady = $state(true); // No pending promises = ready
+let isInitialLoad = true; // True until first navigation completes
 
 let pendingPromises: Promise<unknown>[] = [];
+let assetsReady = $state(true); // No pending promises = ready
 
 // Start min duration timer on initial load
 if (browser) {
@@ -47,6 +46,7 @@ function startNavigation(url: string) {
 
 function endNavigation() {
 	active = false;
+	isInitialLoad = false;
 }
 
 function shouldIntercept() {
@@ -125,6 +125,9 @@ export const preloaderController = {
 	},
 	get assetsReady() {
 		return assetsReady;
+	},
+	get isInitialLoad() {
+		return isInitialLoad;
 	},
 	startNavigation,
 	endNavigation,

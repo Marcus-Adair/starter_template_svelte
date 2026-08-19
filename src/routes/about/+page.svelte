@@ -9,7 +9,7 @@
 
 		<div class="link-box">
 			<a href={resolve("/")} class="underline">Back to Home</a>
-			<a href={resolve("/about")} class="underline">Go To About Test</a>
+			<a href={resolve("/about")} class="underline">Go To About Test (Shouldn't Transition)</a>
 		</div>
 	</div>
 </div>
