@@ -12,6 +12,9 @@ A front-end focused starter template with responsive scaling and precise typogra
 - **SvelteKit + Svelte 5** - Fast, modern framework built for performance
 - **Tailwind CSS v4** - Tailwind optionality to provide quick styling utility
 - **GSAP** - Comes with GSAP installed for animation
+- **Page Transitions** - Preloader with fade transitions between pages
+- **Intro Animation** - Initial load animation with coordinated timing
+- **useAnimation Hook** - GSAP wrapper with auto-cleanup and smart delay
 
 ## Quick Start
 
@@ -146,6 +149,62 @@ Use `isSmall()` and `isLarge()` for reactive breakpoint detection in your script
 ```
 
 Both functions return an object with a reactive `matches` property that updates when the viewport crosses the breakpoint.
+
+## Page Transitions
+
+The preloader shows during page navigation with fade transitions. It intercepts link clicks, fades in, navigates, then fades out.
+
+**Timing constants** (in `$lib/consts.ts`):
+- `TRANS_DURATION` - Fade in/out duration (350ms)
+- `MIN_DURATION` - Minimum preloader display time (700ms)
+
+**Waiting for assets** (optional):
+
+```svelte
+<script>
+	import { preloaderController } from '$lib/stores/preloaderController.svelte';
+	import { onMount } from 'svelte';
+
+	onMount(() => {
+		preloaderController.waitFor(document.fonts.ready);
+		preloaderController.waitFor(preloaderController.waitForImages(document.body));
+	});
+</script>
+```
+
+## Intro Animation
+
+On initial page load, a spinner overlay shows then fades out. This runs once on first visit, not on subsequent navigations.
+
+**Timing** (in `$lib/consts.ts`):
+- `INTRO_DURATION` - Total intro time before page animations start
+
+Customize the intro in `$lib/components/Intro.svelte`.
+
+## useAnimation
+
+GSAP animation hook with auto-cleanup and optional delay coordination.
+
+```svelte
+<script>
+	import { useAnimation } from '$lib/utils/useAnimation.svelte';
+
+	// Delayed - waits for intro (initial) or preloader (navigation)
+	useAnimation((ctx) => {
+		gsap.to('.hero', { opacity: 1, y: 0 });
+	}, { delay: true });
+
+	// Immediate - good for ScrollTrigger
+	useAnimation((ctx) => {
+		ScrollTrigger.create({ /* ... */ });
+	});
+</script>
+```
+
+**Features:**
+- Auto GSAP context creation
+- Auto cleanup on component unmount
+- Smart delay: uses `INTRO_DURATION` on initial load, `TRANS_DURATION` on navigation
 
 ## Capsize
 
