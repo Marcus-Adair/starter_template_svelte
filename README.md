@@ -128,6 +128,25 @@ Edit `src/lib/text.ts` to customize or add styles. Capsize auto-applies when the
 
 Gap & Gutter values for the grid are defined in `layout.css` - use and see `scaledGridVar()` from `$lib/utils/responsive.ts` for help in changing those.
 
+## Breakpoints in JavaScript
+
+Use `isSmall()` and `isLarge()` for reactive breakpoint detection in your scripts:
+
+```svelte
+<script>
+	import { isSmall } from '$lib/utils/breakpoints.svelte';
+	const small = isSmall();
+</script>
+
+{#if small.matches}
+	<MobileNav />
+{:else}
+	<DesktopNav />
+{/if}
+```
+
+Both functions return an object with a reactive `matches` property that updates when the viewport crosses the breakpoint.
+
 ## Capsize
 
 Whitespace trimming is auto-applied when you use `@responsive` with both `font-size` and `line-height`:

@@ -69,6 +69,15 @@
 			<span class="demo-item">Item 3</span>
 		</div>
 	</div>
+
+	<!-- Navigation demo -->
+	<div class="nav-demo grid-main">
+		<h2 class="section-title">Page Transitions</h2>
+		<p class="section-text">
+			Click the link below to test the preloader and fade transitions.
+		</p>
+		<a href="/about" class="nav-link">Go to About Page</a>
+	</div>
 </div>
 
 <style>
@@ -198,5 +207,20 @@
 			color: white;
 			padding: 20px;
 		}
+	}
+
+	/* Nav demo */
+	.nav-demo {
+		@responsive {
+			padding: 40px 0;
+		}
+	}
+
+	.nav-link {
+		@responsive {
+			@text p1;
+		}
+		color: var(--primary);
+		text-decoration: underline;
 	}
 </style>
