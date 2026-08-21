@@ -74,8 +74,7 @@
 	--font-serif: ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
 	--font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
-	/* Misc ... Note: these won't play into the responsive system. Use explicitly or for quick prototyping */
-	--radius: 0.625rem;
+	--radius: 14px;
 	--shadow-x: 0;
 	--shadow-y: 1px;
 	--shadow-blur: 3px;

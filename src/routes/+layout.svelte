@@ -4,7 +4,6 @@
 	import { beforeNavigate, afterNavigate } from '$app/navigation';
 	import { preloaderController } from '$lib/stores/preloaderController.svelte';
 	import Preloader from '$lib/components/Preloader.svelte';
-	import Intro from '$lib/components/Intro.svelte';
 
 	let { children } = $props();
 
@@ -36,7 +35,7 @@
 
 <svelte:head><link rel="icon" href={favicon} /></svelte:head>
 
-<Intro />
+<!-- <Intro /> -->
 <Preloader />
 
 <main class="grow">

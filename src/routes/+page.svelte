@@ -1,21 +1,33 @@
 <!-- Demo of responsive styling with @responsive, @small, @large preprocessor -->
 <script lang="ts">
+	import { resolve } from "$app/paths";
+	import Button from "$lib/components/ui-primitives/Button.svelte";
+	import GridFullBleed from "$lib/components/ui-primitives/GridFullBleed.svelte";
+	import GridMain from "$lib/components/ui-primitives/GridMain.svelte";
+	import GridParent from "$lib/components/ui-primitives/GridParent.svelte";
 	import { isSmall } from "$lib/utils/breakpoints.svelte";
 
 	const small = isSmall();
 
 	let dynamicLabel = $derived(small.matches ? "Mobile" : "Desktop")
 </script>
-<div class="grid-content">
-	<!-- Full bleed hero -->
-	<div class="hero grid-fullbleed bg-primary text-primary-foreground">
-		<div class="grid-content">
+
+
+<GridParent>
+	<!-- GridFullBleed component: styles via class require :global() below -->
+	<GridFullBleed class="hero bg-primary text-primary-foreground">
+		<GridParent>
 			<div class="grid-main flex flex-col">
 				<h1 class="hero-title">Responsive / Capsize / Grid Template System Demo ({dynamicLabel})</h1>
 				<p class="hero-subtitle">Full-bleed hero section. Content respects gutters.</p>
 			</div>
-		</div>
-	</div>
+		</GridParent>
+	</GridFullBleed>
+
+
+<div class="">
+	
+</div>
 
 	<!-- Content section -->
 	<div class="content-section grid-main">
@@ -27,6 +39,9 @@
 			<br/>
 			A max-width is applied to this text to showcase consistent line breaks across screen resizing.
 		</p>
+		<Button class="custom-btn" variant="secondary" onclick={() => console.log("Button pressed!!")}>
+			Button Test
+		</Button>
 	</div>
 
 	<!-- Grid items demo -->
@@ -39,16 +54,22 @@
 		{/each}
 	</div>
 
-	<!-- Another full bleed -->
+	<!-- Plain div with grid-fullbleed: normal scoping works, no :global() needed -->
 	<div class="accent-section grid-fullbleed bg-accent">
-		<div class="grid-content">
+		<GridParent>
 			<div class="grid-main">
 				<p class="accent-text text-accent-foreground">
 					Another full-bleed section. Great for backgrounds, images, etc.
 				</p>
 			</div>
-		</div>
+		</GridParent>
 	</div>
+
+	<!-- GridMain component: styles via class require :global() below -->
+	<GridMain class="component-demo">
+		<h2 class="section-title">GridMain Component Demo</h2>
+		<p class="section-text">This uses the GridMain component with a custom class.</p>
+	</GridMain>
 
 	<!-- Footer info -->
 	<div class="footer-info grid-main text-muted-foreground">
@@ -76,15 +97,37 @@
 		<p class="section-text">
 			Click the link below to test the preloader and fade transitions.
 		</p>
-		<a href="/about" class="nav-link">Go to About Page</a>
+
+		<Button 
+			href={resolve("/about")}
+			variant="primary"
+			class="no-link-padding"
+		>
+			Go to About Page
+		</Button>
+
 	</div>
-</div>
+</GridParent>
 
 <style>
-	/* Hero */
-	.hero {
+	/* Hero (GridFullBleed component - requires :global) */
+	:global(.hero) {
 		@responsive {
 			padding: 80px 0;
+		}
+	}
+
+	:global(.custom-btn) {
+		@responsive {
+			height: 80px;
+		}
+	}
+
+	/* GridMain component demo - requires :global */
+	:global(.component-demo) {
+		@responsive {
+			padding: 40px 0;
+			border: 2px dashed green;
 		}
 	}
 
@@ -214,13 +257,5 @@
 		@responsive {
 			padding: 40px 0;
 		}
-	}
-
-	.nav-link {
-		@responsive {
-			@text p1;
-		}
-		color: var(--primary);
-		text-decoration: underline;
-	}
+	}	
 </style>
