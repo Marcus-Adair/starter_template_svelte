@@ -4,8 +4,24 @@
 	import { beforeNavigate, afterNavigate } from '$app/navigation';
 	import { preloaderController } from '$lib/stores/preloaderController.svelte';
 	import Preloader from '$lib/components/Preloader.svelte';
+	import Intro from '$lib/components/Intro.svelte';
+	import gsap from 'gsap';
+	import { ScrollSmoother } from 'gsap/ScrollSmoother'
+	import { onMount } from 'svelte';
+
+	gsap.registerPlugin(ScrollSmoother);
 
 	let { children } = $props();
+
+
+	onMount(() => {
+		ScrollSmoother.create({
+			wrapper: '#smooth-wrapper',
+			content: '#smooth-content',
+			smooth: 1.5,
+			effects: false
+		});
+	});
 
 	// Intercepts internal navigations to cancel them and show preloader first
 	beforeNavigate((navigation) => {
@@ -38,6 +54,10 @@
 <!-- <Intro /> -->
 <Preloader />
 
-<main class="grow">
-	{@render children()}
-</main>
+<!-- TODO: Put Header-nav outside of smooth-wrapper -->
+
+<div id="smooth-wrapper">
+	<main id="smooth-content" class="grow">
+		{@render children()}
+	</main>
+</div>

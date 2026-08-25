@@ -253,6 +253,23 @@ Whitespace trimming is auto-applied when you use `@responsive` with both `font-s
 3. Run `npx tsx scripts/extractFontMetrics.ts`
 4. Copy output to `src/lib/utils/capsize.ts`
 
+## UI Primitives
+
+Reusable components in `src/lib/components/ui-primitives/`. Inspired by [shadcn-svelte](https://shadcn-svelte.com/).
+
+**Button** - Variants: `primary`, `secondary`, `outline`, `ghost`, `destructive`, `link`. Sizes: `xs`, `sm`, `default`, `lg`, `icon`.
+
+```svelte
+<script>
+	import Button from '$lib/components/ui-primitives/Button.svelte';
+</script>
+
+<Button variant="primary" size="lg">Click me</Button>
+<Button href="/about" variant="outline">As link</Button>
+```
+
+Visit `/ui-catalog` to see all components and variants.
+
 ### Recommended VS Code Plugins
 
 1. **Svelte for VS Code** - Svelte/SvelteKit language support

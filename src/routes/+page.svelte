@@ -25,88 +25,57 @@
 	</GridFullBleed>
 
 
-<div class="">
-	
-</div>
-
-	<!-- Content section -->
-	<div class="content-section grid-main">
-		<h2 class="section-title">Content Section</h2>
-		<p class="section-text">
-			This section uses .grid-main so it respects the gutters. 8 columns on desktop, 4 on mobile.
-			Resize to see it change.
-			<br/>
-			<br/>
-			A max-width is applied to this text to showcase consistent line breaks across screen resizing.
-		</p>
-		<Button class="custom-btn" variant="secondary" onclick={() => console.log("Button pressed!!")}>
-			Button Test
-		</Button>
-	</div>
-
-	<!-- Grid items demo -->
-	<div class="grid-demo grid-main">
-		<!-- eslint-disable-next-line @typescript-eslint/no-unused-vars -->
-		{#each Array(8) as _, i (i)}
-			<div class="grid-item bg-secondary text-secondary-foreground rounded-lg">
-				<p class="grid-item-text">Col {i + 1}</p>
-			</div>
-		{/each}
-	</div>
-
-	<!-- Plain div with grid-fullbleed: normal scoping works, no :global() needed -->
-	<div class="accent-section grid-fullbleed bg-accent">
-		<GridParent>
-			<div class="grid-main">
-				<p class="accent-text text-accent-foreground">
-					Another full-bleed section. Great for backgrounds, images, etc.
-				</p>
-			</div>
-		</GridParent>
-	</div>
-
-	<!-- GridMain component: styles via class require :global() below -->
-	<GridMain class="component-demo">
-		<h2 class="section-title">GridMain Component Demo</h2>
-		<p class="section-text">This uses the GridMain component with a custom class.</p>
-	</GridMain>
-
-	<!-- Footer info -->
-	<div class="footer-info grid-main text-muted-foreground">
-		<p class="footer-text">Grid: var(--grid-columns) columns, var(--grid-gap) gap, var(--grid-gutter) gutter</p>
-		<p class="footer-text">Desktop: 8 cols, 24px gap, 64px gutter</p>
-		<p class="footer-text">Mobile: 4 cols, 16px gap, 20px gutter</p>
-	</div>
-
-	<!-- Breakpoint demo -->
-	<div class="breakpoint-demo grid-main">
-		<h2 class="section-title">Breakpoint Demo</h2>
-		<p class="section-text">
-			This box uses @small and @large to change layout per breakpoint.
-		</p>
-		<div class="demo-box">
-			<span class="demo-item">Item 1</span>
-			<span class="demo-item">Item 2</span>
-			<span class="demo-item">Item 3</span>
+	<GridMain>
+		<!-- Content section -->
+		<div class="content-section">
+			<h2 class="section-title">Content Section</h2>
+			<p class="section-text">
+				This section uses .grid-main so it respects the gutters. 8 columns on desktop, 4 on mobile.
+				Resize to see it change.
+				<br/>
+				<br/>
+				A max-width is applied to this text to showcase consistent line breaks across screen resizing.
+			</p>
 		</div>
-	</div>
 
-	<!-- Navigation demo -->
-	<div class="nav-demo grid-main">
-		<h2 class="section-title">Page Transitions</h2>
-		<p class="section-text">
-			Click the link below to test the preloader and fade transitions.
-		</p>
+		<!-- Grid items demo -->
+		<div class="grid-demo">
+			<!-- eslint-disable-next-line @typescript-eslint/no-unused-vars -->
+			{#each Array(8) as _, i (i)}
+				<div class="grid-item bg-secondary text-secondary-foreground rounded-lg">
+					<p class="grid-item-text">Col {i + 1}</p>
+				</div>
+			{/each}
+		</div>
 
-		<Button 
-			href={resolve("/about")}
-			variant="primary"
-			class="no-link-padding"
-		>
-			Go to About Page
-		</Button>
+		<!-- Breakpoint demo -->
+		<div class="breakpoint-demo">
+			<h2 class="section-title">Breakpoint Demo</h2>
+			<p class="section-text">
+				This box uses @small and @large to change layout per breakpoint.
+			</p>
+			<div class="demo-box">
+				<span class="demo-item">Item 1</span>
+				<span class="demo-item">Item 2</span>
+				<span class="demo-item">Item 3</span>
+			</div>
+		</div>
 
-	</div>
+		<!-- Navigation demo -->
+		<div class="nav-demo">
+			<h2 class="section-title">Page Transitions</h2>
+			<p class="section-text">
+				Click the link below to test the preloader and fade transitions.
+			</p>
+
+			<div class="catalog-link">
+				<Button href={resolve("/about")} variant="outline">Go to About Page</Button>
+				<Button href={resolve("/ui-catalog")} variant="outline">View UI Catalog</Button>
+			</div>
+		</div>
+
+		<!-- UI Catalog link -->
+	</GridMain>
 </GridParent>
 
 <style>
@@ -257,5 +226,13 @@
 		@responsive {
 			padding: 40px 0;
 		}
-	}	
+	}
+
+	.catalog-link {
+		@responsive {
+			padding: 40px 0;
+			margin-top: 20px;
+			border-top: 1px solid var(--border);
+		}
+	}
 </style>
