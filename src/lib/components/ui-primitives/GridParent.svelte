@@ -1,7 +1,16 @@
 <script lang="ts">
-    let { children } = $props();
+	import { cn } from "$lib/utils/misc";
+	import type { Snippet } from "svelte";
+
+	let {
+        children,
+        class: className
+    }: {
+        children?: Snippet;
+        class?: string
+    } = $props();
 </script>
 
-<div class="grid-content">
-    {@render children()}
+<div class={cn("grid-content", className)}>
+    {@render children?.()}
 </div>

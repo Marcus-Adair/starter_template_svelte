@@ -7,10 +7,82 @@
 	import GridFullBleed from "$lib/components/ui-primitives/GridFullBleed.svelte";
 	import GridParent from "$lib/components/ui-primitives/GridParent.svelte";
 	import Input from "$lib/components/ui-primitives/Input.svelte";
-	import Label from "$lib/components/ui-primitives/Label.svelte";
 	import Separator from "$lib/components/ui-primitives/Separator.svelte";
 	import Textarea from "$lib/components/ui-primitives/Textarea.svelte";
+
+	// Color tokens (border: true for light colors that need visibility)
+	const colors = [
+		{ name: "background", border: true },
+		{ name: "foreground" },
+		{ name: "primary" },
+		{ name: "primary-foreground", border: true },
+		{ name: "secondary" },
+		{ name: "secondary-foreground" },
+		{ name: "muted" },
+		{ name: "muted-foreground" },
+		{ name: "accent" },
+		{ name: "accent-foreground" },
+		{ name: "destructive" },
+		{ name: "destructive-foreground", border: true },
+		{ name: "card", border: true },
+		{ name: "card-foreground" },
+		{ name: "popover", border: true },
+		{ name: "popover-foreground" },
+		{ name: "border" },
+		{ name: "input" },
+		{ name: "ring" },
+	];
+
+	// Typography sections (title + styles array)
+	const typeSections = [
+		{
+			title: "Headings (Desktop)",
+			styles: [
+				{ style: "h1Desktop", meta: "64/72 · 700" },
+				{ style: "h2Desktop", meta: "48/56 · 600" },
+				{ style: "h3Desktop", meta: "32/40 · 600" },
+			],
+		},
+		{
+			title: "Headings (Universal)",
+			styles: [
+				{ style: "h4", meta: "24/32 · 600" },
+				{ style: "h5", meta: "20/28 · 600" },
+				{ style: "h6", meta: "18/24 · 600" },
+			],
+		},
+		{
+			title: "Body",
+			styles: [
+				{ style: "p1", sample: "p1 - Body large for intros and emphasis", meta: "18/28" },
+				{ style: "p2", sample: "p2 - Body default for most content", meta: "16/24" },
+				{ style: "p3", sample: "p3 - Body small for secondary text", meta: "14/20" },
+			],
+		},
+		{
+			title: "Utility",
+			styles: [
+				{ style: "label", sample: "label - Form labels and buttons", meta: "14/20 · 500" },
+				{ style: "caption", sample: "caption - Small text and metadata", meta: "12/16" },
+				{ style: "overline", sample: "overline - Section labels", meta: "12/16 · uppercase" },
+			],
+		},
+	];
 </script>
+
+{#snippet colorSwatch(name: string, border?: boolean)}
+	<div class="color-swatch">
+		<div class="color-preview bg-{name}" class:border={border} class:border-border={border}></div>
+		<span class="color-label">{name}</span>
+	</div>
+{/snippet}
+
+{#snippet typeRow(style: string, sample: string, meta: string)}
+	<div class="type-row">
+		<span class="type-sample type-{style}">{sample}</span>
+		<span class="type-meta">{meta}</span>
+	</div>
+{/snippet}
 
 <GridParent>
 	<!-- Hero -->
@@ -30,96 +102,46 @@
 		<p class="section-desc">Semantic color tokens from the design system.</p>
 
 		<div class="color-grid">
-			<div class="color-swatch">
-				<div class="color-preview bg-background border border-border"></div>
-				<span class="color-label">background</span>
-			</div>
-			<div class="color-swatch">
-				<div class="color-preview bg-foreground"></div>
-				<span class="color-label">foreground</span>
-			</div>
-			<div class="color-swatch">
-				<div class="color-preview bg-primary"></div>
-				<span class="color-label">primary</span>
-			</div>
-			<div class="color-swatch">
-				<div class="color-preview bg-primary-foreground border border-border"></div>
-				<span class="color-label">primary-foreground</span>
-			</div>
-			<div class="color-swatch">
-				<div class="color-preview bg-secondary"></div>
-				<span class="color-label">secondary</span>
-			</div>
-			<div class="color-swatch">
-				<div class="color-preview bg-secondary-foreground"></div>
-				<span class="color-label">secondary-foreground</span>
-			</div>
-			<div class="color-swatch">
-				<div class="color-preview bg-muted"></div>
-				<span class="color-label">muted</span>
-			</div>
-			<div class="color-swatch">
-				<div class="color-preview bg-muted-foreground"></div>
-				<span class="color-label">muted-foreground</span>
-			</div>
-			<div class="color-swatch">
-				<div class="color-preview bg-accent"></div>
-				<span class="color-label">accent</span>
-			</div>
-			<div class="color-swatch">
-				<div class="color-preview bg-accent-foreground"></div>
-				<span class="color-label">accent-foreground</span>
-			</div>
-			<div class="color-swatch">
-				<div class="color-preview bg-destructive"></div>
-				<span class="color-label">destructive</span>
-			</div>
-			<div class="color-swatch">
-				<div class="color-preview bg-destructive-foreground border border-border"></div>
-				<span class="color-label">destructive-foreground</span>
-			</div>
-			<div class="color-swatch">
-				<div class="color-preview bg-card border border-border"></div>
-				<span class="color-label">card</span>
-			</div>
-			<div class="color-swatch">
-				<div class="color-preview bg-card-foreground"></div>
-				<span class="color-label">card-foreground</span>
-			</div>
-			<div class="color-swatch">
-				<div class="color-preview bg-popover border border-border"></div>
-				<span class="color-label">popover</span>
-			</div>
-			<div class="color-swatch">
-				<div class="color-preview bg-popover-foreground"></div>
-				<span class="color-label">popover-foreground</span>
-			</div>
-			<div class="color-swatch">
-				<div class="color-preview bg-border"></div>
-				<span class="color-label">border</span>
-			</div>
-			<div class="color-swatch">
-				<div class="color-preview bg-input"></div>
-				<span class="color-label">input</span>
-			</div>
-			<div class="color-swatch">
-				<div class="color-preview bg-ring"></div>
-				<span class="color-label">ring</span>
-			</div>
+			{#each colors as { name, border } (name)}
+				{@render colorSwatch(name, border)}
+			{/each}
 		</div>
 
 	</section>
 
+	<!-- Typography Section -->
+	<section class="section grid-main">
+		<h2 class="section-title">Typography</h2>
+		<p class="section-desc">Text styles from the type system. Use with <code>@text</code> directive.</p>
+
+		{#each typeSections as { title, styles } (title)}
+			<div class="subsection">
+				<h3 class="subsection-title">{title}</h3>
+				<div class="type-stack">
+					{#each styles as { style, meta } (style)}
+						{@render typeRow(style, style, meta)}
+					{/each}
+				</div>
+			</div>
+		{/each}
+	</section>
 
 	<section class="section grid-main">
 		<h2 class="section-title">Misc.</h2>
 		<p class="section-desc">Other misc UI components.</p>
 
+		<div class="subsection">
+			<h3 class="subsection-title">Separator</h3>
+			<Separator orientation="horizontal"/>
+		</div>
 
 		<div class="subsection">
-			<h3 class="subsection-title">Separator:</h3>
-			<Separator orientation="horizontal"/>
-			<Checkbox></Checkbox>
+			<h3 class="subsection-title">Checkbox</h3>
+			<div class="input-stack">
+				<Checkbox id="terms-checkbox" label="I agree to the terms and conditions" />
+				<Checkbox id="newsletter-checkbox" label="Subscribe to newsletter" checked />
+				<Checkbox id="disabled-checkbox" label="Disabled option" disabled />
+			</div>
 		</div>
 	</section>
 
@@ -130,53 +152,39 @@
 			<p class="section-desc">Text fields for user input.</p>
 
 			<div class="subsection">
-				<h3 class="subsection-title">Types</h3>
+				<h3 class="subsection-title">With Labels</h3>
 				<div class="input-stack">
-					<Input type="text" placeholder="Text input" />
-					<Input type="email" placeholder="Email input" />
-					<Input type="password" placeholder="Password input" />
-					<Input type="number" placeholder="Number input" />
+					<Input id="full-name-input" label="Full name" type="text" placeholder="John Doe" />
+					<Input id="email-addr-input" label="Email address" type="email" placeholder="you@example.com" />
+					<Input id="password-input" label="Password" type="password" placeholder="••••••••" />
 				</div>
 			</div>
 
 			<div class="subsection">
 				<h3 class="subsection-title">States</h3>
 				<div class="input-stack">
-					<Input placeholder="Default" />
-					<Input placeholder="Disabled" disabled />
-					<Input placeholder="Invalid" aria-invalid="true" />
+					<Input id="default-input" label="Default" placeholder="Default input" />
+					<Input id="disabled-input" label="Disabled" placeholder="Can't edit this" disabled />
+					<Input id="invalid-input" label="Invalid" placeholder="Something's wrong" aria-invalid="true" />
 				</div>
 			</div>
 
 			<div class="subsection">
 				<h3 class="subsection-title">File</h3>
-				<Input type="file" />
+				<Input id="upload-doc-input" label="Upload document" type="file" />
 			</div>
 		</section>
 
 		<section class="section">
-			<h2 class="section-title">Textarea & Label</h2>
-			<p class="section-desc">Multi-line input and form labels.</p>
+			<h2 class="section-title">Textarea</h2>
+			<p class="section-desc">Multi-line text input.</p>
 
 			<div class="subsection">
-				<h3 class="subsection-title">Textarea</h3>
+				<h3 class="subsection-title">With Labels</h3>
 				<div class="input-stack">
-					<Textarea placeholder="Default textarea" />
-					<Textarea placeholder="Disabled" disabled />
-				</div>
-			</div>
-
-			<div class="subsection">
-				<h3 class="subsection-title">Label</h3>
-				<div class="input-stack">
-					<div class="label-field">
-						<Label for="example-input">Email address</Label>
-						<Input id="example-input" type="email" placeholder="you@example.com" />
-					</div>
-					<div class="label-field" data-disabled="true">
-						<Label for="disabled-input">Disabled field</Label>
-						<Input id="disabled-input" placeholder="Can't edit this" disabled />
-					</div>
+					<Textarea label="Bio" placeholder="Tell us about yourself..." />
+					<Textarea label="Comments" placeholder="Leave a comment..." />
+					<Textarea label="Disabled" placeholder="Can't edit this" disabled />
 				</div>
 			</div>
 		</section>
@@ -382,31 +390,11 @@
 		align-items: center;
 	}
 
-	.input-grid {
-		@responsive {
-			display: grid;
-			grid-template-columns: repeat(2, 1fr);
-			gap: 16px;
-			max-width: 600px;
-		}
-		@small {
-			grid-template-columns: 1fr;
-		}
-	}
-
 	.input-stack {
 		@responsive {
 			display: flex;
 			flex-direction: column;
 			gap: 12px;
-		}
-	}
-
-	.label-field {
-		@responsive {
-			display: flex;
-			flex-direction: column;
-			gap: 6px;
 		}
 	}
 
@@ -450,7 +438,7 @@
 		@responsive {
 			width: 64px;
 			height: 64px;
-			border-radius: 8px;
+			border-radius: var(--radius-md);
 		}
 	}
 
@@ -460,4 +448,43 @@
 		}
 		color: var(--muted-foreground);
 	}
+
+	/* Typography */
+	.type-stack {
+		@responsive {
+			display: flex;
+			flex-direction: column;
+			gap: 16px;
+		}
+	}
+
+	.type-row {
+		@responsive {
+			display: flex;
+			align-items: baseline;
+			justify-content: space-between;
+			gap: 24px;
+		}
+	}
+
+	.type-meta {
+		@responsive {
+			@text caption;
+			flex-shrink: 0;
+		}
+		color: var(--muted-foreground);
+	}
+
+	.type-h1Desktop { @responsive { @text h1Desktop; } }
+	.type-h2Desktop { @responsive { @text h2Desktop; } }
+	.type-h3Desktop { @responsive { @text h3Desktop; } }
+	.type-h4 { @responsive { @text h4; } }
+	.type-h5 { @responsive { @text h5; } }
+	.type-h6 { @responsive { @text h6; } }
+	.type-p1 { @responsive { @text p1; } }
+	.type-p2 { @responsive { @text p2; } }
+	.type-p3 { @responsive { @text p3; } }
+	.type-label { @responsive { @text label; } }
+	.type-caption { @responsive { @text caption; } }
+	.type-overline { @responsive { @text overline; } }
 </style>

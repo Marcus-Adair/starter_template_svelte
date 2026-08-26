@@ -1,8 +1,6 @@
 <!--
     Label component for form inputs.
-    Supports disabled states via parent group or sibling peer.
-
-    Inspired by shadcn-svelte.
+    Supports disabled states.
 -->
 <script lang="ts" module>
     import { cn } from "$lib/utils/misc";
@@ -25,41 +23,26 @@
 
 <!-- :global() needed because LabelPrimitive.Root renders the DOM element -->
 <style>
+    /* Label - sizing (needs @responsive) */
     :global(:where(.base-label)) {
         @responsive {
-            display: flex;
-            align-items: center;
+            @text label;
             gap: 8px;
-
-            font-size: 14px;
-            line-height: 1;
-            font-weight: 500;
-
-            user-select: none;
         }
     }
 
-    /* Disabled via parent group */
-    :global(:where([data-disabled="true"] .base-label)) {
-        @responsive {
-            opacity: 0.5;
-            pointer-events: none;
-        }
+    /* Label - non-scaling */
+    :global(:where(.base-label)) {
+        display: flex;
+        align-items: center;
     }
 
-    /* Disabled via sibling input (label after input) */
-    :global(:where(:disabled + .base-label)) {
-        @responsive {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-    }
-
-    /* Disabled via sibling input (label before input, using :has) */
+    /* Disabled states */
+    :global(:where([data-disabled="true"] .base-label)),
+    :global(:where(:disabled + .base-label)),
     :global(:where(.base-label:has(+ :disabled))) {
-        @responsive {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
+        opacity: 0.5;
+        pointer-events: none;
+        cursor: not-allowed;
     }
 </style>

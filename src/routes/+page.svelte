@@ -68,13 +68,11 @@
 				Click the link below to test the preloader and fade transitions.
 			</p>
 
-			<div class="catalog-link">
+			<div class="nav-links">
 				<Button href={resolve("/about")} variant="outline">Go to About Page</Button>
 				<Button href={resolve("/ui-catalog")} variant="outline">View UI Catalog</Button>
 			</div>
 		</div>
-
-		<!-- UI Catalog link -->
 	</GridMain>
 </GridParent>
 
@@ -83,20 +81,6 @@
 	:global(.hero) {
 		@responsive {
 			padding: 80px 0;
-		}
-	}
-
-	:global(.custom-btn) {
-		@responsive {
-			height: 80px;
-		}
-	}
-
-	/* GridMain component demo - requires :global */
-	:global(.component-demo) {
-		@responsive {
-			padding: 40px 0;
-			border: 2px dashed green;
 		}
 	}
 
@@ -120,7 +104,6 @@
 	/* Content section */
 	.content-section {
 		@responsive {
-			border: 1px dashed pink;
 			padding: 40px 0;
 		}
 	}
@@ -136,11 +119,11 @@
 	}
 
 	.section-text {
-		border: 1px dashed blue;
 		@responsive {
 			@text p1;
 			max-width: 400px;
 		}
+		color: var(--muted-foreground);
 	}
 
 	/* Grid demo */
@@ -162,36 +145,6 @@
 		}
 	}
 
-	/* Accent section */
-	.accent-section {
-		@responsive {
-			padding: 60px 0;
-			margin-top: 40px;
-		}
-	}
-
-	.accent-text {
-		@responsive {
-			@text p1;
-		}
-	}
-
-	/* Footer */
-	.footer-info {
-		@responsive {
-			padding: 40px 0;
-			display: flex;
-			flex-direction: column;
-			gap: 16px;
-		}
-	}
-
-	.footer-text {
-		@responsive {
-			@text p3;
-		}
-	}
-
 	/* Breakpoint demo */
 	.breakpoint-demo {
 		@responsive {
@@ -202,22 +155,23 @@
 	.demo-box {
 		@responsive {
 			display: flex;
-			background: #f0f0f0;
+			background-color: var(--muted);
 			padding: 24px;
 			gap: 16px;
+			border-radius: var(--radius-md);
 		}
 		@small {
 			flex-direction: column;
 		}
-
 	}
 
 	.demo-item {
 		@responsive {
 			@text p2;
-			background: #333;
-			color: white;
+			background-color: var(--secondary);
+			color: var(--secondary-foreground);
 			padding: 20px;
+			border-radius: var(--radius-md);
 		}
 	}
 
@@ -228,10 +182,13 @@
 		}
 	}
 
-	.catalog-link {
+	.nav-links {
 		@responsive {
-			padding: 40px 0;
-			margin-top: 20px;
+			display: flex;
+			flex-wrap: wrap;
+			gap: 12px;
+			padding-top: 24px;
+			margin-top: 24px;
 			border-top: 1px solid var(--border);
 		}
 	}

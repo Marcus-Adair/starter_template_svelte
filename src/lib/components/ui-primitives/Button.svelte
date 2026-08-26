@@ -23,6 +23,20 @@
                 `base-button--size-${size}`,
             );
         }
+
+    /** Check if href is external (different origin or starts with http/https) */
+    function isExternalHref(href: string | undefined): boolean {
+        if (!href) return false;
+        if (href.startsWith("http://") || href.startsWith("https://")) {
+            try {
+                const url = new URL(href);
+                return typeof window !== "undefined" && url.origin !== window.location.origin;
+            } catch {
+                return false;
+            }
+        }
+        return false;
+    }
   </script>
 
   <script lang="ts">
@@ -31,16 +45,25 @@
       variant = "primary",
       size = "default",
       href = undefined,
+      target,
+      rel,
       type = "button",
       disabled,
       children,
       ...restProps
     }: ButtonProps = $props();
+
+    // Auto-detect external links and set target/rel if not explicitly provided
+    const isExternal = $derived(isExternalHref(href ?? undefined));
+    const resolvedTarget = $derived(target ?? (isExternal ? "_blank" : undefined));
+    const resolvedRel = $derived(rel ?? (isExternal ? "noopener noreferrer" : undefined));
   </script>
   {#if href}
     <a
       class={cn(buttonVariants({ variant, size }), className)}
       href={disabled ? undefined : href}
+      target={resolvedTarget}
+      rel={resolvedRel}
       aria-disabled={disabled}
       role={disabled ? "link" : undefined}
       tabindex={disabled ? -1 : undefined}
@@ -62,220 +85,157 @@
   <!-- :where() zeroes specificity so consumer classes can override without chaining -->
   <style>
     /* =========================================================
-    Button base
-    ========================================================= */
+       Button base - sizing (needs @responsive)
+       ========================================================= */
     :where(.base-button) {
         @responsive {
             border-radius: var(--radius-md);
             border: 1px solid transparent;
-
-            /* bg-clip-padding */
-            background-clip: padding-box;
-
-            /* text-sm */
-            font-size: 14px;
-            line-height: 20px;
-            font-weight: 500;
-
-            display: inline-flex;
-            flex-shrink: 0;
-            align-items: center;
-            justify-content: center;
-            white-space: nowrap;
-
-            transition: background-color 0.15s ease;
-            outline: none;
-            user-select: none;
-            cursor: pointer;
+            @text label;
         }
+    }
+
+    /* Button base - non-scaling properties */
+    :where(.base-button) {
+        display: inline-flex;
+        flex-shrink: 0;
+        align-items: center;
+        justify-content: center;
+        white-space: nowrap;
+        background-clip: padding-box;
+        transition: background-color 0.15s ease;
+        outline: none;
+        user-select: none;
+        cursor: pointer;
     }
 
     :where(.base-button:focus-visible) {
-        @responsive {
-            border-color: var(--ring);
-            box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
-        }
+        border-color: var(--ring);
+        box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
     }
 
     :where(.base-button[aria-invalid]) {
-        @responsive {
-            border-color: var(--destructive);
-            box-shadow: 0 0 0 3px color-mix(in srgb, var(--destructive) 20%, transparent);
-        }
+        border-color: var(--destructive);
+        box-shadow: 0 0 0 3px color-mix(in srgb, var(--destructive) 20%, transparent);
     }
 
     :where(.dark .base-button[aria-invalid]) {
-        @responsive {
-            border-color: color-mix(in srgb, var(--destructive) 50%, transparent);
-            box-shadow: 0 0 0 3px color-mix(in srgb, var(--destructive) 40%, transparent);
-        }
+        border-color: color-mix(in srgb, var(--destructive) 50%, transparent);
+        box-shadow: 0 0 0 3px color-mix(in srgb, var(--destructive) 40%, transparent);
     }
 
     :where(.base-button:disabled) {
-        @responsive {
-            pointer-events: none;
-            opacity: 0.5;
-        }
+        pointer-events: none;
+        opacity: 0.5;
     }
 
     :where(.base-button svg) {
-        @responsive {
-            pointer-events: none;
-            flex-shrink: 0;
-        }
+        pointer-events: none;
+        flex-shrink: 0;
     }
 
     /* =========================================================
-    Variants
-    ========================================================= */
+       Variants - colors only (no @responsive needed)
+       ========================================================= */
 
     :where(.base-button--primary) {
-        @responsive {
-            background-color: var(--primary);
-            color: var(--primary-foreground);
-        }
+        background-color: var(--primary);
+        color: var(--primary-foreground);
     }
     :where(.base-button--primary:hover) {
-        @responsive {
-            background-color: color-mix(in srgb, var(--primary) 80%, transparent);
-        }
+        background-color: color-mix(in srgb, var(--primary) 80%, transparent);
     }
     :where(.base-button--primary:active) {
-        @responsive {
-            background-color: color-mix(in srgb, var(--primary) 90%, transparent);
-        }
+        background-color: color-mix(in srgb, var(--primary) 90%, transparent);
     }
 
     :where(.base-button--outline) {
-        @responsive {
-            border-color: var(--border);
-            background-color: var(--background);
-            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-        }
+        border-color: var(--border);
+        background-color: var(--background);
+        box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
     }
     :where(.base-button--outline:hover),
     :where(.base-button--outline[aria-expanded="true"]) {
-        @responsive {
-            background-color: var(--muted);
-            color: var(--foreground);
-        }
+        background-color: var(--muted);
+        color: var(--foreground);
     }
     :where(.base-button--outline:active) {
-        @responsive {
-            background-color: color-mix(in srgb, var(--muted) 40%, transparent);
-        }
+        background-color: color-mix(in srgb, var(--muted) 40%, transparent);
     }
     :where(.dark .base-button--outline) {
-        @responsive {
-            border-color: var(--input);
-            background-color: color-mix(in srgb, var(--input) 30%, transparent);
-        }
+        border-color: var(--input);
+        background-color: color-mix(in srgb, var(--input) 30%, transparent);
     }
     :where(.dark .base-button--outline:hover) {
-        @responsive {
-            background-color: color-mix(in srgb, var(--input) 50%, transparent);
-        }
+        background-color: color-mix(in srgb, var(--input) 50%, transparent);
     }
     :where(.dark .base-button--outline:active) {
-        @responsive {
-            background-color: color-mix(in srgb, var(--input) 60%, transparent);
-        }
+        background-color: color-mix(in srgb, var(--input) 60%, transparent);
     }
+
     :where(.base-button--secondary) {
-        @responsive {
-            background-color: var(--secondary);
-            color: var(--secondary-foreground);
-        }
+        background-color: var(--secondary);
+        color: var(--secondary-foreground);
     }
     :where(.base-button--secondary:hover),
     :where(.base-button--secondary[aria-expanded="true"]) {
-        @responsive {
-            background-color: color-mix(in srgb, var(--secondary) 80%, transparent);
-            color: var(--secondary-foreground);
-        }
+        background-color: color-mix(in srgb, var(--secondary) 80%, transparent);
+        color: var(--secondary-foreground);
     }
     :where(.base-button--secondary:active) {
-        @responsive {
-            background-color: color-mix(in srgb, var(--secondary) 90%, transparent);
-        }
+        background-color: color-mix(in srgb, var(--secondary) 90%, transparent);
     }
 
     :where(.base-button--ghost:hover),
     :where(.base-button--ghost[aria-expanded="true"]) {
-        @responsive {
-            background-color: var(--muted);
-            color: var(--foreground);
-        }
+        background-color: var(--muted);
+        color: var(--foreground);
     }
     :where(.dark .base-button--ghost:hover) {
-        @responsive {
-            background-color: color-mix(in srgb, var(--muted) 50%, transparent);
-        }
+        background-color: color-mix(in srgb, var(--muted) 50%, transparent);
     }
     :where(.base-button--ghost:active) {
-        @responsive {
-            background-color: color-mix(in srgb, var(--muted) 60%, transparent);
-        }
+        background-color: color-mix(in srgb, var(--muted) 60%, transparent);
     }
 
     :where(.base-button--destructive) {
-        @responsive {
-            background-color: color-mix(in srgb, var(--destructive) 10%, transparent);
-            color: var(--destructive);
-        }
+        background-color: color-mix(in srgb, var(--destructive) 10%, transparent);
+        color: var(--destructive);
     }
     :where(.base-button--destructive:hover) {
-        @responsive {
-            background-color: color-mix(in srgb, var(--destructive) 20%, transparent);
-        }
+        background-color: color-mix(in srgb, var(--destructive) 20%, transparent);
     }
     :where(.base-button--destructive:active) {
-        @responsive {
-            background-color: color-mix(in srgb, var(--destructive) 30%, transparent);
-        }
+        background-color: color-mix(in srgb, var(--destructive) 30%, transparent);
     }
     :where(.base-button--destructive:focus-visible) {
-        @responsive {
-            border-color: color-mix(in srgb, var(--destructive) 40%, transparent);
-            box-shadow: 0 0 0 3px color-mix(in srgb, var(--destructive) 20%, transparent);
-        }
+        border-color: color-mix(in srgb, var(--destructive) 40%, transparent);
+        box-shadow: 0 0 0 3px color-mix(in srgb, var(--destructive) 20%, transparent);
     }
     :where(.dark .base-button--destructive) {
-        @responsive {
-            background-color: color-mix(in srgb, var(--destructive) 20%, transparent);
-        }
+        background-color: color-mix(in srgb, var(--destructive) 20%, transparent);
     }
     :where(.dark .base-button--destructive:hover) {
-        @responsive {
-            background-color: color-mix(in srgb, var(--destructive) 30%, transparent);
-        }
+        background-color: color-mix(in srgb, var(--destructive) 30%, transparent);
     }
     :where(.dark .base-button--destructive:active) {
-        @responsive {
-            background-color: color-mix(in srgb, var(--destructive) 40%, transparent);
-        }
+        background-color: color-mix(in srgb, var(--destructive) 40%, transparent);
     }
     :where(.dark .base-button--destructive:focus-visible) {
-        @responsive {
-            box-shadow: 0 0 0 3px color-mix(in srgb, var(--destructive) 40%, transparent);
-        }
+        box-shadow: 0 0 0 3px color-mix(in srgb, var(--destructive) 40%, transparent);
     }
 
     :where(.base-button--link) {
-        @responsive {
-            color: var(--primary);
-            text-underline-offset: 4px;
-        }
+        color: var(--primary);
+        text-underline-offset: 4px;
     }
     :where(.base-button--link:hover) {
-        @responsive {
-            text-decoration: underline;
-        }
+        text-decoration: underline;
     }
 
     /* =========================================================
-    Sizes
-    ========================================================= */
+       Sizes - pixel values (needs @responsive)
+       ========================================================= */
 
     /* default (h-9 gap-1.5 px-2.5) */
     :where(.base-button--size-default) {
@@ -291,8 +251,8 @@
     :where(.base-button--size-xs) {
         @responsive {
             border-radius: min(var(--radius-md), 8px);
-            font-size: 12px;
-            line-height: 16px;
+            @text caption;
+            font-weight: 500;
             height: 24px;
             gap: 4px;
             padding-left: 8px;
@@ -326,6 +286,15 @@
         @responsive {
             width: 36px;
             height: 36px;
+        }
+    }
+
+    /* Reset size styles to be inline like a span for "link" variant (after sizes so it wins) */
+    :where(.base-button--link) {
+        @responsive {
+            height: auto;
+            padding: 0;
+            gap: 0;
         }
     }
   </style>

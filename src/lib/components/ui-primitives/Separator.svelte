@@ -19,12 +19,17 @@
 
 <!-- :global() needed because SeparatorPrimitive.Root renders the DOM element -->
 <style>
+    /* Separator - sizing (needs @responsive) */
     :global(:where(.base-separator)) {
         @responsive {
-            flex-shrink: 0;
-            background-color: var(--border);
             height: 1px;
             width: 100%;
         }
+    }
+
+    /* Separator - non-scaling */
+    :global(:where(.base-separator)) {
+        flex-shrink: 0;
+        background-color: var(--border);
     }
 </style>
