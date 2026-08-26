@@ -9,7 +9,7 @@
     import type { HTMLAnchorAttributes, HTMLAttributes } from "svelte/elements";
 
     export type BadgeProps = HTMLAttributes<HTMLSpanElement> & HTMLAnchorAttributes & {
-        variant?: "default" | "secondary" | "destructive" | "outline" | "ghost" | "link";
+        variant?: "default" | "secondary" | "destructive" | "outline" | "ghost";
     };
 
     function badgeVariants({ variant = "default" }: Pick<BadgeProps, "variant">) {
@@ -44,18 +44,6 @@
        Badge base - sizing (needs @responsive)
        ========================================================= */
     :where(.base-badge) {
-        @responsive {
-            height: 20px;
-            gap: 4px;
-            padding: 2px 8px;
-            border-radius: var(--radius-md);
-            border: 1px solid transparent;
-            @text caption;
-        }
-    }
-
-    /* Badge base - non-scaling properties */
-    :where(.base-badge) {
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -65,6 +53,14 @@
         overflow: hidden;
         white-space: nowrap;
         transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+        @responsive {
+            height: 20px;
+            gap: 4px;
+            padding: 2px 8px;
+            border-radius: var(--radius-md);
+            border: 1px solid transparent;
+            @text caption;
+        }
     }
 
     :where(.base-badge > :global(svg)) {
@@ -147,13 +143,5 @@
     }
     :where(.dark .base-badge--ghost:hover) {
         background-color: color-mix(in srgb, var(--muted) 50%, transparent);
-    }
-
-    :where(.base-badge--link) {
-        color: var(--primary);
-        text-underline-offset: 4px;
-    }
-    :where(.base-badge--link:hover) {
-        text-decoration: underline;
     }
 </style>

@@ -20,6 +20,7 @@
 	class:disable={!preloaderController.visible}
 >
 	<!-- ADD ANIMATED ELEMENTS HERE -->
+	 <span class="text-primary-foreground">Page transition ...</span>
 </div>
 
 <style>

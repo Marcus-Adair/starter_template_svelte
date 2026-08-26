@@ -1,9 +1,3 @@
-<!--
-    Card component for grouping related content.
-    Supports size variants for different spacing.
-
-    Inspired by shadcn-svelte.
--->
 <script lang="ts" module>
     import { cn } from "$lib/utils/misc";
     import type { HTMLAttributes } from "svelte/elements";
@@ -37,18 +31,6 @@
 </div>
 
 <style>
-    /* Card base - sizing (needs @responsive) */
-    :where(.base-card) {
-        @responsive {
-            --card-spacing: 24px;
-            gap: 12px;
-            padding: var(--card-spacing);
-            border-radius: 12px;
-            @text p3;
-        }
-    }
-
-    /* Card base - non-scaling properties */
     :where(.base-card) {
         display: flex;
         flex-direction: column;
@@ -58,6 +40,13 @@
         box-shadow:
             0 1px 2px 0 rgb(0 0 0 / 0.05),
             0 0 0 1px color-mix(in srgb, var(--foreground) 10%, transparent);
+        @responsive {
+            --card-spacing: 24px;
+            gap: 12px;
+            padding: var(--card-spacing);
+            border-radius: 12px;
+            @text p3;
+        }
     }
 
     :where(.base-card--sm) {

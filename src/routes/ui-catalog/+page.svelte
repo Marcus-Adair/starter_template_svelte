@@ -1,10 +1,10 @@
 <script lang="ts">
 	import { resolve } from "$app/paths";
+	import Hero100vh from "$lib/components/sections/Hero100vh.svelte";
 	import Badge from "$lib/components/ui-primitives/Badge.svelte";
 	import Button from "$lib/components/ui-primitives/Button.svelte";
 	import Card from "$lib/components/ui-primitives/Card.svelte";
 	import Checkbox from "$lib/components/ui-primitives/Checkbox.svelte";
-	import GridFullBleed from "$lib/components/ui-primitives/GridFullBleed.svelte";
 	import GridParent from "$lib/components/ui-primitives/GridParent.svelte";
 	import Input from "$lib/components/ui-primitives/Input.svelte";
 	import Separator from "$lib/components/ui-primitives/Separator.svelte";
@@ -85,16 +85,10 @@
 {/snippet}
 
 <GridParent>
-	<!-- Hero -->
-	<GridFullBleed class="hero bg-primary text-primary-foreground">
-		<GridParent>
-			<div class="grid-main flex flex-col">
-				<h1 class="hero-title">UI Catalog</h1>
-				<p class="hero-subtitle">Component library for this starter template.</p>
-				<span>Inspired by <Button href="https://shadcn-svelte.com/" variant="link">shadcn-svelte</Button></span>
-			</div>
-		</GridParent>
-	</GridFullBleed>
+	<Hero100vh
+		heroTitle="UI Catalog"
+		heroSubTitle="Component library for this starter template."
+	/>
 
 	<!-- Colors Section -->
 	<section class="section grid-main">
@@ -129,6 +123,14 @@
 	<section class="section grid-main">
 		<h2 class="section-title">Misc.</h2>
 		<p class="section-desc">Other misc UI components.</p>
+
+		<div class="subsection">
+			<h3 class="subsection-title">Enhanced Image</h3>
+			<p class="subsection-desc">SvelteKit's <code>&lt;enhanced:img&gt;</code> for automatic image optimization.</p>
+			<div class="image-demo">
+				<enhanced:img src="$lib/assets/hammerhead-shark_16x9.png" alt="Placeholder landscape image" />
+			</div>
+		</div>
 
 		<div class="subsection">
 			<h3 class="subsection-title">Separator</h3>
@@ -166,6 +168,14 @@
 					<Input id="default-input" label="Default" placeholder="Default input" />
 					<Input id="disabled-input" label="Disabled" placeholder="Can't edit this" disabled />
 					<Input id="invalid-input" label="Invalid" placeholder="Something's wrong" aria-invalid="true" />
+				</div>
+			</div>
+
+			<div class="subsection">
+				<h3 class="subsection-title">Required</h3>
+				<div class="input-stack">
+					<Input id="required-name-input" label="Name *" type="text" placeholder="Required field" required />
+					<Input id="required-email-input" label="Email *" type="email" placeholder="you@example.com" required />
 				</div>
 			</div>
 
@@ -255,7 +265,6 @@
 					<Badge variant="destructive">Destructive</Badge>
 					<Badge variant="outline">Outline</Badge>
 					<Badge variant="ghost">Ghost</Badge>
-					<Badge variant="link">Link</Badge>
 				</div>
 			</div>
 
@@ -298,30 +307,6 @@
 </GridParent>
 
 <style>
-	/* Hero (GridFullBleed component - requires :global) */
-	:global(.hero) {
-		@responsive {
-			padding: 80px 0;
-		}
-	}
-
-	.hero-title {
-		@responsive {
-			@text h1Desktop;
-			margin-bottom: 10px;
-		}
-		@small {
-			@text h1Mobile;
-		}
-	}
-
-	.hero-subtitle {
-		@responsive {
-			@text p1;
-			margin-top: 16px;
-		}
-	}
-
 	/* Sections */
 	.section {
 		@responsive {
@@ -371,6 +356,27 @@
 			margin-bottom: 16px;
 		}
 		font-weight: 600;
+	}
+
+	.subsection-desc {
+		@responsive {
+			@text p3;
+			margin-bottom: 16px;
+		}
+		color: var(--muted-foreground);
+	}
+
+	.image-demo {
+		@responsive {
+			max-width: 400px;
+			border-radius: var(--radius-md);
+		}
+		overflow: hidden;
+	}
+	.image-demo img {
+		width: 100%;
+		height: auto;
+		display: block;
 	}
 
 	.button-row,

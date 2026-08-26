@@ -38,29 +38,14 @@
 <style>
     /* Container - sizing (needs @responsive) */
     .textarea-label-container {
+        display: flex;
+        flex-direction: column;
         @responsive {
             gap: 6px;
         }
     }
 
-    /* Container - non-scaling */
-    .textarea-label-container {
-        display: flex;
-        flex-direction: column;
-    }
-
-    /* Textarea base - sizing (needs @responsive) */
-    :where(.base-textarea) {
-        @responsive {
-            min-height: 64px;
-            padding: 8px 10px;
-            border-radius: var(--radius-md);
-            border: 1px solid var(--input);
-            @text p3;
-        }
-    }
-
-    /* Textarea base - non-scaling properties */
+    /* Textarea base */
     :where(.base-textarea) {
         display: flex;
         width: 100%;
@@ -69,6 +54,13 @@
         field-sizing: content;
         outline: none;
         transition: color 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+        @responsive {
+            min-height: 64px;
+            padding: 8px 10px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--input);
+            @text p3;
+        }
     }
 
     :where(.base-textarea::placeholder) {

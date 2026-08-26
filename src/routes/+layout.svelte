@@ -4,26 +4,32 @@
 	import { beforeNavigate, afterNavigate } from '$app/navigation';
 	import { preloaderController } from '$lib/stores/preloaderController.svelte';
 	import Preloader from '$lib/components/Preloader.svelte';
-	// import Intro from '$lib/components/Intro.svelte';
+	import Intro from '$lib/components/Intro.svelte';
 	import gsap from 'gsap';
-	import { ScrollSmoother } from 'gsap/ScrollSmoother'
-	// import { onMount } from 'svelte';
+	import { ScrollTrigger } from 'gsap/ScrollTrigger';
+	import { ScrollSmoother } from 'gsap/ScrollSmoother';
 	import Footer from '$lib/components/Footer.svelte';
 	import Header from '$lib/components/Header.svelte';
+	import { ModeWatcher } from "mode-watcher";
 
-	gsap.registerPlugin(ScrollSmoother);
+	gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 
 	let { children } = $props();
 
+	let smoother: ScrollSmoother | null = null;
 
-	// onMount(() => {
-	// 	ScrollSmoother.create({
-	// 		wrapper: '#smooth-wrapper',
-	// 		content: '#smooth-content',
-	// 		smooth: 2,
-	// 		effects: false
-	// 	});
-	// });
+	$effect(() => {
+		smoother = ScrollSmoother.create({
+			wrapper: '#smooth-wrapper',
+			content: '#smooth-content',
+			smooth: 2,
+			effects: true
+		});
+
+		return () => {
+			smoother?.kill();
+		};
+	});
 
 	// Intercepts internal navigations to cancel them and show preloader first
 	beforeNavigate((navigation) => {
@@ -55,20 +61,18 @@
 </script>
 
 <svelte:head><link rel="icon" href={favicon} /></svelte:head>
+<ModeWatcher />
 
+<Intro />
+<Preloader />
+<Header />
 
- <div class="relative">
-	<!-- <Intro /> -->
-	<Preloader />
+<div id="smooth-wrapper">
+	<div id="smooth-content">
+		<main class="grow">
+			{@render children()}
+		</main>
 
-	<Header/>
-
-	<!-- <div id="smooth-wrapper"> -->
-	<main id="smooth-content" class="grow">
-		{@render children()}
-	</main>
-
-	<Footer/>
-	<!-- </div> -->
-
+		<Footer />
+	</div>
 </div>

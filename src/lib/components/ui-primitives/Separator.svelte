@@ -25,10 +25,6 @@
             height: 1px;
             width: 100%;
         }
-    }
-
-    /* Separator - non-scaling */
-    :global(:where(.base-separator)) {
         flex-shrink: 0;
         background-color: var(--border);
     }

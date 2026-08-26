@@ -16,7 +16,7 @@
                         <!-- Brand -->
                         <div class="footer-col footer-col--brand">
                             <span class="footer-logo">LOGO</span>
-                            <p class="footer-tagline">TODO: Tagline or short description goes here.</p>
+                            <p class="footer-tagline">This is an open-source starter template for implementing pixel-perfect designs & creative dev websites - Implemented with TypeScript, HTML/CSS, SvelteKit, GSAP, and more.</p>
                         </div>
 
                         <!-- Col 1 -->
@@ -54,7 +54,7 @@
                     <div class="footer-bottom">
                         <span>© 2026 Acme Corp. All rights reserved.</span>
                         <div class="footer-social">
-                            <Button href="https://www.linkedin.com/in/marcus-adair/" variant="link" class="footer-link">Instagram</Button>
+                            <Button href="https://www.instagram.com/marcusadairdigital/" variant="link" class="footer-link">Instagram</Button>
                             <Button href="https://github.com/Marcus-Adair/" variant="link" class="footer-link">GitHub</Button>
                             <Button href="https://www.linkedin.com/in/marcus-adair/" variant="link" class="footer-link">LinkedIn</Button>
                         </div>

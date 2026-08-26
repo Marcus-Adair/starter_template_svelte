@@ -13,7 +13,7 @@
 
 export const text: Record<string, string> = {
 	// Headings - Desktop
-	h1Desktop: `font-size: 64px; line-height: 72px; font-weight: 700;`,
+	h1Desktop: `font-family: Aktura; font-size: 64px; line-height: 72px; font-weight: 700; `,
 	h2Desktop: `font-size: 48px; line-height: 56px; font-weight: 600;`,
 	h3Desktop: `font-size: 32px; line-height: 40px; font-weight: 600;`,
 

@@ -3,9 +3,11 @@ import adapter from '@sveltejs/adapter-auto';
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig } from 'vite';
 import { responsivePreprocess } from './src/lib/preprocessors/responsive.ts';
+import { enhancedImages } from '@sveltejs/enhanced-img';
 
 export default defineConfig({
 	plugins: [
+		enhancedImages(), // must come before the SvelteKit plugin
 		tailwindcss(),
 		sveltekit({
 			preprocess: [responsivePreprocess()],

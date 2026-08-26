@@ -29,10 +29,6 @@
             @text label;
             gap: 8px;
         }
-    }
-
-    /* Label - non-scaling */
-    :global(:where(.base-label)) {
         display: flex;
         align-items: center;
     }

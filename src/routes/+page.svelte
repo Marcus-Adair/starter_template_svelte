@@ -1,8 +1,8 @@
 <!-- Demo of responsive styling with @responsive, @small, @large preprocessor -->
 <script lang="ts">
 	import { resolve } from "$app/paths";
+	import Hero100vh from "$lib/components/sections/Hero100vh.svelte";
 	import Button from "$lib/components/ui-primitives/Button.svelte";
-	import GridFullBleed from "$lib/components/ui-primitives/GridFullBleed.svelte";
 	import GridMain from "$lib/components/ui-primitives/GridMain.svelte";
 	import GridParent from "$lib/components/ui-primitives/GridParent.svelte";
 	import { isSmall } from "$lib/utils/breakpoints.svelte";
@@ -14,16 +14,10 @@
 
 
 <GridParent>
-	<!-- GridFullBleed component: styles via class require :global() below -->
-	<GridFullBleed class="hero bg-primary text-primary-foreground">
-		<GridParent>
-			<div class="grid-main flex flex-col">
-				<h1 class="hero-title">Responsive / Capsize / Grid Template System Demo ({dynamicLabel})</h1>
-				<p class="hero-subtitle">Full-bleed hero section. Content respects gutters.</p>
-			</div>
-		</GridParent>
-	</GridFullBleed>
-
+	<Hero100vh
+		heroTitle="Starter Template"
+		heroSubTitle={`Responsive / Capsize / Grid Template System Demo (${dynamicLabel}) - Full-bleed hero section. Content respects gutters.`}
+	/>
 
 	<GridMain>
 		<!-- Content section -->
@@ -77,30 +71,6 @@
 </GridParent>
 
 <style>
-	/* Hero (GridFullBleed component - requires :global) */
-	:global(.hero) {
-		@responsive {
-			padding: 80px 0;
-		}
-	}
-
-	.hero-title {
-		@responsive {
-			@text h1Desktop;
-			margin-bottom: 10px;
-		}
-		@small {
-			@text h1Mobile;
-		}
-	}
-
-	.hero-subtitle {
-		@responsive {
-			@text p1;
-			margin-top: 16px;
-		}
-	}
-
 	/* Content section */
 	.content-section {
 		@responsive {

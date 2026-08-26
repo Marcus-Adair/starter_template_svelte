@@ -16,8 +16,16 @@
 	font-display: swap;
 }
 
+@font-face {
+	font-family: 'Aktura';
+	src: url('/fonts/Aktura-Regular.woff2') format('woff2');
+	font-weight: 400;
+	font-style: normal;
+	font-display: swap;
+}
+
 /* Note: Add this in to enable a dark them - and add CSS: .dark {}  */
-/* @custom-variant dark (&:is(.dark *)); */
+@custom-variant dark (&:is(.dark *));
 
 :root {
 	/* Responsive scaling breakpoint toggles (only one is 1 at a time) */
@@ -48,26 +56,29 @@
 		(1.067vw * var(--is-mobile)) + (4.444vw * var(--is-desktop)) + (64px * var(--is-full))
 	);
 
-	/* Color system */
-	--background: oklch(0.99 0 0);
-	--foreground: oklch(0 0 0);
+	/* Color system
+	 *
+	 * Visit https://tweakcn.com/editor/theme to find and generate themes to plug-n-play:
+	 */
+	--background: oklch(0.9842 0.0034 247.8575);
+	--foreground: oklch(0.2795 0.0368 260.031);
 	--card: oklch(1 0 0);
-	--card-foreground: oklch(0 0 0);
-	--popover: oklch(0.99 0 0);
-	--popover-foreground: oklch(0 0 0);
-	--primary: oklch(0 0 0);
+	--card-foreground: oklch(0.2795 0.0368 260.031);
+	--popover: oklch(1 0 0);
+	--popover-foreground: oklch(0.2795 0.0368 260.031);
+	--primary: oklch(0.6718 0.1144 196.2546);
 	--primary-foreground: oklch(1 0 0);
-	--secondary: oklch(0.94 0 0);
-	--secondary-foreground: oklch(0 0 0);
-	--muted: oklch(0.97 0 0);
-	--muted-foreground: oklch(0.44 0 0);
-	--accent: oklch(0.94 0 0);
-	--accent-foreground: oklch(0 0 0);
-	--destructive: oklch(0.63 0.19 23.03);
+	--secondary: oklch(0.9276 0.0058 264.5313);
+	--secondary-foreground: oklch(0.3729 0.0306 259.7328);
+	--muted: oklch(0.967 0.0029 264.5419);
+	--muted-foreground: oklch(0.551 0.0234 264.3637);
+	--accent: oklch(0.9364 0.0392 347.0664);
+	--accent-foreground: oklch(0.3729 0.0306 259.7328);
+	--destructive: oklch(0.6368 0.2078 25.3313);
 	--destructive-foreground: oklch(1 0 0);
-	--border: oklch(0.92 0 0);
-	--input: oklch(0.94 0 0);
-	--ring: oklch(0 0 0);
+	--border: oklch(0.8717 0.0093 258.3382);
+	--input: oklch(0.8717 0.0093 258.3382);
+	--ring: oklch(0.8758 0.1299 177.9554);
 
 	/* Font system */
 	--font-sans: 'Satoshi', system-ui, sans-serif;
@@ -92,6 +103,47 @@
 
 	--tracking-normal: 0em;
 	--spacing: 0.25rem;
+}
+
+.dark {
+	--background: oklch(0.2077 0.0398 265.7549);
+	--foreground: oklch(0.9288 0.0126 255.5078);
+	--card: oklch(0.2795 0.0368 260.031);
+	--card-foreground: oklch(0.9288 0.0126 255.5078);
+	--popover: oklch(0.2795 0.0368 260.031);
+	--popover-foreground: oklch(0.9288 0.0126 255.5078);
+	--primary: oklch(71.859% 0.12161 196.883);
+	--primary-foreground: oklch(1 0 0);
+	--secondary: oklch(0.3351 0.0331 260.912);
+	--secondary-foreground: oklch(0.8717 0.0093 258.3382);
+	--muted: oklch(0.2427 0.0381 259.9437);
+	--muted-foreground: oklch(0.7137 0.0192 261.3246);
+	--accent: oklch(0.7534 0.0969 6.4326);
+	--accent-foreground: oklch(0.9288 0.0126 255.5078);
+	--destructive: oklch(0.6368 0.2078 25.3313);
+	--destructive-foreground: oklch(0.2077 0.0398 265.7549);
+	--border: oklch(0.4461 0.0263 256.8018);
+	--input: oklch(0.4461 0.0263 256.8018);
+	--ring: oklch(0.8971 0.1504 196.9043);
+
+	--font-sans: Inter, sans-serif;
+	--font-serif: Merriweather, serif;
+	--font-mono: JetBrains Mono, monospace;
+
+	--shadow-x: 0px;
+	--shadow-y: 4px;
+	--shadow-blur: 8px;
+	--shadow-spread: -1px;
+	--shadow-opacity: 0.1;
+	--shadow-color: hsl(0 0% 0%);
+	--shadow-2xs: 0px 4px 8px -1px hsl(0 0% 0% / 0.05);
+	--shadow-xs: 0px 4px 8px -1px hsl(0 0% 0% / 0.05);
+	--shadow-sm: 0px 4px 8px -1px hsl(0 0% 0% / 0.1), 0px 1px 2px -2px hsl(0 0% 0% / 0.1);
+	--shadow: 0px 4px 8px -1px hsl(0 0% 0% / 0.1), 0px 1px 2px -2px hsl(0 0% 0% / 0.1);
+	--shadow-md: 0px 4px 8px -1px hsl(0 0% 0% / 0.1), 0px 2px 4px -2px hsl(0 0% 0% / 0.1);
+	--shadow-lg: 0px 4px 8px -1px hsl(0 0% 0% / 0.1), 0px 4px 6px -2px hsl(0 0% 0% / 0.1);
+	--shadow-xl: 0px 4px 8px -1px hsl(0 0% 0% / 0.1), 0px 8px 10px -2px hsl(0 0% 0% / 0.1);
+	--shadow-2xl: 0px 4px 8px -1px hsl(0 0% 0% / 0.25);
 }
 
 @theme inline {
@@ -284,3 +336,21 @@
 }
 
 /* CSS Class (put custom CSS classes below): */
+
+/* ScrollSmoother wrapper */
+#smooth-wrapper {
+	overflow: hidden;
+	position: fixed;
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+}
+
+#smooth-content {
+	overflow: visible;
+	width: 100%;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+}

@@ -88,15 +88,6 @@
        Button base - sizing (needs @responsive)
        ========================================================= */
     :where(.base-button) {
-        @responsive {
-            border-radius: var(--radius-md);
-            border: 1px solid transparent;
-            @text label;
-        }
-    }
-
-    /* Button base - non-scaling properties */
-    :where(.base-button) {
         display: inline-flex;
         flex-shrink: 0;
         align-items: center;
@@ -107,6 +98,11 @@
         outline: none;
         user-select: none;
         cursor: pointer;
+        @responsive {
+            border-radius: var(--radius-md);
+            border: 1px solid transparent;
+            @text label;
+        }
     }
 
     :where(.base-button:focus-visible) {
@@ -118,7 +114,6 @@
         border-color: var(--destructive);
         box-shadow: 0 0 0 3px color-mix(in srgb, var(--destructive) 20%, transparent);
     }
-
     :where(.dark .base-button[aria-invalid]) {
         border-color: color-mix(in srgb, var(--destructive) 50%, transparent);
         box-shadow: 0 0 0 3px color-mix(in srgb, var(--destructive) 40%, transparent);
@@ -284,6 +279,7 @@
     /* icon (size-9) */
     :where(.base-button--size-icon) {
         @responsive {
+            border-radius: min(var(--radius-md), 10px);
             width: 36px;
             height: 36px;
         }

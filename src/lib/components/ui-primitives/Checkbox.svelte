@@ -53,32 +53,16 @@
     {/if}
 </div>
 
-<!-- :global() needed because CheckboxPrimitive.Root renders the DOM element -->
 <style>
     /* Container - sizing (needs @responsive) */
     .checkbox-label-container {
+        display: flex;
+        align-items: center;
         @responsive {
             gap: 8px;
         }
     }
 
-    /* Container - non-scaling */
-    .checkbox-label-container {
-        display: flex;
-        align-items: center;
-    }
-
-    /* Checkbox base - sizing (needs @responsive) */
-    :global(:where(.base-checkbox)) {
-        @responsive {
-            width: 16px;
-            height: 16px;
-            border-radius: 4px;
-            border: 1px solid var(--input);
-        }
-    }
-
-    /* Checkbox base - non-scaling */
     :global(:where(.base-checkbox)) {
         display: flex;
         align-items: center;
@@ -89,6 +73,12 @@
         outline: none;
         transition: box-shadow 0.15s ease, border-color 0.15s ease, background-color 0.15s ease;
         cursor: pointer;
+        @responsive {
+            width: 16px;
+            height: 16px;
+            border-radius: 4px;
+            border: 1px solid var(--input);
+        }
     }
 
     /* Expanded hit area */
@@ -130,7 +120,6 @@
         border-color: var(--destructive);
         box-shadow: 0 0 0 3px color-mix(in srgb, var(--destructive) 20%, transparent);
     }
-
     :global(:where(.base-checkbox[aria-invalid="true"][data-state="checked"])) {
         border-color: var(--primary);
     }
@@ -139,7 +128,6 @@
     :global(:where(.dark .base-checkbox)) {
         background-color: color-mix(in srgb, var(--input) 30%, transparent);
     }
-
     :global(:where(.dark .base-checkbox[aria-invalid="true"])) {
         border-color: color-mix(in srgb, var(--destructive) 50%, transparent);
         box-shadow: 0 0 0 3px color-mix(in srgb, var(--destructive) 40%, transparent);

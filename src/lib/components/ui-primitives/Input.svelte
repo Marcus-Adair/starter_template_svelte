@@ -67,29 +67,14 @@
 <style>
     /* Container - sizing (needs @responsive) */
     .input-label-container {
+        display: flex;
+        flex-direction: column;
         @responsive {
             gap: 16px;
         }
     }
 
-    /* Container - non-scaling */
-    .input-label-container {
-        display: flex;
-        flex-direction: column;
-    }
-
     /* Input base - sizing (needs @responsive) */
-    :where(.base-input) {
-        @responsive {
-            height: 36px;
-            padding: 4px 10px;
-            border-radius: var(--radius-md);
-            border: 1px solid var(--input);
-            @text p3;
-        }
-    }
-
-    /* Input base - non-scaling properties */
     :where(.base-input) {
         width: 100%;
         min-width: 0;
@@ -97,6 +82,13 @@
         box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
         outline: none;
         transition: color 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+        @responsive {
+            height: 36px;
+            padding: 4px 10px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--input);
+            @text p3;
+        }
     }
 
     :where(.base-input::placeholder) {
