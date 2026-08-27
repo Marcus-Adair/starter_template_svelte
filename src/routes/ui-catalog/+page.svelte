@@ -38,9 +38,17 @@
 		{
 			title: "Headings (Desktop)",
 			styles: [
-				{ style: "h1Desktop", meta: "64/72 · 700" },
+				{ style: "h1Desktop", meta: "200/72 · 700 · Aktura" },
 				{ style: "h2Desktop", meta: "48/56 · 600" },
 				{ style: "h3Desktop", meta: "32/40 · 600" },
+			],
+		},
+		{
+			title: "Headings (Mobile)",
+			styles: [
+				{ style: "h1Mobile", meta: "54/48 · 700 · Aktura" },
+				{ style: "h2Mobile", meta: "32/40 · 600" },
+				{ style: "h3Mobile", meta: "24/32 · 600" },
 			],
 		},
 		{
@@ -84,12 +92,14 @@
 	</div>
 {/snippet}
 
-<GridParent>
-	<Hero100vh
-		heroTitle="UI Catalog"
-		heroSubTitle="Component library for this starter template."
-	/>
+<!-- Hero with fixed content - outside main GridParent -->
+<Hero100vh
+	heroTitle="UI Catalog"
+	heroSubTitle="Component library for this starter template."
+/>
 
+<!-- Page content - scrolls over and clips the fixed hero -->
+<GridParent class="page-content">
 	<!-- Colors Section -->
 	<section class="section grid-main">
 		<h2 class="section-title">Colors</h2>
@@ -484,6 +494,9 @@
 	.type-h1Desktop { @responsive { @text h1Desktop; } }
 	.type-h2Desktop { @responsive { @text h2Desktop; } }
 	.type-h3Desktop { @responsive { @text h3Desktop; } }
+	.type-h1Mobile { @responsive { @text h1Mobile; } }
+	.type-h2Mobile { @responsive { @text h2Mobile; } }
+	.type-h3Mobile { @responsive { @text h3Mobile; } }
 	.type-h4 { @responsive { @text h4; } }
 	.type-h5 { @responsive { @text h5; } }
 	.type-h6 { @responsive { @text h6; } }

@@ -128,7 +128,7 @@
 
 				<div class="flex items-center justify-center">
 					<!-- Logo -->
-					<a href={resolve("/")} class="type-h3Desktop">LOGO</a>
+					<a href={resolve("/")} class="header-h3">TODO</a>
 				</div>
 
 				<div class="flex items-center justify-end">
@@ -168,5 +168,11 @@
 		}
 	}
 
-	.type-h3Desktop { @responsive { @text h3Desktop; } }
+	.header-h3 { 
+		@responsive { 
+			@text h3Desktop; 
+			border: 2px dashed var(--primary);
+			padding: 6px 10px;
+		} 
+	}
 </style>

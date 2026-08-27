@@ -1,5 +1,6 @@
 <script lang="ts">
 	import './layout.css';
+	import 'lenis/dist/lenis.css';
 	import favicon from '$lib/assets/favicon.svg';
 	import { beforeNavigate, afterNavigate } from '$app/navigation';
 	import { preloaderController } from '$lib/stores/preloaderController.svelte';
@@ -7,27 +8,38 @@
 	import Intro from '$lib/components/Intro.svelte';
 	import gsap from 'gsap';
 	import { ScrollTrigger } from 'gsap/ScrollTrigger';
-	import { ScrollSmoother } from 'gsap/ScrollSmoother';
+	import Lenis from 'lenis';
 	import Footer from '$lib/components/Footer.svelte';
 	import Header from '$lib/components/Header.svelte';
 	import { ModeWatcher } from "mode-watcher";
 
-	gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+	gsap.registerPlugin(ScrollTrigger);
+
+	// ScrollTrigger config (from Reform Co)
+	ScrollTrigger.config({ ignoreMobileResize: true });
 
 	let { children } = $props();
 
-	let smoother: ScrollSmoother | null = null;
-
+	// Lenis smooth scroll setup (for sticky + smooth scroll)
 	$effect(() => {
-		smoother = ScrollSmoother.create({
-			wrapper: '#smooth-wrapper',
-			content: '#smooth-content',
-			smooth: 2,
-			effects: true
+		const lenis = new Lenis({
+			// Customize as needed
+			duration: 2,
+			easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
 		});
 
+		// Sync Lenis with GSAP ticker (like Reform Co does)
+		function update(time: number) {
+			lenis.raf(time * 1000);
+		}
+		gsap.ticker.add(update);
+
+		// Sync ScrollTrigger with Lenis scroll position
+		lenis.on('scroll', ScrollTrigger.update);
+
 		return () => {
-			smoother?.kill();
+			gsap.ticker.remove(update);
+			lenis.destroy();
 		};
 	});
 
@@ -67,12 +79,8 @@
 <Preloader />
 <Header />
 
-<div id="smooth-wrapper">
-	<div id="smooth-content">
-		<main class="grow">
-			{@render children()}
-		</main>
+<main>
+	{@render children()}
+</main>
 
-		<Footer />
-	</div>
-</div>
+<Footer />

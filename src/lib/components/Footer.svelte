@@ -11,7 +11,6 @@
         <GridFullBleed class="footer-bg">
             <GridParent>
                 <GridMain class="footer-content">
-                    <!-- Top (Main columns)-->
                     <div class="footer-columns">
                         <!-- Brand -->
                         <div class="footer-col footer-col--brand">
@@ -31,28 +30,22 @@
 
                         <!-- Col 2 -->
                         <div class="footer-col">
-                            <h4 class="footer-heading">Company</h4>
+                            <h4 class="footer-heading">Column</h4>
                             <div class="footer-links">
-                                <Button href="#" variant="link" class="footer-link">About</Button>
-                                <Button href="#" variant="link" class="footer-link">Blog</Button>
-                                <Button href="#" variant="link" class="footer-link">Careers</Button>
-                                <Button href="#" variant="link" class="footer-link">Contact</Button>
+                                <Button href="/" variant="link" class="footer-link">Home</Button>
                             </div>
                         </div>
 
                         <!-- Col 3 -->
                         <div class="footer-col">
                             <h4 class="footer-heading">Legal</h4>
-                            <div class="footer-links">
-                                <Button href="#" variant="link" class="footer-link">Privacy</Button>
-                                <Button href="#" variant="link" class="footer-link">Terms</Button>
-                            </div>
+                            <span>TODO</span>
                         </div>
                     </div>
 
                     <!-- Bottom row -->
                     <div class="footer-bottom">
-                        <span>© 2026 Acme Corp. All rights reserved.</span>
+                        <span class="text-muted-foreground">© {new Date().getFullYear()} Acme Corp. All rights reserved ✧✧✧</span>
                         <div class="footer-social">
                             <Button href="https://www.instagram.com/marcusadairdigital/" variant="link" class="footer-link">Instagram</Button>
                             <Button href="https://github.com/Marcus-Adair/" variant="link" class="footer-link">GitHub</Button>
@@ -68,9 +61,8 @@
 <style>
     /* Base styles */
     :global(.footer-bg) {
-        @responsive {
-            background-color: var(--muted);
-        }
+        background-color: var(--muted);
+        z-index: 1;
     }
 
     :global(.footer-content) {

@@ -59,6 +59,8 @@
 	/* Color system
 	 *
 	 * Visit https://tweakcn.com/editor/theme to find and generate themes to plug-n-play:
+	 *
+	 * And/Or change add new vars and change names. 
 	 */
 	--background: oklch(0.9842 0.0034 247.8575);
 	--foreground: oklch(0.2795 0.0368 260.031);
@@ -353,4 +355,17 @@
 	min-height: 100vh;
 	display: flex;
 	flex-direction: column;
+}
+
+/* =============================================================================
+   Page Content Clipping (for fixed hero content)
+
+   Content sections that should scroll over fixed heroes need:
+   - Solid background to clip/cover the fixed content
+   - Higher z-index than the fixed hero (z-index: 0)
+============================================================================= */
+.page-content {
+	position: relative;
+	z-index: 1;
+	background-color: var(--background);
 }

@@ -1,27 +1,29 @@
 <script lang="ts">
 	import { resolve } from "$app/paths";
+	import Hero100vh from "$lib/components/sections/Hero100vh.svelte";
 	import Button from "$lib/components/ui-primitives/Button.svelte";
-	import GridFullBleed from "$lib/components/ui-primitives/GridFullBleed.svelte";
 	import GridParent from "$lib/components/ui-primitives/GridParent.svelte";
 </script>
 
-<GridParent>
-	<!-- Hero -->
-	<GridFullBleed class="hero bg-primary text-primary-foreground">
-		<GridParent>
-			<div class="grid-main flex flex-col">
-				<h1 class="hero-title">About</h1>
-				<p class="hero-subtitle">This is the about page. Use it to test page transitions.</p>
-			</div>
-		</GridParent>
-	</GridFullBleed>
+<!-- Hero with fixed content - outside main GridParent -->
+<Hero100vh
+	heroTitle="About Page"
+	heroSubTitle="This is the about page, and its used to test page transitions."
+/>
 
+<!-- Page content - scrolls over and clips the fixed hero -->
+<GridParent class="page-content">
 	<!-- Content Section -->
 	<section class="section grid-main">
 		<h2 class="section-title">Page Transition Test</h2>
+		
 		<p class="section-desc">
 			Navigate between pages to see the preloader fade transitions in action.
 			Clicking the current page link should not trigger a transition.
+		</p>
+
+		<p class="section-desc">
+			Other features in this starter include (but are not limited to): skeleton Header/Footer components, SmoothScroll, Tailwind integration, and light/dark theme support.
 		</p>
 
 		<div class="button-row">
@@ -39,24 +41,6 @@
 		}
 	}
 
-	.hero-title {
-		@responsive {
-			@text h1Desktop;
-			margin-bottom: 10px;
-		}
-		@small {
-			@text h1Mobile;
-		}
-	}
-
-	.hero-subtitle {
-		@responsive {
-			@text p1;
-			margin-top: 16px;
-		}
-	}
-
-	/* Sections */
 	.section {
 		@responsive {
 			padding: 48px 0;
@@ -77,6 +61,7 @@
 		@responsive {
 			@text p1;
 			margin-bottom: 32px;
+			max-width: 960px;
 		}
 		color: var(--muted-foreground);
 	}

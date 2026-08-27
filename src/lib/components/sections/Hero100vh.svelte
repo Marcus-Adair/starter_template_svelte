@@ -1,10 +1,16 @@
-<!-- An example of a simple re-usable section -->
-<script lang="ts">
-	import GridFullBleed from "../ui-primitives/GridFullBleed.svelte";
-	import GridParent from "../ui-primitives/GridParent.svelte";
-	import Separator from "../ui-primitives/Separator.svelte";
+<!--
+	Hero100vh - Fixed content that page scrolls over
 
-    let {
+	Structure:
+	- Hero background: 100vh spacer with bg color
+	- Hero content: Fixed in center of viewport (via portal-like pattern)
+	- Page content after this component clips over the fixed content
+-->
+<script lang="ts">
+	import ScrolldownArrowSvg from "../svgs/ScrolldownArrowSvg.svelte";
+	import GridParent from "../ui-primitives/GridParent.svelte";
+
+	let {
 		heroTitle,
 		heroSubTitle,
 	}: {
@@ -13,60 +19,110 @@
 	} = $props()
 </script>
 
-<GridFullBleed 
-    class={[
-        "hero-100vh flex items-center justify-center",
-        "bg-primary text-primary-foreground"
-    ]}
->
-    <GridParent>
-        <div class="grid-main flex flex-col">
-            <h1 class="hero-100vh-title">{heroTitle}</h1>
-
-			<!-- class="bg-primary-foreground" -->
-			<Separator />
+<!-- Fixed hero content - stays in center while page scrolls over -->
+<div class="hero-fixed-content">
+	<GridParent class="">
+		<div class="grid-main flex flex-col dashed-inner relative">
+			<h1 class="hero-100vh-title">{heroTitle}</h1>
 
 			<div class="flex justify-end">
-            	<p class="hero-100vh-subtitle font-medium italic">
+				<p class="hero-100vh-subtitle font-medium italic">
 					{heroSubTitle}
 				</p>
 			</div>
-        </div>
-    </GridParent>
-</GridFullBleed>
 
+			<div class="arrow-svg-container grid-fullbleed absolute">
+				<ScrolldownArrowSvg/>
+			</div>
+		</div>
+	</GridParent>
+</div>
+
+<!-- Hero background spacer - creates the 100vh of colored space -->
+<div class="hero-background"></div>
 
 <style>
-	/* Hero (GridFullBleed component - requires :global for class prop) */
-	:global(.hero-100vh) {
+	/* Fixed content - centered in viewport */
+	.hero-fixed-content {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100vh;
+		
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		z-index: 0;
+		pointer-events: none;
+		@responsive {
+			min-height: 760px;
+		}@small {
+			min-height: 360px;
+		}
+	}
+
+	/* Allow interactions with content inside */
+	.hero-fixed-content :global(*) {
+		pointer-events: auto;
+	}
+
+	/* Background spacer - this is what gets scrolled past */
+	.hero-background {
 		@responsive {
 			height: 100vh;
 			min-height: 400px;
 		}
+		background-color: var(--primary);
 	}
+
 	.hero-100vh-title {
+		color: var(--primary-foreground);
 		@responsive {
-			font-family: Aktura;
-			font-size: 200px;
-			line-height: 1px;
-			margin-bottom: 10px;
+			@text h1Desktop;
 		}
 		@small {
-			font-size: 54px;
+			@text h1Mobile;
 		}
 	}
 
 	.hero-100vh-subtitle {
+		color: var(--primary-foreground);
 		@responsive {
 			font-size: 32px;
 			line-height: 48px;
 			margin-top: 16px;
 			text-align: right;
-			max-width: 900px;
+			max-width: 960px;
+			margin-top: 42px;
 		}
 		@small {
 			font-size: 20px;
 			line-height: 28px;
+		}
+	}
+	.arrow-svg-container {
+		@responsive {
+			height: auto;
+			width: 48px;
+			border: 2px dashed var(--destructive);
+			bottom: -18px;
+			left: -12px;
+		}
+		@small {
+			width: 20px;
+			border: 1px dashed var(--destructive);
+			left: -6px;
+		}
+	}
+	.dashed-inner {
+		@responsive {
+			border: 3px dashed var(--border);
+			padding-bottom: 208px;
+		}
+		@small {
+			border: 2px dashed var(--border);
+			padding-bottom: 0;
 		}
 	}
 </style>
