@@ -32,7 +32,7 @@ interface UseAnimationOptions {
  * });
  */
 export function useAnimation(callback: AnimationCallback, options: UseAnimationOptions = {}) {
-	const { delay = false } = options;
+	const { delay = true } = options;
 
 	onMount(() => {
 		let ctx: gsap.Context;

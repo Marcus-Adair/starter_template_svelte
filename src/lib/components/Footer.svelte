@@ -14,7 +14,7 @@
                     <div class="footer-columns">
                         <!-- Brand -->
                         <div class="footer-col footer-col--brand">
-                            <span class="footer-logo">LOGO</span>
+                            <span class="footer-logo">TODO</span>
                             <p class="footer-tagline">This is an open-source starter template for implementing pixel-perfect designs & creative dev websites - Implemented with TypeScript, HTML/CSS, SvelteKit, GSAP, and more.</p>
                         </div>
 

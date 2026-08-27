@@ -33,7 +33,10 @@
 {/if}
 
 <style>
-	.intro-words { @responsive { @text h1Desktop; } }
+	.intro-words { 
+		@responsive { @text h1Desktop; } 
+		@small { @text h1Mobile; } 
+	}
 	.intro-div {
 		@responsive {
 			gap: 16px;

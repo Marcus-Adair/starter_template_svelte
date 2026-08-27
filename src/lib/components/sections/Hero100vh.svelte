@@ -17,6 +17,8 @@
 		heroTitle: string;
 		heroSubTitle: string
 	} = $props()
+
+
 </script>
 
 <!-- Fixed hero content - stays in center while page scrolls over -->
@@ -99,6 +101,7 @@
 		@small {
 			font-size: 20px;
 			line-height: 28px;
+			max-width: 320px;
 		}
 	}
 	.arrow-svg-container {

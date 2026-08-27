@@ -6,7 +6,6 @@
 
 	import GridMain from "./ui-primitives/GridMain.svelte";
 	import GridParent from "./ui-primitives/GridParent.svelte";
-	import Button from "./ui-primitives/Button.svelte";
 	import { Lightbulb, LightbulbOff } from "@lucide/svelte";
 
 	// Scroll behavior config
@@ -117,13 +116,13 @@
 			<nav class="header">
 				<div class="flex items-center">
 					<!-- Buttons 1 -->
-					<Button onclick={toggleMode} size="icon">
+					<button onclick={toggleMode} class="header-size-container cursor-pointer">
 						{#if (mode.current === "light")}
 							<Lightbulb class="header-icon-size" />
 						{:else}
 							<LightbulbOff class="header-icon-size" />
 						{/if}
-					</Button>
+					</button>
 				</div>
 
 				<div class="flex items-center justify-center">
@@ -161,10 +160,16 @@
 		}
 	}
 
+	:global(.header-size-container) {
+		@responsive {
+			padding: 8px 10px;
+			border: 2px dashed var(--destructive);
+		}
+	}
 	:global(.header-icon-size) {
 		@responsive {
-			height: 24px;
-			width: 24px;
+			height: 36px;
+			width: 36px;
 		}
 	}
 
