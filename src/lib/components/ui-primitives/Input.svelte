@@ -122,10 +122,13 @@
     }
 
     /* File input button - sizing (needs @responsive) */
+    /* Note: Can't use @text here - Capsize adds ::before/::after which can't chain with ::file-selector-button */
     :where(.base-input[type="file"])::file-selector-button {
         @responsive {
             height: 28px;
-            @text label;
+            font-size: 14px;
+            line-height: 20px;
+            font-weight: 500;
         }
     }
 
