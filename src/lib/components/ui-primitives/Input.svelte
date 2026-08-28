@@ -121,18 +121,8 @@
         box-shadow: 0 0 0 3px color-mix(in srgb, var(--destructive) 40%, transparent);
     }
 
-    /* File input button - sizing (needs @responsive) */
-    /* Note: Can't use @text here - Capsize adds ::before/::after which can't chain with ::file-selector-button */
-    :where(.base-input[type="file"])::file-selector-button {
-        @responsive {
-            height: 28px;
-            font-size: 14px;
-            line-height: 20px;
-            font-weight: 500;
-        }
-    }
-
-    /* File input button - non-scaling */
+    /* File input button */
+    /* Note: font props outside @responsive to avoid Capsize adding ::before/::after (can't chain with ::file-selector-button) */
     :where(.base-input[type="file"])::file-selector-button {
         display: inline-flex;
         align-items: center;
@@ -140,5 +130,11 @@
         background-color: transparent;
         color: var(--foreground);
         cursor: pointer;
+        font-size: 14px;
+        line-height: 20px;
+        font-weight: 500;
+        @responsive {
+            height: 28px;
+        }
     }
 </style>
