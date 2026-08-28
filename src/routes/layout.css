@@ -128,10 +128,6 @@
 	--input: oklch(0.4461 0.0263 256.8018);
 	--ring: oklch(0.8971 0.1504 196.9043);
 
-	--font-sans: Inter, sans-serif;
-	--font-serif: Merriweather, serif;
-	--font-mono: JetBrains Mono, monospace;
-
 	--shadow-x: 0px;
 	--shadow-y: 4px;
 	--shadow-blur: 8px;
