@@ -1,11 +1,15 @@
-import adapter from '@sveltejs/adapter-static'; // For Git Pages deployment
+import adapter from '@sveltejs/adapter-static';
+import { responsivePreprocess } from './src/lib/preprocessors/responsive.ts';
 
 /** @type {import('@sveltejs/kit').Config} */
 const config = {
+	preprocess: [responsivePreprocess()],
+	compilerOptions: {
+		// Force runes mode for the project, except for node_modules
+		runes: ({ filename }) => filename.split(/[/\\]/).includes('node_modules') ? undefined : true
+	},
 	kit: {
 		adapter: adapter({
-			// default options are shown. On some platforms
-			// these options are set automatically — see below
 			pages: 'build',
 			assets: 'build',
 			fallback: undefined,
