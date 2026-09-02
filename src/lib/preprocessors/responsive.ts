@@ -13,13 +13,35 @@ const lineHeightRegex = /line-height:\s*(\d+(?:\.\d+)?)px/;
 const textDirectiveRegex = /@text\s+(\w+)\s*;?/g;
 
 /**
+ * Properties that should use media queries instead of calc() for better
+ * browser performance (especially Safari with large font sizes).
+ * Add properties here that cause rendering issues with calc-based scaling.
+ */
+const MEDIA_PREFERRED_PROPERTIES = ['font-size', 'line-height'];
+
+// =============================================================================
+// Core conversion helpers (single source of truth for responsive math)
+// =============================================================================
+
+/** Convert px to vw for mobile design size */
+const toMobileVw = (px: number): string => `${((px / MOBILE_DESIGN_SIZE) * 100).toFixed(3)}vw`;
+
+/** Convert px to vw for desktop design size */
+const toDesktopVw = (px: number): string => `${((px / DESKTOP_DESIGN_SIZE) * 100).toFixed(3)}vw`;
+
+/** Keep as px (for full width breakpoint) */
+const toPx = (px: number): string => `${px}px`;
+
+// =============================================================================
+// Calc engine (default) - single expression with CSS var toggles
+// =============================================================================
+
+/**
  * Transforms px values to responsive calc() for all breakpoints.
  * Uses CSS vars --is-mobile, --is-desktop, --is-full to switch.
  */
 function scaledAll(px: number): string {
-	const mobileVw = ((px / MOBILE_DESIGN_SIZE) * 100).toFixed(3);
-	const desktopVw = ((px / DESKTOP_DESIGN_SIZE) * 100).toFixed(3);
-	return `calc((${mobileVw}vw * var(--is-mobile)) + (${desktopVw}vw * var(--is-desktop)) + (${px}px * var(--is-full)))`;
+	return `calc((${toMobileVw(px)} * var(--is-mobile)) + (${toDesktopVw(px)} * var(--is-desktop)) + (${toPx(px)} * var(--is-full)))`;
 }
 
 /**
@@ -27,8 +49,7 @@ function scaledAll(px: number): string {
  * Used inside @small media query where we know we're on mobile.
  */
 function scaledMobile(px: number): string {
-	const mobileVw = ((px / MOBILE_DESIGN_SIZE) * 100).toFixed(3);
-	return `${mobileVw}vw`;
+	return toMobileVw(px);
 }
 
 /**
@@ -36,8 +57,7 @@ function scaledMobile(px: number): string {
  * Uses calc with --is-desktop and --is-full vars since @large spans both.
  */
 function scaledLarge(px: number): string {
-	const desktopVw = ((px / DESKTOP_DESIGN_SIZE) * 100).toFixed(3);
-	return `calc((${desktopVw}vw * var(--is-desktop)) + (${px}px * var(--is-full)))`;
+	return `calc((${toDesktopVw(px)} * var(--is-desktop)) + (${toPx(px)} * var(--is-full)))`;
 }
 
 /**
@@ -48,6 +68,64 @@ function transformPxValues(css: string, transform: (px: number) => string): stri
 		const px = parseFloat(match);
 		return transform(px);
 	});
+}
+
+// =============================================================================
+// Engine switching - auto-detect and split by property type
+// =============================================================================
+
+/** Regex to match a CSS declaration: property: value; */
+const declarationRegex = /([a-z-]+)\s*:\s*([^;]+);?/gi;
+
+/**
+ * Check if a property should use media queries instead of calc.
+ */
+function isMediaPreferred(property: string): boolean {
+	return MEDIA_PREFERRED_PROPERTIES.includes(property.toLowerCase());
+}
+
+/**
+ * Split CSS declarations into calc-preferred and media-preferred groups.
+ * Returns { calcCss, mediaCss } where each is a string of declarations.
+ */
+function splitByEngine(css: string): { calcCss: string; mediaCss: string } {
+	const calcDeclarations: string[] = [];
+	const mediaDeclarations: string[] = [];
+
+	let match;
+	// Reset regex state
+	declarationRegex.lastIndex = 0;
+
+	while ((match = declarationRegex.exec(css)) !== null) {
+		const [fullMatch, property] = match;
+		const declaration = fullMatch.endsWith(';') ? fullMatch : `${fullMatch};`;
+
+		if (isMediaPreferred(property)) {
+			mediaDeclarations.push(declaration);
+		} else {
+			calcDeclarations.push(declaration);
+		}
+	}
+
+	return {
+		calcCss: calcDeclarations.join(' '),
+		mediaCss: mediaDeclarations.join(' ')
+	};
+}
+
+/**
+ * Generate media query CSS for a selector with responsive values.
+ * Outputs 3 media queries: mobile, desktop, and full-width.
+ */
+function generateMediaQueryCSS(selector: string, css: string): string {
+	const mobile = transformPxValues(css, toMobileVw);
+	const desktop = transformPxValues(css, toDesktopVw);
+	const full = transformPxValues(css, toPx);
+
+	return `
+@media (max-width: ${MOBILE_BREAKPOINT}px) { ${selector} { ${mobile} } }
+@media (min-width: ${MOBILE_BREAKPOINT + 1}px) and (max-width: ${DESKTOP_DESIGN_SIZE}px) { ${selector} { ${desktop} } }
+@media (min-width: ${DESKTOP_DESIGN_SIZE + 1}px) { ${selector} { ${full} } }`;
 }
 
 /**
@@ -147,7 +225,20 @@ function processStyleContent(content: string): string {
 					);
 				}
 			}
-			return transformPxValues(expandedCss, scaledAll);
+
+			// Split by engine: calc for most properties, media queries for font-size etc.
+			const { calcCss, mediaCss } = splitByEngine(expandedCss);
+
+			// Generate media queries for media-preferred properties (e.g., font-size)
+			if (mediaCss) {
+				mediaBlocks.push({
+					query: '', // Empty query = raw CSS (already contains media queries)
+					rules: generateMediaQueryCSS(selector, mediaCss)
+				});
+			}
+
+			// Return calc-transformed CSS for inline properties
+			return calcCss ? transformPxValues(calcCss, scaledAll) : '';
 		});
 
 		// Process @small { ... } - extract to media query
@@ -185,7 +276,13 @@ function processStyleContent(content: string): string {
 
 	// Append media query blocks at the end
 	for (const block of mediaBlocks) {
-		result += `\n${block.query} { ${block.rules} }`;
+		if (block.query) {
+			// Standard media query block
+			result += `\n${block.query} { ${block.rules} }`;
+		} else {
+			// Raw CSS (already contains media queries from engine switching)
+			result += block.rules;
+		}
 	}
 
 	return result;
