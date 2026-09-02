@@ -146,9 +146,10 @@
 		left: 0;
 		width: 100%;
 		z-index: 100;
-		background-color: color-mix(in srgb, var(--background) 50%, transparent);
-		backdrop-filter: blur(12px);
+		/* Use RGB variable for reliable backdrop-filter support */
+		background-color: rgb(var(--background-rgb) / 0.5);
 		-webkit-backdrop-filter: blur(12px);
+		backdrop-filter: blur(12px);
 		border-bottom: 1px solid var(--border);
 	}
 

@@ -60,13 +60,19 @@
 	 *
 	 * Visit https://tweakcn.com/editor/theme to find and generate themes to plug-n-play:
 	 *
-	 * And/Or change add new vars and change names. 
+	 * And/Or change add new vars and change names.
+	 *
+	 * RGB companions (-rgb suffix) are for opacity/alpha use cases like backdrop-filter.
+	 * Usage: background-color: rgb(var(--background-rgb) / 0.5);
 	 */
 	--background: oklch(0.9842 0.0034 247.8575);
+	--background-rgb: 250 250 252;
 	--foreground: oklch(0.2795 0.0368 260.031);
 	--card: oklch(1 0 0);
+	--card-rgb: 255 255 255;
 	--card-foreground: oklch(0.2795 0.0368 260.031);
 	--popover: oklch(1 0 0);
+	--popover-rgb: 255 255 255;
 	--popover-foreground: oklch(0.2795 0.0368 260.031);
 	--primary: oklch(0.6718 0.1144 196.2546);
 	--primary-foreground: oklch(1 0 0);
@@ -109,10 +115,13 @@
 
 .dark {
 	--background: oklch(0.2077 0.0398 265.7549);
+	--background-rgb: 38 38 48;
 	--foreground: oklch(0.9288 0.0126 255.5078);
 	--card: oklch(0.2795 0.0368 260.031);
+	--card-rgb: 55 55 65;
 	--card-foreground: oklch(0.9288 0.0126 255.5078);
 	--popover: oklch(0.2795 0.0368 260.031);
+	--popover-rgb: 55 55 65;
 	--popover-foreground: oklch(0.9288 0.0126 255.5078);
 	--primary: oklch(71.859% 0.12161 196.883);
 	--primary-foreground: oklch(1 0 0);
