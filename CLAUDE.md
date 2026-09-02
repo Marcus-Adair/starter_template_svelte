@@ -245,6 +245,68 @@ To add dark mode support to a component:
 
 ---
 
+## Color System & Backdrop Blur
+
+Colors use **oklch** format (perceptually uniform, better gradients, wider gamut).
+
+For **backdrop-filter blur** or any semi-transparent backgrounds, use the RGB companion variables instead of `color-mix()`. The `color-mix()` function with oklch can cause rendering issues in Chrome.
+
+**Pattern:**
+```css
+/* DON'T - can break backdrop-filter in Chrome */
+background-color: color-mix(in srgb, var(--background) 50%, transparent);
+
+/* DO - reliable cross-browser */
+background-color: rgb(var(--background-rgb) / 0.5);
+```
+
+**Available RGB variables:** `--background-rgb`, `--card-rgb`, `--popover-rgb`
+
+If you need more, add them to `layout.css` in both `:root` and `.dark`:
+```css
+:root {
+  --my-color: oklch(0.5 0.1 200);
+  --my-color-rgb: 100 150 180;
+}
+.dark {
+  --my-color: oklch(0.3 0.1 200);
+  --my-color-rgb: 50 75 90;
+}
+```
+
+---
+
+## Automatic Engine Switching (font-size & line-height)
+
+The responsive preprocessor automatically uses **media queries** instead of `calc()` for certain properties that cause browser rendering issues (especially Safari with large font sizes).
+
+**How it works:**
+- Properties in `MEDIA_PREFERRED_PROPERTIES` (`font-size`, `line-height`) output 3 media queries
+- All other properties use the standard calc() approach with CSS variable toggles
+
+**Example transformation:**
+
+Input:
+```css
+.title {
+  @responsive { font-size: 64px; margin-bottom: 24px; }
+}
+```
+
+Output:
+```css
+.title { margin-bottom: calc(...); }  /* calc engine */
+
+/* media engine for font-size */
+@media (max-width: 700px) { .title { font-size: 17.067vw; } }
+@media (min-width: 701px) and (max-width: 1440px) { .title { font-size: 4.444vw; } }
+@media (min-width: 1441px) { .title { font-size: 64px; } }
+```
+
+**To add more properties:** Edit `MEDIA_PREFERRED_PROPERTIES` in `src/lib/preprocessors/responsive.ts`.
+
+---
+
 ## Known Issues
 
 - Build may fail on `::file-selector-button::before` CSS (lightningcss minification issue with Input component)
