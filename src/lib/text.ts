@@ -13,12 +13,12 @@
 
 export const text: Record<string, string> = {
 	// Headings - Desktop
-	h1Desktop: `font-family: Aktura; font-size: 200px; line-height: 72px; font-weight: 700; `,
+	h1Desktop: `font-family: Aktura; font-size: 200px; line-height: 220px; font-weight: 700; `,
 	h2Desktop: `font-size: 48px; line-height: 56px; font-weight: 600;`,
 	h3Desktop: `font-size: 32px; line-height: 40px; font-weight: 600;`,
 
 	// Headings - Mobile
-	h1Mobile: `font-family: Aktura; font-size: 54px; line-height: 48px; font-weight: 700;`,
+	h1Mobile: `font-family: Aktura; font-size: 54px; line-height: 60px; font-weight: 700;`,
 	h2Mobile: `font-size: 32px; line-height: 40px; font-weight: 600;`,
 	h3Mobile: `font-size: 24px; line-height: 32px; font-weight: 600;`,
 
