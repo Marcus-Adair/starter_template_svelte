@@ -8,5 +8,10 @@ export default defineConfig({
 		enhancedImages(),
 		tailwindcss(),
 		sveltekit()
-	]
+	],
+	build: {
+		// Use esbuild for CSS minification instead of lightningcss
+		// lightningcss converts to range syntax which Safari <16.4 doesn't support
+		cssMinify: 'esbuild'
+	}
 });
