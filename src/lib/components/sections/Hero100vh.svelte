@@ -80,6 +80,7 @@
 
 	.hero-100vh-title {
 		color: var(--primary-foreground);
+		white-space: nowrap;
 		@responsive {
 			@text h1Desktop;
 		}
