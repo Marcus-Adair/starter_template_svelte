@@ -230,6 +230,7 @@ function processStyleContent(content: string): string {
 			const { calcCss, mediaCss } = splitByEngine(expandedCss);
 
 			// Generate media queries for media-preferred properties (e.g., font-size)
+			// These override the calc fallback for browsers that support range syntax
 			if (mediaCss) {
 				mediaBlocks.push({
 					query: '', // Empty query = raw CSS (already contains media queries)
@@ -237,8 +238,10 @@ function processStyleContent(content: string): string {
 				});
 			}
 
-			// Return calc-transformed CSS for inline properties
-			return calcCss ? transformPxValues(calcCss, scaledAll) : '';
+			// Return ALL properties as calc() - this serves as fallback for old browsers
+			// that don't understand range syntax media queries.
+			// New browsers will use the media queries (added later) which override these.
+			return transformPxValues(expandedCss, scaledAll);
 		});
 
 		// Process @small { ... } - extract to media query
