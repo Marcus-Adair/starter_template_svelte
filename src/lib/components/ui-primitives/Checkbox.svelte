@@ -54,13 +54,10 @@
 </div>
 
 <style>
-    /* Container - sizing (needs @responsive) */
     .checkbox-label-container {
         display: flex;
         align-items: center;
-        @responsive {
-            gap: 8px;
-        }
+        gap: var(--space-sm);
     }
 
     :global(:where(.base-checkbox)) {
@@ -83,19 +80,16 @@
 
     /* Expanded hit area */
     :global(:where(.base-checkbox)::after) {
-        @responsive {
-            top: -8px;
-            bottom: -8px;
-            left: -12px;
-            right: -12px;
-        }
+        top: calc(-1 * var(--space-sm));
+        bottom: calc(-1 * var(--space-sm));
+        left: calc(-1 * var(--space-md));
+        right: calc(-1 * var(--space-md));
     }
     :global(:where(.base-checkbox)::after) {
         content: "";
         position: absolute;
     }
 
-    /* Focus state */
     :global(:where(.base-checkbox:focus-visible)) {
         border-color: var(--ring);
         box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
@@ -109,13 +103,11 @@
         color: var(--primary-foreground);
     }
 
-    /* Disabled state */
     :global(:where(.base-checkbox:disabled)) {
         cursor: not-allowed;
         opacity: 0.5;
     }
 
-    /* Invalid state */
     :global(:where(.base-checkbox[aria-invalid="true"])) {
         border-color: var(--destructive);
         box-shadow: 0 0 0 3px color-mix(in srgb, var(--destructive) 20%, transparent);
@@ -125,22 +117,20 @@
     }
 
     /* Dark mode */
-    :global(:where(.dark .base-checkbox)) {
+    /* :global(:where(.dark .base-checkbox)) {
         background-color: color-mix(in srgb, var(--input) 30%, transparent);
     }
     :global(:where(.dark .base-checkbox[aria-invalid="true"])) {
         border-color: color-mix(in srgb, var(--destructive) 50%, transparent);
         box-shadow: 0 0 0 3px color-mix(in srgb, var(--destructive) 40%, transparent);
-    }
+    } */
 
-    /* Indicator - non-scaling */
     :global(:where(.base-checkbox__indicator)) {
         display: grid;
         place-content: center;
         color: currentColor;
     }
 
-    /* Indicator icon - sizing (needs @responsive) */
     :global(:where(.base-checkbox__indicator > svg)) {
         @responsive {
             width: 14px;

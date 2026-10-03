@@ -23,17 +23,15 @@
 
 <!-- :global() needed because LabelPrimitive.Root renders the DOM element -->
 <style>
-    /* Label - sizing (needs @responsive) */
     :global(:where(.base-label)) {
-        @responsive {
-            @text label;
-            gap: 8px;
-        }
         display: flex;
         align-items: center;
+        gap: var(--space-sm);
+        @responsive {
+            @text p4;
+        }
     }
 
-    /* Disabled states */
     :global(:where([data-disabled="true"] .base-label)),
     :global(:where(:disabled + .base-label)),
     :global(:where(.base-label:has(+ :disabled))) {

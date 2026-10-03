@@ -16,6 +16,7 @@ pnpm dev
 Currently configured for GitHub Pages static deployment.
 
 ### Files involved:
+
 - `.github/workflows/build-deploy.yml` - GitHub Actions workflow
 - `svelte.config.js` - Uses `adapter-static`
 - `src/routes/+layout.ts` - `export const prerender = true`
@@ -24,6 +25,7 @@ Currently configured for GitHub Pages static deployment.
 ### To reverse (switch back to adapter-auto):
 
 1. **Delete these files:**
+
    ```bash
    rm .github/workflows/build-deploy.yml
    rm svelte.config.js
@@ -31,6 +33,7 @@ Currently configured for GitHub Pages static deployment.
    ```
 
 2. **Remove adapter-static from package.json:**
+
    ```bash
    pnpm remove @sveltejs/adapter-static
    ```
@@ -47,23 +50,25 @@ Custom CSS preprocessor that scales pixel values with viewport.
 
 ```svelte
 <style>
-  .box {
-    @responsive {
-      width: 200px;      /* Scales: mobile vw → desktop vw → fixed at 1440px+ */
-      height: 100px;
-      padding: 24px;
-    }
-    background: red;     /* Non-px values go outside @responsive */
-  }
+	.box {
+		@responsive {
+			width: 200px; /* Scales: mobile vw → desktop vw → fixed at 1440px+ */
+			height: 100px;
+			padding: 24px;
+		}
+		background: red; /* Non-px values go outside @responsive */
+	}
 </style>
 ```
 
 **Breakpoints:**
+
 - Mobile: ≤700px (scales based on 375px design)
 - Desktop: 701-1440px (scales based on 1440px design)
 - Full: >1440px (fixed px values)
 
 **Directives:**
+
 - `@responsive { }` - Default desktop-first scaling
 - `@small { }` - Mobile-only overrides
 - `@large { }` - Desktop-only (rarely needed)
@@ -76,14 +81,22 @@ Capsize-powered text styles with automatic whitespace trimming.
 
 ```svelte
 <style>
-  .title {
-    @responsive { @text h1Desktop; }
-    @small { @text h1Mobile; }
-  }
+	.title {
+		@responsive {
+			@text h1;
+		}
+		@small {
+			@text h6;
+		}
+	}
 </style>
 ```
 
-**Available styles:** `h1Desktop`, `h2Desktop`, `h3Desktop`, `h1Mobile`, `h2Mobile`, `h3Mobile`, `h4`, `h5`, `h6`, `p1`, `p2`, `p3`, `label`, `caption`, `overline`
+**Available styles:**
+- **Headings (Aktura):** `h1`, `h2`, `h3`, `h4`, `h5`, `h6`, `h7`, `h8`, `h9`, `h10`
+- **Paragraph (Satoshi):** `p1`, `p2`, `p3`, `p4`
+- **Kicker (Satoshi):** `kicker1`, `kicker2`
+- **Link (Satoshi):** `link1`, `link2`
 
 **Files:** `src/lib/text.ts`, `src/lib/utils/capsize.ts`
 
@@ -93,8 +106,8 @@ CSS Grid with gutters and full-bleed support.
 
 ```svelte
 <GridParent>
-  <GridFullBleed>Edge to edge content</GridFullBleed>
-  <GridMain>Respects gutters</GridMain>
+	<GridFullBleed>Edge to edge content</GridFullBleed>
+	<GridMain>Respects gutters</GridMain>
 </GridParent>
 ```
 
@@ -117,6 +130,7 @@ Preloader-based transitions between routes.
 ## Components
 
 ### UI Primitives (`$lib/components/ui-primitives/`)
+
 - `Button` - Variants: primary, secondary, outline, ghost, destructive, link. Sizes: xs, sm, default, lg, icon
 - `Badge` - Variants: default, secondary, destructive, outline, ghost
 - `Card` - Sizes: default, sm
@@ -128,13 +142,16 @@ Preloader-based transitions between routes.
 - `GridParent`, `GridMain`, `GridFullBleed` - Grid wrappers
 
 ### Sections (`$lib/components/sections/`)
+
 - `Hero100vh` - Fixed-position hero that page content clips over
 
 ### SVGs (`$lib/components/svgs/`)
+
 - `_SvgTemplate.svelte` - Copy this for new SVGs
 - `ScrolldownArrowSvg.svelte` - Animated arrow
 
 ### Layout
+
 - `Header.svelte` - Hides on scroll down, shows on scroll up
 - `Footer.svelte` - Basic footer
 - `Intro.svelte` - Initial page load animation
@@ -145,39 +162,42 @@ Preloader-based transitions between routes.
 ## Utilities
 
 ### `useAnimation` (`$lib/utils/useAnimation.svelte.ts`)
+
 GSAP animation helper with automatic cleanup.
 
 ```svelte
 <script>
-  import { useAnimation } from '$lib/utils/useAnimation.svelte';
+	import { useAnimation } from '$lib/utils/useAnimation.svelte';
 
-  let box;
+	let box;
 
-  useAnimation(() => {
-    gsap.to(box, { x: 100 });
-  });
+	useAnimation(() => {
+		gsap.to(box, { x: 100 });
+	});
 </script>
 ```
 
 ### `isSmall` / `isDesktop` (`$lib/utils/breakpoints.svelte.ts`)
+
 Reactive breakpoint detection.
 
 ```svelte
 <script>
-  import { isSmall } from '$lib/utils/breakpoints.svelte';
-  const small = isSmall();
+	import { isSmall } from '$lib/utils/breakpoints.svelte';
+	const small = isSmall();
 </script>
 
 {#if small.matches}
-  Mobile content
+	Mobile content
 {/if}
 ```
 
 ### `cn` (`$lib/utils/misc.ts`)
+
 Class name utility (like clsx).
 
 ```svelte
-<div class={cn("base", condition && "conditional", className)} />
+<div class={cn('base', condition && 'conditional', className)} />
 ```
 
 ---
@@ -239,6 +259,7 @@ src/
 Toggle via `mode-watcher`. Colors defined in `layout.css` under `:root` and `.dark`.
 
 To add dark mode support to a component:
+
 ```svelte
 <div class="bg-background text-foreground dark:bg-card" />
 ```
@@ -252,6 +273,7 @@ Colors use **oklch** format (perceptually uniform, better gradients, wider gamut
 For **backdrop-filter blur** or any semi-transparent backgrounds, use the RGB companion variables instead of `color-mix()`. The `color-mix()` function with oklch can cause rendering issues in Chrome.
 
 **Pattern:**
+
 ```css
 /* DON'T - can break backdrop-filter in Chrome */
 background-color: color-mix(in srgb, var(--background) 50%, transparent);
@@ -260,50 +282,70 @@ background-color: color-mix(in srgb, var(--background) 50%, transparent);
 background-color: rgb(var(--background-rgb) / 0.5);
 ```
 
-**Available RGB variables:** `--background-rgb`, `--card-rgb`, `--popover-rgb`
+**Available RGB variables:** `--background-rgb`, `--card-rgb`
 
-If you need more, add them to `layout.css` in both `:root` and `.dark`:
-```css
-:root {
-  --my-color: oklch(0.5 0.1 200);
-  --my-color-rgb: 100 150 180;
-}
-.dark {
-  --my-color: oklch(0.3 0.1 200);
-  --my-color-rgb: 50 75 90;
-}
-```
+**Primitives:** `--dark-1`→`4`, `--neutral-1`→`5`, `--light-1`→`7`, `--teal-1`→`3`, `--rose-1`→`2`, `--red-1`→`2`
+
+**Semantic:** `--background`, `--foreground`, `--card`, `--primary`, `--secondary`, `--muted`, `--accent`, `--destructive`, `--border`, `--input`, `--ring`
 
 ---
 
 ## Automatic Engine Switching (font-size & line-height)
 
-The responsive preprocessor automatically uses **media queries** instead of `calc()` for certain properties that cause browser rendering issues (especially Safari with large font sizes).
+The responsive preprocessor outputs **both** calc() and media query versions for typography properties. This provides progressive enhancement:
+
+- **Modern browsers (Safari 16.4+, Chrome 104+):** Use media queries (smooth resizing)
+- **Older browsers:** Fall back to calc() (works but may be jittery on resize)
 
 **How it works:**
-- Properties in `MEDIA_PREFERRED_PROPERTIES` (`font-size`, `line-height`) output 3 media queries
-- All other properties use the standard calc() approach with CSS variable toggles
+
+- Properties in `MEDIA_PREFERRED_PROPERTIES` (`font-size`, `line-height`) output calc() first, then media queries that override
+- Older browsers ignore the media query range syntax and use the calc() fallback
+- All other properties use only the calc() approach
 
 **Example transformation:**
 
 Input:
+
 ```css
 .title {
-  @responsive { font-size: 64px; margin-bottom: 24px; }
+	@responsive {
+		font-size: 64px;
+		margin-bottom: 24px;
+	}
 }
 ```
 
 Output:
-```css
-.title { margin-bottom: calc(...); }  /* calc engine */
 
-/* media engine for font-size */
-@media (max-width: 700px) { .title { font-size: 17.067vw; } }
-@media (min-width: 701px) and (max-width: 1440px) { .title { font-size: 4.444vw; } }
-@media (min-width: 1441px) { .title { font-size: 64px; } }
+```css
+/* calc fallback for old browsers */
+.title {
+	font-size: calc(...);
+	margin-bottom: calc(...);
+}
+
+/* media queries override for modern browsers */
+@media (max-width: 700px) {
+	.title {
+		font-size: 17.067vw;
+	}
+}
+@media (min-width: 701px) and (max-width: 1440px) {
+	.title {
+		font-size: 4.444vw;
+	}
+}
+@media (min-width: 1441px) {
+	.title {
+		font-size: 64px;
+	}
+}
 ```
 
 **To add more properties:** Edit `MEDIA_PREFERRED_PROPERTIES` in `src/lib/preprocessors/responsive.ts`.
+
+**Text wrapping fix:** If large text wraps unexpectedly at certain viewport widths, add `white-space: nowrap` to prevent line breaks. This happens because font-size and container width scale at slightly different rates due to gutters.
 
 ---
 

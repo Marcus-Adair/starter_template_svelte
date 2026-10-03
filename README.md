@@ -97,11 +97,11 @@ Use `@text` to apply pre-defined typography styles from `src/lib/text.ts`:
 <style>
 	.title {
 		@responsive {
-			@text h1Desktop;
+			@text h1;
 			margin-bottom: 24px;
 		}
 		@small {
-			@text h1Mobile;
+			@text h5;
 		}
 	}
 </style>
@@ -109,10 +109,10 @@ Use `@text` to apply pre-defined typography styles from `src/lib/text.ts`:
 
 **Available styles:**
 
-- Headings (with Desktop/Mobile variants): `h1Desktop`, `h1Mobile`, `h2Desktop`, `h2Mobile`, `h3Desktop`, `h3Mobile`
-- Headings (universal): `h4`, `h5`, `h6`
-- Body: `p1`, `p2`, `p3`
-- Utility: `caption`, `overline`, `label`
+- **Headings (Aktura):** `h1`, `h2`, `h3`, `h4`, `h5`, `h6`, `h7`, `h8`, `h9`, `h10`
+- **Paragraph (Satoshi):** `p1`, `p2`, `p3`, `p4`
+- **Kicker (Satoshi):** `kicker1`, `kicker2`
+- **Link (Satoshi):** `link1`, `link2`
 
 Edit `src/lib/text.ts` to customize or add styles. Capsize auto-applies when the style includes `font-size` and `line-height`.
 
@@ -155,6 +155,7 @@ Both functions return an object with a reactive `matches` property that updates 
 The preloader shows during page navigation with fade transitions. It intercepts link clicks, fades in, navigates, then fades out.
 
 **Timing constants** (in `$lib/consts.ts`):
+
 - `TRANS_DURATION` - Fade in/out duration (350ms)
 - `MIN_DURATION` - Minimum preloader display time (700ms)
 
@@ -177,6 +178,7 @@ The preloader shows during page navigation with fade transitions. It intercepts 
 On initial page load, a spinner overlay shows then fades out. This runs once on first visit, not on subsequent navigations.
 
 **Timing** (in `$lib/consts.ts`):
+
 - `INTRO_DURATION` - Total intro time before page animations start
 
 Customize the intro in `$lib/components/Intro.svelte`.
@@ -190,18 +192,22 @@ GSAP animation hook with auto-cleanup and optional delay coordination.
 	import { useAnimation } from '$lib/utils/useAnimation.svelte';
 
 	// Delayed - waits for intro (initial) or preloader (navigation)
-	useAnimation((ctx) => {
-		gsap.to('.hero', { opacity: 1, y: 0 });
-	}, { delay: true });
+	useAnimation(
+		(ctx) => {
+			gsap.to('.hero', { opacity: 1, y: 0 });
+		},
+		{ delay: true }
+	);
 
 	// Immediate - good for ScrollTrigger
 	useAnimation((ctx) => {
-		ScrollTrigger.create({ /* ... */ });
+		ScrollTrigger.create({/* ... */});
 	});
 </script>
 ```
 
 **Features:**
+
 - Auto GSAP context creation
 - Auto cleanup on component unmount
 - Smart delay: uses `INTRO_DURATION` on initial load, `TRANS_DURATION` on navigation

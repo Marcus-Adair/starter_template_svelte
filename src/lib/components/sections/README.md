@@ -1,1 +1,1 @@
-<!-- TODO: talk about putting reusable sections here -->
+<!-- Put reusable sections here -->

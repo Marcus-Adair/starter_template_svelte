@@ -10,8 +10,16 @@
 	import Separator from "$lib/components/ui-primitives/Separator.svelte";
 	import Textarea from "$lib/components/ui-primitives/Textarea.svelte";
 
-	// Color tokens (border: true for light colors that need visibility)
-	const colors = [
+	const primitiveColors = [
+		{ group: "Dark", colors: ["dark-1", "dark-2", "dark-3", "dark-4"] },
+		{ group: "Neutral", colors: ["neutral-1", "neutral-2", "neutral-3", "neutral-4", "neutral-5"] },
+		{ group: "Light", colors: ["light-1", "light-2", "light-3", "light-4", "light-5", "light-6", "light-7"], border: true },
+		{ group: "Teal", colors: ["teal-1", "teal-2", "teal-3"] },
+		{ group: "Rose", colors: ["rose-1", "rose-2"], border: true },
+		{ group: "Red", colors: ["red-1", "red-2"] },
+	];
+
+	const semanticColors = [
 		{ name: "background", border: true },
 		{ name: "foreground" },
 		{ name: "primary" },
@@ -22,121 +30,84 @@
 		{ name: "muted-foreground" },
 		{ name: "accent" },
 		{ name: "accent-foreground" },
-		{ name: "destructive" },
-		{ name: "destructive-foreground", border: true },
 		{ name: "card", border: true },
 		{ name: "card-foreground" },
-		{ name: "popover", border: true },
-		{ name: "popover-foreground" },
 		{ name: "border" },
 		{ name: "input" },
 		{ name: "ring" },
+		{ name: "destructive" },
 	];
 
-	// Typography sections (title + styles array)
-	const typeSections = [
-		{
-			title: "Headings (Desktop)",
-			styles: [
-				{ style: "h1Desktop", meta: "200/72 · 700 · Aktura" },
-				{ style: "h2Desktop", meta: "48/56 · 600" },
-				{ style: "h3Desktop", meta: "32/40 · 600" },
-			],
-		},
-		{
-			title: "Headings (Mobile)",
-			styles: [
-				{ style: "h1Mobile", meta: "54/48 · 700 · Aktura" },
-				{ style: "h2Mobile", meta: "32/40 · 600" },
-				{ style: "h3Mobile", meta: "24/32 · 600" },
-			],
-		},
-		{
-			title: "Headings (Universal)",
-			styles: [
-				{ style: "h4", meta: "24/32 · 600" },
-				{ style: "h5", meta: "20/28 · 600" },
-				{ style: "h6", meta: "18/24 · 600" },
-			],
-		},
-		{
-			title: "Body",
-			styles: [
-				{ style: "p1", sample: "p1 - Body large for intros and emphasis", meta: "18/28" },
-				{ style: "p2", sample: "p2 - Body default for most content", meta: "16/24" },
-				{ style: "p3", sample: "p3 - Body small for secondary text", meta: "14/20" },
-			],
-		},
-		{
-			title: "Utility",
-			styles: [
-				{ style: "label", sample: "label - Form labels and buttons", meta: "14/20 · 500" },
-				{ style: "caption", sample: "caption - Small text and metadata", meta: "12/16" },
-				{ style: "overline", sample: "overline - Section labels", meta: "12/16 · uppercase" },
-			],
-		},
+	// Typography specs:
+	const typeStyles = [
+		{ style: "h1", sample: "Heading 01", font: "Aktura", weight: "Bold", spacing: "-4%", lineHeight: "94%", size: "160px" },
+		{ style: "h2", sample: "Heading 02", font: "Aktura", weight: "Bold", spacing: "-4%", lineHeight: "110%", size: "112px" },
+		{ style: "h3", sample: "Heading 03", font: "Aktura", weight: "Regular", spacing: "-4%", lineHeight: "94%", size: "96px" },
+		{ style: "h4", sample: "Heading 04", font: "Aktura", weight: "Regular", spacing: "-4%", lineHeight: "110%", size: "64px" },
+		{ style: "h5", sample: "Heading 05", font: "Aktura", weight: "Bold", spacing: "-4%", lineHeight: "94%", size: "48px" },
+		{ style: "h6", sample: "Heading 06", font: "Aktura", weight: "Regular", spacing: "-4%", lineHeight: "110%", size: "36px" },
+		{ style: "h7", sample: "Heading 07", font: "Aktura", weight: "Regular", spacing: "-4%", lineHeight: "110%", size: "28px" },
+		{ style: "h8", sample: "Heading 08", font: "Aktura", weight: "Regular", spacing: "-4%", lineHeight: "110%", size: "22px" },
+		{ style: "h9", sample: "Heading 09", font: "Aktura", weight: "Regular", spacing: "-1%", lineHeight: "110%", size: "24px" },
+		{ style: "h10", sample: "Heading 10", font: "Aktura", weight: "Regular", spacing: "-1%", lineHeight: "140%", size: "18px" },
+		{ style: "p1", sample: "Paragraph 01", font: "Satoshi", weight: "Regular", spacing: "-4%", lineHeight: "140%", size: "24px" },
+		{ style: "p2", sample: "Paragraph 02", font: "Satoshi", weight: "Regular", spacing: "-4%", lineHeight: "155%", size: "22px" },
+		{ style: "p3", sample: "Paragraph 03", font: "Satoshi", weight: "Regular", spacing: "-4%", lineHeight: "150%", size: "18px" },
+		{ style: "p4", sample: "Paragraph 04", font: "Satoshi", weight: "Regular", spacing: "-4%", lineHeight: "150%", size: "12px" },
+		{ style: "kicker1", sample: "Kicker 01", font: "Satoshi", weight: "Medium", spacing: "+4%", lineHeight: "110%", size: "17px" },
+		{ style: "kicker2", sample: "Kicker 02", font: "Satoshi", weight: "Medium", spacing: "+4%", lineHeight: "130%", size: "12px" },
+		{ style: "link1", sample: "Link 01", font: "Satoshi", weight: "Medium", spacing: "-2%", lineHeight: "140%", size: "18px" },
+		{ style: "link2", sample: "Link 02", font: "Satoshi", weight: "Medium", spacing: "-4%", lineHeight: "130%", size: "14px" },
+		{ style: "label", sample: "Label", font: "Satoshi", weight: "Medium", spacing: "0%", lineHeight: "140%", size: "14px" },
 	];
 </script>
 
 {#snippet colorSwatch(name: string, border?: boolean)}
 	<div class="color-swatch">
-		<div class="color-preview bg-{name}" class:border={border} class:border-border={border}></div>
+		<div
+			class="color-preview"
+			class:border={border}
+			class:border-border={border}
+			style="background-color: var(--{name});"
+		></div>
 		<span class="color-label">{name}</span>
 	</div>
 {/snippet}
 
-{#snippet typeRow(style: string, sample: string, meta: string)}
-	<div class="type-row">
-		<span class="type-sample type-{style}">{sample}</span>
-		<span class="type-meta">{meta}</span>
+{#snippet specRow(label: string, value: string)}
+	<div class="spec-row">
+		<span class="spec-label">{label}</span>
+		<span class="spec-value">{value}</span>
 	</div>
 {/snippet}
 
-<!-- Hero with fixed content - outside main GridParent -->
+{#snippet typeCard(item: typeof typeStyles[0])}
+	<div class="type-card">
+		<span class="type-sample type-{item.style}">{item.sample}</span>
+		<div class="spec-table">
+			{@render specRow("Font", item.font)}
+			{@render specRow("Weight", item.weight)}
+			{@render specRow("Spacing", item.spacing)}
+			{@render specRow("Line Height", item.lineHeight)}
+			{@render specRow("Size", item.size)}
+		</div>
+	</div>
+{/snippet}
+
 <Hero100vh
 	heroTitle="UI Catalog"
 	heroSubTitle="Component library for this starter template."
 />
 
-<!-- Page content - scrolls over and clips the fixed hero -->
 <GridParent class="page-content">
-	<!-- Colors Section -->
-	<section class="section grid-main">
-		<h2 class="section-title">Colors</h2>
-		<p class="section-desc">Semantic color tokens from the design system.</p>
-
-		<div class="color-grid">
-			{#each colors as { name, border } (name)}
-				{@render colorSwatch(name, border)}
-			{/each}
-		</div>
-
-	</section>
-
-	<!-- Typography Section -->
-	<section class="section grid-main">
-		<h2 class="section-title">Typography</h2>
-		<p class="section-desc">Text styles from the type system. Use with <code>@text</code> directive.</p>
-
-		{#each typeSections as { title, styles } (title)}
-			<div class="subsection">
-				<h3 class="subsection-title">{title}</h3>
-				<div class="type-stack">
-					{#each styles as { style, meta } (style)}
-						{@render typeRow(style, style, meta)}
-					{/each}
-				</div>
-			</div>
-		{/each}
-	</section>
-
+	<!-- Misc. -->
 	<section class="section grid-main">
 		<h2 class="section-title">Misc.</h2>
 		<p class="section-desc">Other misc UI components.</p>
 
 		<div class="subsection">
 			<h3 class="subsection-title">Enhanced Image</h3>
-			<p class="subsection-desc">SvelteKit's <code>&lt;enhanced:img&gt;</code> for automatic image optimization.</p>
+			<p class="subsection-desc">SvelteKit's <code>&lt;enhanced:img&gt;</code> is the go-to for automatic image optimization.</p>
 			<div class="image-demo">
 				<enhanced:img src="$lib/assets/hammerhead-shark_16x9.png" alt="Placeholder landscape image" />
 			</div>
@@ -278,6 +249,16 @@
 				</div>
 			</div>
 
+			<!-- Sizes -->
+			<div class="subsection">
+				<h3 class="subsection-title">Sizes</h3>
+				<div class="badge-row">
+					<Badge size="sm">Small</Badge>
+					<Badge size="default">Default</Badge>
+					<Badge size="lg">Large</Badge>
+				</div>
+			</div>
+
 			<!-- As Link -->
 			<div class="subsection">
 				<h3 class="subsection-title">As Link</h3>
@@ -300,17 +281,61 @@
 			<div class="card-grid">
 				<Card>
 					<strong>Default Card</strong>
-					<p>This card uses the default spacing (24px).</p>
+					<p>This card uses the default spacing.</p>
 				</Card>
 				<Card size="sm">
 					<strong>Small Card</strong>
-					<p>This card uses smaller spacing (16px).</p>
+					<p>This card uses smaller spacing ("sm").</p>
 				</Card>
 			</div>
 		</div>
 	</section>
 
-	<!-- Navigation -->
+	<!-- Colors Section -->
+	<section class="section grid-main">
+		<h2 class="section-title">Colors</h2>
+		<p class="section-desc">Primitive and semantic color tokens from the design system.</p>
+
+		<!-- Primitive Colors -->
+		<div class="subsection">
+			<h3 class="subsection-title">Primitives</h3>
+			<div class="primitives-wrapper">
+				{#each primitiveColors as { group, colors, border } (group)}
+					<div class="color-group">
+						<span class="color-group-label">{group}</span>
+						<div class="color-group-grid">
+							{#each colors as name (name)}
+								{@render colorSwatch(name, border)}
+							{/each}
+						</div>
+					</div>
+				{/each}
+			</div>
+		</div>
+
+		<!-- Semantic Colors -->
+		<div class="subsection">
+			<h3 class="subsection-title">Semantic</h3>
+			<div class="color-group-grid">
+				{#each semanticColors as { name, border } (name)}
+					{@render colorSwatch(name, border)}
+				{/each}
+			</div>
+		</div>
+	</section>
+
+	<!-- Typography Section -->
+	<section class="section grid-main">
+		<h2 class="section-title">Typography</h2>
+		<p class="section-desc">Text styles from the type system. Use with <code>@text</code> directive.</p>
+
+		<div class="type-grid">
+			{#each typeStyles as item (item.style)}
+				{@render typeCard(item)}
+			{/each}
+		</div>
+	</section>
+
 	<div class="nav-row grid-main">
 		<Button href={resolve("/")} variant="outline">Back to Home</Button>
 	</div>
@@ -338,17 +363,14 @@
 
 	.section-title {
 		@responsive {
-			@text h2Desktop;
+			@text h5;
 			margin-bottom: 8px;
-		}
-		@small {
-			@text h2Mobile;
 		}
 	}
 
 	.section-desc {
 		@responsive {
-			@text p2;
+			@text p3;
 			margin-bottom: 32px;
 		}
 		color: var(--muted-foreground);
@@ -362,10 +384,9 @@
 
 	.subsection-title {
 		@responsive {
-			@text p2;
+			@text h8;
 			margin-bottom: 16px;
 		}
-		font-weight: 600;
 	}
 
 	.subsection-desc {
@@ -441,69 +462,153 @@
 		}
 	}
 
+	.color-preview {
+		@responsive {
+			width: 100%;
+			height: 75px;
+			border-radius: var(--radius-md);
+		}
+	}
+	
+	.color-group-grid {
+		@responsive {
+			display: grid;
+			grid-template-columns: repeat(4, 100px);
+			gap: var(--space-lg);
+		}
+		@small {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+
 	.color-swatch {
 		@responsive {
 			display: flex;
 			flex-direction: column;
-			gap: 8px;
-			max-width: 64px;
+			gap: var(--space-sm);
 		}
 	}
 
-	.color-preview {
+	.color-group {
 		@responsive {
-			width: 64px;
-			height: 64px;
-			border-radius: var(--radius-md);
+			display: flex;
+			flex-direction: column;
+			gap: var(--space-sm);
 		}
+	}
+
+	.color-group-label {
+		@responsive {
+			@text kicker2;
+		}
+		color: var(--muted-foreground);
+		text-transform: uppercase;
 	}
 
 	.color-label {
 		@responsive {
-			@text p3;
+			@text p4;
 		}
 		color: var(--muted-foreground);
 	}
 
 	/* Typography */
-	.type-stack {
+	.type-grid {
 		@responsive {
 			display: flex;
 			flex-direction: column;
-			gap: 16px;
+			gap: var(--space-3xl);
 		}
 	}
 
-	.type-row {
+	.type-card {
 		@responsive {
 			display: flex;
-			align-items: baseline;
 			justify-content: space-between;
-			gap: 24px;
+			align-items: flex-start;
+			gap: var(--space-xl);
+		}
+		@small {
+			flex-direction: column;
+			gap: var(--space-md);
 		}
 	}
 
-	.type-meta {
+	.type-sample {
+		flex: 1;
+	}
+
+	.spec-table {
 		@responsive {
-			@text caption;
-			flex-shrink: 0;
+			display: flex;
+			flex-direction: column;
+		}
+	}
+
+	.spec-row {
+		@responsive {
+			display: flex;
+			
+			justify-content: space-between;
+			padding: var(--space-sm) 0;
+			border-bottom: 1px solid var(--border);
+		}
+		@large {
+			min-width: 260px;
+		}
+	}
+
+	.spec-label {
+		@responsive {
+			@text p4;
 		}
 		color: var(--muted-foreground);
 	}
 
-	.type-h1Desktop { @responsive { @text h1Desktop; } }
-	.type-h2Desktop { @responsive { @text h2Desktop; } }
-	.type-h3Desktop { @responsive { @text h3Desktop; } }
-	.type-h1Mobile { @responsive { @text h1Mobile; } }
-	.type-h2Mobile { @responsive { @text h2Mobile; } }
-	.type-h3Mobile { @responsive { @text h3Mobile; } }
+	.spec-value {
+		@responsive {
+			@text p4;
+		}
+	}
+
+	/* Headings */
+	.type-h1 { @responsive { @text h1; } }
+	.type-h2 { @responsive { @text h2; } }
+	.type-h3 { @responsive { @text h3; } }
 	.type-h4 { @responsive { @text h4; } }
 	.type-h5 { @responsive { @text h5; } }
 	.type-h6 { @responsive { @text h6; } }
+	.type-h7 { @responsive { @text h7; } }
+	.type-h8 { @responsive { @text h8; } }
+	.type-h9 { @responsive { @text h9; } }
+	.type-h10 { @responsive { @text h10; } }
+
+	/* Paragraph */
 	.type-p1 { @responsive { @text p1; } }
 	.type-p2 { @responsive { @text p2; } }
 	.type-p3 { @responsive { @text p3; } }
+	.type-p4 { @responsive { @text p4; } }
+
+	/* Kicker */
+	.type-kicker1 { @responsive { @text kicker1; } }
+	.type-kicker2 { @responsive { @text kicker2; } }
+
+	/* Link */
+	.type-link1 { @responsive { @text link1; } }
+	.type-link2 { @responsive { @text link2; } }
+
+	/* Utility */
 	.type-label { @responsive { @text label; } }
-	.type-caption { @responsive { @text caption; } }
-	.type-overline { @responsive { @text overline; } }
+
+	/* Primitives wrapper - 2 cols on desktop, 1 on mobile */
+	.primitives-wrapper {
+		@responsive {
+			display: grid;
+			grid-template-columns: repeat(2, 1fr);
+			gap: var(--space-xl);
+		}
+		@small {
+			grid-template-columns: 1fr;
+		}
+	}
 </style>

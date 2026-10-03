@@ -85,7 +85,7 @@
   <!-- :where() zeroes specificity so consumer classes can override without chaining -->
   <style>
     /* =========================================================
-       Button base - sizing (needs @responsive)
+       Button base
        ========================================================= */
     :where(.base-button) {
         display: inline-flex;
@@ -101,7 +101,7 @@
         @responsive {
             border-radius: var(--radius-md);
             border: 1px solid transparent;
-            @text label;
+            @text p4;
         }
     }
 
@@ -114,10 +114,10 @@
         border-color: var(--destructive);
         box-shadow: 0 0 0 3px color-mix(in srgb, var(--destructive) 20%, transparent);
     }
-    :where(.dark .base-button[aria-invalid]) {
+    /* :where(.dark .base-button[aria-invalid]) {
         border-color: color-mix(in srgb, var(--destructive) 50%, transparent);
         box-shadow: 0 0 0 3px color-mix(in srgb, var(--destructive) 40%, transparent);
-    }
+    } */
 
     :where(.base-button:disabled) {
         pointer-events: none;
@@ -157,7 +157,7 @@
     :where(.base-button--outline:active) {
         background-color: color-mix(in srgb, var(--muted) 40%, transparent);
     }
-    :where(.dark .base-button--outline) {
+    /* :where(.dark .base-button--outline) {
         border-color: var(--input);
         background-color: color-mix(in srgb, var(--input) 30%, transparent);
     }
@@ -166,7 +166,7 @@
     }
     :where(.dark .base-button--outline:active) {
         background-color: color-mix(in srgb, var(--input) 60%, transparent);
-    }
+    } */
 
     :where(.base-button--secondary) {
         background-color: var(--secondary);
@@ -186,9 +186,9 @@
         background-color: var(--muted);
         color: var(--foreground);
     }
-    :where(.dark .base-button--ghost:hover) {
+    /* :where(.dark .base-button--ghost:hover) {
         background-color: color-mix(in srgb, var(--muted) 50%, transparent);
-    }
+    } */
     :where(.base-button--ghost:active) {
         background-color: color-mix(in srgb, var(--muted) 60%, transparent);
     }
@@ -207,7 +207,7 @@
         border-color: color-mix(in srgb, var(--destructive) 40%, transparent);
         box-shadow: 0 0 0 3px color-mix(in srgb, var(--destructive) 20%, transparent);
     }
-    :where(.dark .base-button--destructive) {
+    /* :where(.dark .base-button--destructive) {
         background-color: color-mix(in srgb, var(--destructive) 20%, transparent);
     }
     :where(.dark .base-button--destructive:hover) {
@@ -218,7 +218,7 @@
     }
     :where(.dark .base-button--destructive:focus-visible) {
         box-shadow: 0 0 0 3px color-mix(in srgb, var(--destructive) 40%, transparent);
-    }
+    } */
 
     :where(.base-button--link) {
         color: var(--primary);
@@ -229,60 +229,52 @@
     }
 
     /* =========================================================
-       Sizes - pixel values (needs @responsive)
+       Sizes
        ========================================================= */
 
-    /* default (h-9 gap-1.5 px-2.5) */
+    /* default */
     :where(.base-button--size-default) {
-        @responsive {
-            height: 36px;
-            gap: 6px;
-            padding-left: 10px;
-            padding-right: 10px;
-        }
+        height: 36px;
+        gap: var(--space-sm);
+        padding-left: var(--space-md);
+        padding-right: var(--space-md);
     }
 
-    /* xs (h-6 gap-1 px-2 text-xs) */
+    /* xs */
     :where(.base-button--size-xs) {
         @responsive {
             border-radius: min(var(--radius-md), 8px);
-            @text caption;
+            @text p4;
             font-weight: 500;
-            height: 24px;
-            gap: 4px;
-            padding-left: 8px;
-            padding-right: 8px;
         }
+        height: 24px;
+        gap: var(--space-xs);
+        padding-left: var(--space-sm);
+        padding-right: var(--space-sm);
     }
 
-    /* sm (h-8 gap-1 px-2.5) */
+    /* sm */
     :where(.base-button--size-sm) {
-        @responsive {
-            border-radius: min(var(--radius-md), 10px);
-            height: 32px;
-            gap: 4px;
-            padding-left: 10px;
-            padding-right: 10px;
-        }
+        border-radius: min(var(--radius-md), 10px);
+        height: 32px;
+        gap: var(--space-xs);
+        padding-left: var(--space-md);
+        padding-right: var(--space-md);
     }
 
-    /* lg (h-10 gap-1.5 px-2.5) */
+    /* lg */
     :where(.base-button--size-lg) {
-        @responsive {
-            height: 40px;
-            gap: 6px;
-            padding-left: 10px;
-            padding-right: 10px;
-        }
+        height: 40px;
+        gap: var(--space-sm);
+        padding-left: var(--space-md);
+        padding-right: var(--space-md);
     }
 
-    /* icon (size-9) */
+    /* icon */
     :where(.base-button--size-icon) {
-        @responsive {
-            border-radius: min(var(--radius-md), 10px);
-            width: 36px;
-            height: 36px;
-        }
+        border-radius: min(var(--radius-md), 10px);
+        width: 36px;
+        height: 36px;
     }
 
     /* Reset size styles to be inline like a span for "link" variant (after sizes so it wins) */

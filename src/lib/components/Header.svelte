@@ -2,11 +2,11 @@
 	import { resolve } from "$app/paths";
 	import gsap from "gsap";
 	import { ScrollTrigger } from "gsap/ScrollTrigger";
-	import { toggleMode, mode } from "mode-watcher";
+	// import { toggleMode, mode } from "mode-watcher";
+	// import { Lightbulb, LightbulbOff } from "@lucide/svelte";
 
 	import GridMain from "./ui-primitives/GridMain.svelte";
 	import GridParent from "./ui-primitives/GridParent.svelte";
-	import { Lightbulb, LightbulbOff } from "@lucide/svelte";
 
 	// Scroll behavior config
 	const HIDE_THRESHOLD = 50; // px to scroll down before hiding
@@ -115,14 +115,15 @@
 		<GridMain>
 			<nav class="header">
 				<div class="flex items-center">
-					<!-- Buttons 1 -->
-					<button onclick={toggleMode} class="header-size-container cursor-pointer">
+					<!-- Theme toggle -->
+					<!-- <button onclick={toggleMode} class="header-size-container cursor-pointer">
 						{#if (mode.current === "light")}
 							<Lightbulb class="header-icon-size" />
 						{:else}
 							<LightbulbOff class="header-icon-size" />
 						{/if}
-					</button>
+					</button> -->
+					LEFT-SIDE
 				</div>
 
 				<div class="flex items-center justify-center">
@@ -131,7 +132,6 @@
 				</div>
 
 				<div class="flex items-center justify-end">
-					<!-- Buttons 2 -->
 					RIGHT-SIDE
 				</div>
 			</nav>
@@ -150,7 +150,6 @@
 		background-color: rgb(var(--background-rgb) / 0.5);
 		-webkit-backdrop-filter: blur(12px);
 		backdrop-filter: blur(12px);
-		border-bottom: 1px solid var(--border);
 	}
 
 	.header {
@@ -176,9 +175,8 @@
 
 	.header-h3 { 
 		@responsive { 
-			@text h3Desktop; 
+			@text h7; 
 			border: 2px dashed var(--primary);
-			padding: 6px 10px;
 		} 
 	}
 </style>

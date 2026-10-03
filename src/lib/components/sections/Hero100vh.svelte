@@ -40,11 +40,10 @@
 	</GridParent>
 </div>
 
-<!-- Hero background spacer - creates the 100vh of colored space -->
+<!-- 100vh of colored space -->
 <div class="hero-background"></div>
 
 <style>
-	/* Fixed content - centered in viewport */
 	.hero-fixed-content {
 		position: fixed;
 		top: 0;
@@ -69,24 +68,17 @@
 		pointer-events: auto;
 	}
 
-	/* Background spacer - this is what gets scrolled past */
 	.hero-background {
-		@responsive {
-			height: 100vh;
-			min-height: 400px;
-		}
+		height: 100vh;
 		background-color: var(--primary);
+		@responsive { min-height: 400px; }
 	}
 
 	.hero-100vh-title {
 		color: var(--primary-foreground);
 		white-space: nowrap;
-		@responsive {
-			@text h1Desktop;
-		}
-		@small {
-			@text h1Mobile;
-		}
+		@responsive { @text h1; }
+		@small { @text h5; }
 	}
 
 	.hero-100vh-subtitle {
