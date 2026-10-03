@@ -68,7 +68,7 @@
     .input-label-container {
         display: flex;
         flex-direction: column;
-        gap: var(--space-lg);
+        gap: var(--space-md);
     }
 
     :where(.base-input) {

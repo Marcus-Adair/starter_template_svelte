@@ -141,6 +141,7 @@
 	.demo-item {
 		background-color: var(--secondary);
 		color: var(--secondary-foreground);
+		flex: 1;
 		@responsive {
 			@text p2;
 			padding: 20px;

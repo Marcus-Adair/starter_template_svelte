@@ -1,36 +1,34 @@
-<!--
-    Label component for form inputs.
-    Supports disabled states.
--->
 <script lang="ts" module>
     import { cn } from "$lib/utils/misc";
-    import { Label as LabelPrimitive } from "bits-ui";
+    import type { Snippet } from "svelte";
 
-    export type LabelProps = LabelPrimitive.RootProps;
+    export type LabelProps = {
+        for?: string;
+        class?: string;
+        children?: Snippet;
+    };
 </script>
 
 <script lang="ts">
     let {
+        for: htmlFor,
         class: className,
-        ...restProps
+        children,
     }: LabelProps = $props();
 </script>
 
-<LabelPrimitive.Root
-    class={cn("base-label", className)}
-    {...restProps}
-/>
+{#if htmlFor}
+    <label for={htmlFor} class={cn("base-label", className)}>
+        {@render children?.()}
+    </label>
+{:else}
+    <span class={cn("base-label", className)}>
+        {@render children?.()}
+    </span>
+{/if}
 
-<!-- :global() needed because LabelPrimitive.Root renders the DOM element -->
 <style>
-    :global(:where(.base-label)) {
-        display: flex;
-        align-items: center;
-        gap: var(--space-sm);
-        @responsive {
-            @text p4;
-        }
-    }
+    .base-label { @responsive { @text p3; } }
 
     :global(:where([data-disabled="true"] .base-label)),
     :global(:where(:disabled + .base-label)),

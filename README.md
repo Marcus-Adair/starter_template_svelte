@@ -131,6 +131,61 @@ Edit `src/lib/text.ts` to customize or add styles. Capsize auto-applies when the
 
 Gap & Gutter values for the grid are defined in `layout.css` - use and see `scaledGridVar()` from `$lib/utils/responsive.ts` for help in changing those.
 
+## Spacing System
+
+Responsive spacing variables are defined in `layout.css` and integrated with Tailwind:
+
+```css
+/* In layout.css */
+--space-xs: calc(...);  /* 4px responsive */
+--space-sm: calc(...);  /* 8px responsive */
+--space-md: calc(...);  /* 12px responsive */
+--space-lg: calc(...);  /* 16px responsive */
+--space-xl: calc(...);  /* 24px responsive */
+--space-2xl: calc(...); /* 32px responsive */
+--space-3xl: calc(...); /* 48px responsive */
+--space-4xl: calc(...); /* 64px responsive */
+```
+
+These are mapped to Tailwind via `--spacing-*`, so you can use them as utility classes:
+
+```svelte
+<!-- These produce responsive spacing automatically -->
+<div class="flex flex-col gap-xl p-lg">
+	<div class="mb-md">...</div>
+</div>
+```
+
+**Important:** Use the named spacing classes (`gap-xl`, `p-md`, `m-sm`) instead of Tailwind's default numeric classes (`gap-4`, `p-2`, `m-1`). The numeric classes use fixed px values and won't scale responsively.
+
+| Use this | Not this |
+|----------|----------|
+| `gap-xl` | `gap-6` |
+| `p-lg` | `p-4` |
+| `m-sm` | `m-2` |
+
+## Radius System
+
+Responsive border-radius variables are defined in `layout.css` and integrated with Tailwind:
+
+```css
+/* In layout.css */
+--radius: calc(...);    /* 10px responsive (base) */
+--radius-sm: calc(var(--radius) - 2px);
+--radius-md: var(--radius);
+--radius-lg: calc(var(--radius) + 2px);
+--radius-xl: calc(var(--radius) + 4px);
+```
+
+Use with Tailwind utility classes:
+
+```svelte
+<div class="rounded-md">...</div>
+<div class="rounded-lg">...</div>
+```
+
+The base `--radius` scales responsively, and derived sizes maintain consistent visual steps via fixed offsets.
+
 ## Breakpoints in JavaScript
 
 Use `isSmall()` and `isLarge()` for reactive breakpoint detection in your scripts:

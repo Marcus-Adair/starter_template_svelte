@@ -39,7 +39,7 @@
     .textarea-label-container {
         display: flex;
         flex-direction: column;
-        gap: var(--space-sm);
+        gap: var(--space-md);
     }
 
     :where(.base-textarea) {

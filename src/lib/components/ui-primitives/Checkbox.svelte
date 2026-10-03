@@ -29,7 +29,7 @@
     }: CheckboxProps = $props();
 </script>
 
-<div class="checkbox-label-container">
+<div class="flex align-center gap-md">
     <CheckboxPrimitive.Root
         {id}
         bind:ref
@@ -54,12 +54,6 @@
 </div>
 
 <style>
-    .checkbox-label-container {
-        display: flex;
-        align-items: center;
-        gap: var(--space-sm);
-    }
-
     :global(:where(.base-checkbox)) {
         display: flex;
         align-items: center;

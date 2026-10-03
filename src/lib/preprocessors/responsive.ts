@@ -161,17 +161,33 @@ function extractCapsizeValues(css: string): { fontSize: number; lineHeight: numb
 }
 
 /**
+ * Append a pseudo-element to a selector, handling :global() wrappers.
+ * :global(.foo) + ::before → :global(.foo::before)
+ * .foo + ::before → .foo::before
+ */
+function appendPseudoElement(selector: string, pseudo: string): string {
+	const globalMatch = selector.match(/^(.*?):global\((.+)\)$/);
+	if (globalMatch) {
+		const [, prefix, inner] = globalMatch;
+		return `${prefix}:global(${inner}${pseudo})`;
+	}
+	return `${selector}${pseudo}`;
+}
+
+/**
  * Generate Capsize ::before and ::after rules for a selector.
  */
 function generateCapsizeRules(selector: string, fontSize: number, lineHeight: number): string {
 	const styles = capsize(fontSize, lineHeight, fontMetrics);
+	const beforeSelector = appendPseudoElement(selector, '::before');
+	const afterSelector = appendPseudoElement(selector, '::after');
 	return `
-${selector}::before {
+${beforeSelector} {
 	content: '';
 	display: table;
 	margin-bottom: ${styles['::before'].marginBottom};
 }
-${selector}::after {
+${afterSelector} {
 	content: '';
 	display: table;
 	margin-top: ${styles['::after'].marginTop};
