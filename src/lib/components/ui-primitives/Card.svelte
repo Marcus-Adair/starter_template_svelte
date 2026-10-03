@@ -40,19 +40,16 @@
         box-shadow:
             0 1px 2px 0 rgb(0 0 0 / 0.05),
             0 0 0 1px color-mix(in srgb, var(--foreground) 10%, transparent);
+        gap: var(--space-md);
+        padding: var(--space-xl);
+        border-radius: 12px;
         @responsive {
-            --card-spacing: 24px;
-            gap: 12px;
-            padding: var(--card-spacing);
-            border-radius: 12px;
             @text p3;
         }
     }
 
     :where(.base-card--sm) {
-        @responsive {
-            --card-spacing: 16px;
-            gap: 6px;
-        }
+        gap: var(--space-sm);
+        padding: var(--space-lg);
     }
 </style>

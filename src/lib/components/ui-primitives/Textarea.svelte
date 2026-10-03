@@ -36,16 +36,12 @@
 </div>
 
 <style>
-    /* Container - sizing (needs @responsive) */
     .textarea-label-container {
         display: flex;
         flex-direction: column;
-        @responsive {
-            gap: 6px;
-        }
+        gap: var(--space-sm);
     }
 
-    /* Textarea base */
     :where(.base-textarea) {
         display: flex;
         width: 100%;
@@ -54,11 +50,11 @@
         field-sizing: content;
         outline: none;
         transition: color 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+        min-height: 64px;
+        padding: var(--space-sm) var(--space-md);
+        border-radius: var(--radius-md);
+        border: 1px solid var(--input);
         @responsive {
-            min-height: 64px;
-            padding: 8px 10px;
-            border-radius: var(--radius-md);
-            border: 1px solid var(--input);
             @text p3;
         }
     }
@@ -83,11 +79,11 @@
     }
 
     /* Dark mode */
-    :where(.dark .base-textarea) {
+    /* :where(.dark .base-textarea) {
         background-color: color-mix(in srgb, var(--input) 30%, transparent);
     }
     :where(.dark .base-textarea[aria-invalid="true"]) {
         border-color: color-mix(in srgb, var(--destructive) 50%, transparent);
         box-shadow: 0 0 0 3px color-mix(in srgb, var(--destructive) 40%, transparent);
-    }
+    } */
 </style>

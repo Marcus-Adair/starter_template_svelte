@@ -196,7 +196,13 @@ ${selector}::after {
  *   .text::after { content: ''; display: table; margin-top: -0.5em; }
  */
 function processStyleContent(content: string): string {
-	let result = content;
+	// Extract and preserve CSS comments to prevent regex from matching braces inside them
+	const comments: string[] = [];
+	let result = content.replace(/\/\*[\s\S]*?\*\//g, (match) => {
+		comments.push(match);
+		return `/*__COMMENT_${comments.length - 1}__*/`;
+	});
+
 	const mediaBlocks: { query: string; rules: string }[] = [];
 	const capsizeBlocks: string[] = [];
 
@@ -287,6 +293,11 @@ function processStyleContent(content: string): string {
 			result += block.rules;
 		}
 	}
+
+	// Restore CSS comments
+	result = result.replace(/\/\*__COMMENT_(\d+)__\*\//g, (_, index) => {
+		return comments[parseInt(index, 10)];
+	});
 
 	return result;
 }

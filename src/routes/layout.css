@@ -24,8 +24,8 @@
 	font-display: swap;
 }
 
-/* Note: Add this in to enable a dark them - and add CSS: .dark {}  */
-@custom-variant dark (&:is(.dark *));
+/* Note: Add this in to enable a dark theme - and add CSS: .dark {}  */
+/* @custom-variant dark (&:is(.dark *)); */
 
 :root {
 	/* Responsive scaling breakpoint toggles (only one is 1 at a time) */
@@ -56,44 +56,119 @@
 		(1.067vw * var(--is-mobile)) + (4.444vw * var(--is-desktop)) + (64px * var(--is-full))
 	);
 
-	/* Color system
-	 *
-	 * Visit https://tweakcn.com/editor/theme to find and generate themes to plug-n-play:
-	 *
-	 * And/Or change add new vars and change names.
-	 *
-	 * RGB companions (-rgb suffix) are for opacity/alpha use cases like backdrop-filter.
-	 * Usage: background-color: rgb(var(--background-rgb) / 0.5);
-	 */
-	--background: oklch(0.9842 0.0034 247.8575);
-	--background-rgb: 250 250 252;
-	--foreground: oklch(0.2795 0.0368 260.031);
-	--card: oklch(1 0 0);
-	--card-rgb: 255 255 255;
-	--card-foreground: oklch(0.2795 0.0368 260.031);
-	--popover: oklch(1 0 0);
-	--popover-rgb: 255 255 255;
-	--popover-foreground: oklch(0.2795 0.0368 260.031);
-	--primary: oklch(0.6718 0.1144 196.2546);
-	--primary-foreground: oklch(1 0 0);
-	--secondary: oklch(0.9276 0.0058 264.5313);
-	--secondary-foreground: oklch(0.3729 0.0306 259.7328);
-	--muted: oklch(0.967 0.0029 264.5419);
-	--muted-foreground: oklch(0.551 0.0234 264.3637);
-	--accent: oklch(0.9364 0.0392 347.0664);
-	--accent-foreground: oklch(0.3729 0.0306 259.7328);
-	--destructive: oklch(0.6368 0.2078 25.3313);
-	--destructive-foreground: oklch(1 0 0);
-	--border: oklch(0.8717 0.0093 258.3382);
-	--input: oklch(0.8717 0.0093 258.3382);
-	--ring: oklch(0.8758 0.1299 177.9554);
+	/* ==========================================================================
+	   Color System - Primitives
 
-	/* Font system */
+	   Base color palette. Semantic colors reference these.
+	   ========================================================================== */
+
+	--dark-1: #000000;
+	--dark-2: #141418;
+	--dark-3: #1c1c24;
+	--dark-4: #2a2a36;
+
+	--neutral-1: #3b3b4f;
+	--neutral-2: #55556a;
+	--neutral-3: #7a7a8c;
+	--neutral-4: #9a9aac;
+	--neutral-5: #b8b8c8;
+
+	--light-1: #d8d8e0;
+	--light-2: #e0e0e8;
+	--light-3: #e8e8ed;
+	--light-4: #f0f0f5;
+	--light-5: #f5f5f8;
+	--light-6: #fafafc;
+	--light-7: #ffffff;
+
+	--teal-1: #4a9e9e;
+	--teal-2: #5bb5b5;
+	--teal-3: #90ddd0;
+
+	--rose-1: #f5e0e8;
+	--rose-2: #e8c0d0;
+
+	--red-1: #e54545;
+	--red-2: #ff6b6b;
+
+	--opacity-1: rgba(20, 20, 24, 0.2);
+	--opacity-2: rgba(216, 216, 224, 0.2);
+	--opacity-3: rgba(232, 232, 237, 0.3);
+	--opacity-4: rgba(255, 255, 255, 0.1);
+
+	/* ==========================================================================
+	   Color System - Semantic
+
+	   RGB companions (-rgb suffix) for opacity/alpha use cases.
+	   Usage: background-color: rgb(var(--background-rgb) / 0.5);
+	   ========================================================================== */
+
+	--background: var(--light-6);
+	--background-rgb: 250 250 252;
+	--foreground: var(--neutral-1);
+
+	--card: var(--light-7);
+	--card-rgb: 255 255 255;
+	--card-foreground: var(--neutral-1);
+
+	--primary: var(--teal-2);
+	--primary-foreground: var(--light-7);
+
+	--secondary: var(--light-3);
+	--secondary-foreground: var(--neutral-1);
+
+	--muted: var(--light-5);
+	--muted-foreground: var(--neutral-3);
+
+	--accent: var(--rose-1);
+	--accent-foreground: var(--neutral-1);
+
+	--destructive: var(--red-1);
+
+	--border: var(--light-1);
+	--input: var(--light-1);
+	--ring: var(--teal-3);
+
+	/* ==========================================================================
+	   Spacing System (Gap/Padding)
+
+	   Responsive spacing that scales with viewport (like --grid-gap).
+	   Formula: (mobile-vw * is-mobile) + (desktop-vw * is-desktop) + (px * is-full)
+	   Mobile vw = px / 375 * 100, Desktop vw = px / 1440 * 100
+	   ========================================================================== */
+
+	--space-xs: calc(
+		(1.067vw * var(--is-mobile)) + (0.278vw * var(--is-desktop)) + (4px * var(--is-full))
+	);
+	--space-sm: calc(
+		(2.133vw * var(--is-mobile)) + (0.556vw * var(--is-desktop)) + (8px * var(--is-full))
+	);
+	--space-md: calc(
+		(3.2vw * var(--is-mobile)) + (0.833vw * var(--is-desktop)) + (12px * var(--is-full))
+	);
+	--space-lg: calc(
+		(4.267vw * var(--is-mobile)) + (1.111vw * var(--is-desktop)) + (16px * var(--is-full))
+	);
+	--space-xl: calc(
+		(6.4vw * var(--is-mobile)) + (1.667vw * var(--is-desktop)) + (24px * var(--is-full))
+	);
+	--space-2xl: calc(
+		(8.533vw * var(--is-mobile)) + (2.222vw * var(--is-desktop)) + (32px * var(--is-full))
+	);
+	--space-3xl: calc(
+		(12.8vw * var(--is-mobile)) + (3.333vw * var(--is-desktop)) + (48px * var(--is-full))
+	);
+	--space-4xl: calc(
+		(17.067vw * var(--is-mobile)) + (4.444vw * var(--is-desktop)) + (64px * var(--is-full))
+	);
+
 	--font-sans: 'Satoshi', system-ui, sans-serif;
 	--font-serif: ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
 	--font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
+	/* md */
 	--radius: 10px;
+
 	--shadow-x: 0;
 	--shadow-y: 1px;
 	--shadow-blur: 3px;
@@ -108,34 +183,38 @@
 	--shadow-lg: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 4px 6px -1px hsl(0 0% 0% / 0.1);
 	--shadow-xl: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 8px 10px -1px hsl(0 0% 0% / 0.1);
 	--shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
-
-	--tracking-normal: 0em;
-	--spacing: 0.25rem;
 }
 
-.dark {
-	--background: oklch(0.2077 0.0398 265.7549);
-	--background-rgb: 38 38 48;
-	--foreground: oklch(0.9288 0.0126 255.5078);
-	--card: oklch(0.2795 0.0368 260.031);
-	--card-rgb: 55 55 65;
-	--card-foreground: oklch(0.9288 0.0126 255.5078);
-	--popover: oklch(0.2795 0.0368 260.031);
-	--popover-rgb: 55 55 65;
-	--popover-foreground: oklch(0.9288 0.0126 255.5078);
-	--primary: oklch(71.859% 0.12161 196.883);
-	--primary-foreground: oklch(1 0 0);
-	--secondary: oklch(0.3351 0.0331 260.912);
-	--secondary-foreground: oklch(0.8717 0.0093 258.3382);
-	--muted: oklch(0.2427 0.0381 259.9437);
-	--muted-foreground: oklch(0.7137 0.0192 261.3246);
-	--accent: oklch(0.7534 0.0969 6.4326);
-	--accent-foreground: oklch(0.9288 0.0126 255.5078);
-	--destructive: oklch(0.6368 0.2078 25.3313);
-	--destructive-foreground: oklch(0.2077 0.0398 265.7549);
-	--border: oklch(0.4461 0.0263 256.8018);
-	--input: oklch(0.4461 0.0263 256.8018);
-	--ring: oklch(0.8971 0.1504 196.9043);
+/* 
+	Note: Add this in to enable a dark theme.
+	Dark mode: swap light/dark primitives for semantic colors
+*/
+/* .dark {
+	--background: var(--dark-2);
+	--background-rgb: 20 20 20;
+	--foreground: var(--light-6);
+
+	--card: var(--dark-3);
+	--card-rgb: 22 22 22;
+	--card-foreground: var(--light-6);
+
+	--primary: var(--light-6);
+	--primary-foreground: var(--dark-1);
+
+	--secondary: var(--neutral-2);
+	--secondary-foreground: var(--light-7);
+
+	--muted: var(--dark-4);
+	--muted-foreground: var(--neutral-4);
+
+	--accent: var(--neutral-1);
+	--accent-foreground: var(--light-7);
+
+	--destructive: var(--red-1);
+
+	--border: var(--neutral-1);
+	--input: var(--dark-4);
+	--ring: var(--neutral-3);
 
 	--shadow-x: 0px;
 	--shadow-y: 4px;
@@ -151,15 +230,13 @@
 	--shadow-lg: 0px 4px 8px -1px hsl(0 0% 0% / 0.1), 0px 4px 6px -2px hsl(0 0% 0% / 0.1);
 	--shadow-xl: 0px 4px 8px -1px hsl(0 0% 0% / 0.1), 0px 8px 10px -2px hsl(0 0% 0% / 0.1);
 	--shadow-2xl: 0px 4px 8px -1px hsl(0 0% 0% / 0.25);
-}
+} */
 
 @theme inline {
 	--color-background: var(--background);
 	--color-foreground: var(--foreground);
 	--color-card: var(--card);
 	--color-card-foreground: var(--card-foreground);
-	--color-popover: var(--popover);
-	--color-popover-foreground: var(--popover-foreground);
 	--color-primary: var(--primary);
 	--color-primary-foreground: var(--primary-foreground);
 	--color-secondary: var(--secondary);
@@ -169,7 +246,6 @@
 	--color-accent: var(--accent);
 	--color-accent-foreground: var(--accent-foreground);
 	--color-destructive: var(--destructive);
-	--color-destructive-foreground: var(--destructive-foreground);
 	--color-border: var(--border);
 	--color-input: var(--input);
 	--color-ring: var(--ring);
@@ -178,9 +254,11 @@
 	--font-mono: var(--font-mono);
 	--font-serif: var(--font-serif);
 
-	--radius-sm: calc(var(--radius) - 4px);
-	--radius-md: calc(var(--radius) - 2px);
-	--radius-lg: var(--radius);
+	/* Other radiuses calculated from base */
+	--radius-sm: calc(var(--radius) - 2px);
+	--radius-md: var(--radius);
+	/* lg is base/default */
+	--radius-lg: calc(var(--radius) + 2px);
 	--radius-xl: calc(var(--radius) + 4px);
 
 	--shadow-2xs: var(--shadow-2xs);
@@ -191,6 +269,16 @@
 	--shadow-lg: var(--shadow-lg);
 	--shadow-xl: var(--shadow-xl);
 	--shadow-2xl: var(--shadow-2xl);
+
+	/* Spacing for Tailwind utilities (e.g., p-space-md, gap-space-xl) */
+	--spacing-xs: var(--space-xs);
+	--spacing-sm: var(--space-sm);
+	--spacing-md: var(--space-md);
+	--spacing-lg: var(--space-lg);
+	--spacing-xl: var(--space-xl);
+	--spacing-2xl: var(--space-2xl);
+	--spacing-3xl: var(--space-3xl);
+	--spacing-4xl: var(--space-4xl);
 
 	/* Breakpoints for Tailwind */
 	--breakpoint-desktop: 1025px;

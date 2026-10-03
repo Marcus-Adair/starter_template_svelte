@@ -19,7 +19,6 @@
 
 <!-- :global() needed because SeparatorPrimitive.Root renders the DOM element -->
 <style>
-    /* Separator - sizing (needs @responsive) */
     :global(:where(.base-separator)) {
         @responsive {
             height: 1px;

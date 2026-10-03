@@ -34,8 +34,8 @@
 
 <style>
 	.intro-words { 
-		@responsive { @text h1Desktop; } 
-		@small { @text h1Mobile; } 
+		@responsive { @text h1; } 
+		@small { @text h5; } 
 	}
 	.intro-div {
 		@responsive {

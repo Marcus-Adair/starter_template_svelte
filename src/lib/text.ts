@@ -1,39 +1,34 @@
 /**
- * Typography system for consistent text styles.
- * Use with @text directive in @responsive/@small/@large blocks.
- *
- * @example
- * <style>
- *   .title {
- *     @responsive { @text h1Desktop; }
- *     @small { @text h1Mobile; }
- *   }
- * </style>
+ * Typography system. Use with @text directive in @responsive/@small/@large blocks.
  */
 
 export const text: Record<string, string> = {
-	// Headings - Desktop
-	h1Desktop: `font-family: Aktura; font-size: 200px; line-height: 220px; font-weight: 700; `,
-	h2Desktop: `font-size: 48px; line-height: 56px; font-weight: 600;`,
-	h3Desktop: `font-size: 32px; line-height: 40px; font-weight: 600;`,
+	// Headings
+	h1: `font-family: Aktura; font-size: 162px; line-height: 136px; font-weight: 700; letter-spacing: -0.04em;`,
+	h2: `font-family: Aktura; font-size: 112px; line-height: 123px; font-weight: 700; letter-spacing: -0.04em;`,
+	h3: `font-family: Aktura; font-size: 96px; line-height: 90px; font-weight: 400; letter-spacing: -0.04em;`,
+	h4: `font-family: Aktura; font-size: 68px; line-height: 70px; font-weight: 400; letter-spacing: -0.04em;`,
+	h5: `font-family: Aktura; font-size: 65px; line-height: 45px; font-weight: 700; letter-spacing: -0.04em;`,
+	h6: `font-family: Aktura; font-size: 56px; line-height: 40px; font-weight: 400; letter-spacing: -0.04em;`,
+	h7: `font-family: Aktura; font-size: 48px; line-height: 31px; font-weight: 400; letter-spacing: -0.04em;`,
+	h8: `font-family: Aktura; font-size: 32px; line-height: 24px; font-weight: 400; letter-spacing: -0.04em;`,
+	h9: `font-family: Aktura; font-size: 24px; line-height: 28px; font-weight: 400; letter-spacing: -0.01em;`,
+	h10: `font-family: Aktura; font-size: 16px; line-height: 25px; font-weight: 400; letter-spacing: -0.01em;`,
 
-	// Headings - Mobile
-	h1Mobile: `font-family: Aktura; font-size: 54px; line-height: 60px; font-weight: 700;`,
-	h2Mobile: `font-size: 32px; line-height: 40px; font-weight: 600;`,
-	h3Mobile: `font-size: 24px; line-height: 32px; font-weight: 600;`,
+	// Paragraph
+	p1: `font-size: 24px; line-height: 34px; font-weight: 400; letter-spacing: -0.04em;`,
+	p2: `font-size: 22px; line-height: 34px; font-weight: 400; letter-spacing: -0.04em;`,
+	p3: `font-size: 18px; line-height: 27px; font-weight: 400; letter-spacing: -0.04em;`,
+	p4: `font-size: 12px; line-height: 18px; font-weight: 400; letter-spacing: -0.04em;`,
 
-	// Headings - Universal (same on all breakpoints)
-	h4: `font-size: 24px; line-height: 32px; font-weight: 600;`,
-	h5: `font-size: 20px; line-height: 28px; font-weight: 600;`,
-	h6: `font-size: 18px; line-height: 24px; font-weight: 600;`,
+	// Kicker
+	kicker1: `font-size: 17px; line-height: 19px; font-weight: 500; letter-spacing: 0.04em;`,
+	kicker2: `font-size: 12px; line-height: 16px; font-weight: 500; letter-spacing: 0.04em;`,
 
-	// Body text
-	p1: `font-size: 18px; line-height: 26px;`,
-	p2: `font-size: 16px; line-height: 24px;`,
-	p3: `font-size: 14px; line-height: 20px;`,
+	// Link
+	link1: `font-size: 18px; line-height: 25px; font-weight: 500; letter-spacing: -0.02em;`,
+	link2: `font-size: 14px; line-height: 18px; font-weight: 500; letter-spacing: -0.04em;`,
 
 	// Utility
-	caption: `font-size: 12px; line-height: 16px;`,
-	overline: `font-size: 12px; line-height: 16px; text-transform: uppercase; letter-spacing: 0.1em;`,
 	label: `font-size: 14px; line-height: 20px; font-weight: 500;`,
 };

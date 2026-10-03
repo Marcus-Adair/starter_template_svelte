@@ -5,15 +5,12 @@
 	import GridParent from "$lib/components/ui-primitives/GridParent.svelte";
 </script>
 
-<!-- Hero with fixed content - outside main GridParent -->
 <Hero100vh
 	heroTitle="About Page"
 	heroSubTitle="This is the about page, and its used to test page transitions."
 />
 
-<!-- Page content - scrolls over and clips the fixed hero -->
 <GridParent class="page-content">
-	<!-- Content Section -->
 	<section class="section grid-main">
 		<h2 class="section-title">Page Transition Test</h2>
 		
@@ -27,20 +24,17 @@
 		</p>
 
 		<div class="button-row">
-			<Button href={resolve("/")} variant="outline">Back to Home</Button>
-			<Button href={resolve("/about")} variant="ghost">Go To About (No Transition)</Button>
+			<Button href={resolve("/")} variant="outline">
+				Back to Home
+			</Button>
+			<Button href={resolve("/about")} variant="ghost">
+				Go To About (No Transition)
+			</Button>
 		</div>
 	</section>
 </GridParent>
 
 <style>
-	/* Hero (GridFullBleed component - requires :global) */
-	:global(.hero) {
-		@responsive {
-			padding: 80px 0;
-		}
-	}
-
 	.section {
 		@responsive {
 			padding: 48px 0;
@@ -49,11 +43,11 @@
 
 	.section-title {
 		@responsive {
-			@text h2Desktop;
+			@text h7;
 			margin-bottom: 20px;
 		}
 		@small {
-			@text h2Mobile;
+			@text h8;
 		}
 	}
 

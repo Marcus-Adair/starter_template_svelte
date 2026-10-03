@@ -15,7 +15,6 @@
 
 	gsap.registerPlugin(ScrollTrigger);
 
-	// ScrollTrigger config (from Reform Co)
 	ScrollTrigger.config({ ignoreMobileResize: true });
 
 	let { children } = $props();
@@ -28,7 +27,7 @@
 			easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
 		});
 
-		// Sync Lenis with GSAP ticker (like Reform Co does)
+		// Sync Lenis with GSAP ticker
 		function update(time: number) {
 			lenis.raf(time * 1000);
 		}

@@ -65,16 +65,12 @@
 {/if}
 
 <style>
-    /* Container - sizing (needs @responsive) */
     .input-label-container {
         display: flex;
         flex-direction: column;
-        @responsive {
-            gap: 16px;
-        }
+        gap: var(--space-lg);
     }
 
-    /* Input base - sizing (needs @responsive) */
     :where(.base-input) {
         width: 100%;
         min-width: 0;
@@ -82,11 +78,11 @@
         box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
         outline: none;
         transition: color 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+        height: 36px;
+        padding: var(--space-xs) var(--space-md);
+        border-radius: var(--radius-md);
+        border: 1px solid var(--input);
         @responsive {
-            height: 36px;
-            padding: 4px 10px;
-            border-radius: var(--radius-md);
-            border: 1px solid var(--input);
             @text p3;
         }
     }
@@ -112,14 +108,13 @@
     }
 
     /* Dark mode */
-    :where(.dark .base-input) {
+    /* :where(.dark .base-input) {
         background-color: color-mix(in srgb, var(--input) 30%, transparent);
     }
-
     :where(.dark .base-input[aria-invalid="true"]) {
         border-color: color-mix(in srgb, var(--destructive) 50%, transparent);
         box-shadow: 0 0 0 3px color-mix(in srgb, var(--destructive) 40%, transparent);
-    }
+    } */
 
     /* File input button */
     /* Note: font props outside @responsive to avoid Capsize adding ::before/::after (can't chain with ::file-selector-button) */

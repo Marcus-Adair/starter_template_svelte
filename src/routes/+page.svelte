@@ -12,16 +12,13 @@
 	let dynamicLabel = $derived(small.matches ? "Mobile" : "Desktop")
 </script>
 
-<!-- Hero with fixed content - outside main GridParent -->
 <Hero100vh
 	heroTitle="Starter Template"
 	heroSubTitle={`Responsive / CapsizeCSS / Grid-Template - System Demo (${dynamicLabel}) - Full-bleed hero section. Content respects gutters.`}
 />
 
-<!-- Page content - scrolls over and clips the fixed hero -->
 <GridParent class="page-content">
 	<GridMain>
-		<!-- Content section + Grid Demo -->
 		<div class="section-container">
 			<h2 class="section-title">Content Section</h2>
 			<p class="section-text">
@@ -41,7 +38,6 @@
 			{/each}
 		</div>
 
-		<!-- Breakpoint demo -->
 		<div class="section-container">
 			<h2 class="section-title">Breakpoint Demo</h2>
 			<p class="section-text">
@@ -55,7 +51,6 @@
 			</div>
 		</div>
 
-		<!-- Navigation demo -->
 		<div class="section-container">
 			<h2 class="section-title">Page Transitions</h2>
 			<p class="section-text">
@@ -88,8 +83,8 @@
 
 <style>
 	.section-title {
-		@responsive { @text h3Desktop; }
-		@small { @text h3Mobile; }
+		@responsive { @text h8; }
+		@small { @text h9; }
 	}
 	.section-container {
 		@responsive {
