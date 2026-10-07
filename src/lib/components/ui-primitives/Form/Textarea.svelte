@@ -5,7 +5,7 @@
 <script lang="ts" module>
     import { cn } from "$lib/utils/misc";
     import type { HTMLTextareaAttributes } from "svelte/elements";
-    import Label from "./Label.svelte";
+    import Label from "../Label.svelte";
 
     export type TextareaProps = HTMLTextareaAttributes & {
         label?: string;
@@ -24,7 +24,7 @@
 
 <div class="textarea-label-container">
     {#if label}
-        <Label for={id}>{label}</Label>
+        <Label for={id ?? undefined}>{label}</Label>
     {/if}
     <textarea
         id={id}
@@ -46,16 +46,16 @@
         display: flex;
         width: 100%;
         background-color: transparent;
-        box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
         field-sizing: content;
         outline: none;
         transition: color 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
-        min-height: 64px;
         padding: var(--space-sm) var(--space-md);
         border-radius: var(--radius-md);
         border: 1px solid var(--input);
         @responsive {
             @text p3;
+            min-height: 64px;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
         }
     }
 
@@ -65,7 +65,7 @@
 
     :where(.base-textarea:focus-visible) {
         border-color: var(--ring);
-        box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
+        @responsive { box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent); }
     }
 
     :where(.base-textarea:disabled) {
@@ -75,7 +75,7 @@
 
     :where(.base-textarea[aria-invalid="true"]) {
         border-color: var(--destructive);
-        box-shadow: 0 0 0 3px color-mix(in srgb, var(--destructive) 20%, transparent);
+        @responsive { box-shadow: 0 0 0 3px color-mix(in srgb, var(--destructive) 20%, transparent); }
     }
 
     /* Dark mode */

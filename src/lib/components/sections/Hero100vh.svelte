@@ -8,7 +8,7 @@
 -->
 <script lang="ts">
 	import ScrolldownArrowSvg from "../svgs/ScrolldownArrowSvg.svelte";
-	import GridParent from "../ui-primitives/GridParent.svelte";
+	import { GridParent } from "../ui-primitives/Grid";
 
 	let {
 		heroTitle,

@@ -9,7 +9,8 @@ export const MOBILE_BREAKPOINT = 700;
 
 const pxRegex = /-?\d+(\.\d+)?px/g;
 const fontSizeRegex = /font-size:\s*(\d+(?:\.\d+)?)px/;
-const lineHeightRegex = /line-height:\s*(\d+(?:\.\d+)?)px/;
+const lineHeightPxRegex = /line-height:\s*(\d+(?:\.\d+)?)px/;
+const lineHeightUnitlessRegex = /line-height:\s*(\d+(?:\.\d+)?)\s*;/;
 const textDirectiveRegex = /@text\s+(\w+)\s*;?/g;
 
 /**
@@ -87,6 +88,7 @@ function isMediaPreferred(property: string): boolean {
 /**
  * Split CSS declarations into calc-preferred and media-preferred groups.
  * Returns { calcCss, mediaCss } where each is a string of declarations.
+ * Note: Only properties with px values go to mediaCss; unitless values pass through.
  */
 function splitByEngine(css: string): { calcCss: string; mediaCss: string } {
 	const calcDeclarations: string[] = [];
@@ -97,10 +99,11 @@ function splitByEngine(css: string): { calcCss: string; mediaCss: string } {
 	declarationRegex.lastIndex = 0;
 
 	while ((match = declarationRegex.exec(css)) !== null) {
-		const [fullMatch, property] = match;
+		const [fullMatch, property, value] = match;
 		const declaration = fullMatch.endsWith(';') ? fullMatch : `${fullMatch};`;
 
-		if (isMediaPreferred(property)) {
+		// Only use media queries for properties that prefer them AND have px values
+		if (isMediaPreferred(property) && value.includes('px')) {
 			mediaDeclarations.push(declaration);
 		} else {
 			calcDeclarations.push(declaration);
@@ -144,19 +147,29 @@ function expandTextDirectives(css: string): string {
 }
 
 /**
- * Check if CSS contains both font-size and line-height in px.
+ * Check if CSS contains font-size (px) and line-height (px or unitless ratio).
+ * For unitless line-height, computes px value as fontSize * ratio.
  * Returns the values if found, null otherwise.
  */
 function extractCapsizeValues(css: string): { fontSize: number; lineHeight: number } | null {
 	const fontSizeMatch = css.match(fontSizeRegex);
-	const lineHeightMatch = css.match(lineHeightRegex);
+	if (!fontSizeMatch) return null;
 
-	if (fontSizeMatch && lineHeightMatch) {
-		return {
-			fontSize: parseFloat(fontSizeMatch[1]),
-			lineHeight: parseFloat(lineHeightMatch[1])
-		};
+	const fontSize = parseFloat(fontSizeMatch[1]);
+
+	// Try px line-height first
+	const lineHeightPxMatch = css.match(lineHeightPxRegex);
+	if (lineHeightPxMatch) {
+		return { fontSize, lineHeight: parseFloat(lineHeightPxMatch[1]) };
 	}
+
+	// Try unitless line-height (ratio)
+	const lineHeightUnitlessMatch = css.match(lineHeightUnitlessRegex);
+	if (lineHeightUnitlessMatch) {
+		const ratio = parseFloat(lineHeightUnitlessMatch[1]);
+		return { fontSize, lineHeight: fontSize * ratio };
+	}
+
 	return null;
 }
 

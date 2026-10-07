@@ -7,7 +7,7 @@
 <script lang="ts" module>
     import { cn } from "$lib/utils/misc";
     import type { HTMLInputAttributes, HTMLInputTypeAttribute } from "svelte/elements";
-	import Label from "./Label.svelte";
+	import Label from "../Label.svelte";
 
     type InputType = Exclude<HTMLInputTypeAttribute, "file">;
 
@@ -32,7 +32,7 @@
 {#if type === "file"}
     <div class="input-label-container">
         {#if label}
-            <Label for={id}>
+            <Label for={id ?? undefined}>
                 {label}
             </Label>
         {/if}
@@ -49,7 +49,7 @@
 {:else}
     <div class="input-label-container">
         {#if label}
-            <Label for={id}>
+            <Label for={id ?? undefined}>
                 {label}
             </Label>
         {/if}
@@ -75,15 +75,15 @@
         width: 100%;
         min-width: 0;
         background-color: transparent;
-        box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
         outline: none;
         transition: color 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
-        height: 36px;
         padding: var(--space-xs) var(--space-md);
         border-radius: var(--radius-md);
         border: 1px solid var(--input);
         @responsive {
             @text p3;
+            height: 36px;
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
         }
     }
 
@@ -93,7 +93,7 @@
 
     :where(.base-input:focus-visible) {
         border-color: var(--ring);
-        box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
+        @responsive { box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent); }
     }
 
     :where(.base-input:disabled) {
@@ -104,7 +104,7 @@
 
     :where(.base-input[aria-invalid="true"]) {
         border-color: var(--destructive);
-        box-shadow: 0 0 0 3px color-mix(in srgb, var(--destructive) 20%, transparent);
+        @responsive { box-shadow: 0 0 0 3px color-mix(in srgb, var(--destructive) 20%, transparent); }
     }
 
     /* Dark mode */

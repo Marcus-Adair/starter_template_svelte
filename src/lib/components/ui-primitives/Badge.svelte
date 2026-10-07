@@ -1,14 +1,13 @@
 <!--
     Badge component for labels, tags, and status indicators.
-    Renders as <a> when href is provided, otherwise <span>.
 
     Inspired by shadcn-svelte.
 -->
 <script lang="ts" module>
     import { cn } from "$lib/utils/misc";
-    import type { HTMLAnchorAttributes, HTMLAttributes } from "svelte/elements";
+    import type { HTMLAttributes } from "svelte/elements";
 
-    export type BadgeProps = HTMLAttributes<HTMLSpanElement> & HTMLAnchorAttributes & {
+    export type BadgeProps = HTMLAttributes<HTMLDivElement> & {
         variant?: "default" | "secondary" | "destructive" | "outline" | "ghost";
         size?: "sm" | "default" | "lg";
     };
@@ -24,7 +23,6 @@
 
 <script lang="ts">
     let {
-        href,
         class: className,
         variant = "default",
         size = "default",
@@ -33,14 +31,12 @@
     }: BadgeProps = $props();
 </script>
 
-<svelte:element
-    this={href ? "a" : "span"}
-    {href}
+<div
     class={cn(badgeVariants({ variant, size }), className)}
     {...restProps}
 >
-    {@render children?.()}
-</svelte:element>
+    <span class="badge-text">{@render children?.()}</span>
+</div>
 
 <style>
     /* =========================================================
@@ -51,17 +47,19 @@
         align-items: center;
         justify-content: center;
         width: fit-content;
-        font-weight: 500;
         flex-shrink: 0;
         overflow: hidden;
         white-space: nowrap;
         transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
         gap: var(--space-xs);
         border-radius: var(--radius-md);
-        border: 1px solid transparent;
-        @responsive {
-            @text p4;
+        @responsive { 
+            border: 1px solid transparent; 
         }
+    }
+
+    .badge-text {
+        @responsive { @text p3; }
     }
 
     :where(.base-badge > :global(svg)) {
@@ -76,18 +74,47 @@
 
     :where(.base-badge:focus-visible) {
         border-color: var(--ring);
-        box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
         outline: none;
+        @responsive { box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent); }
     }
 
     :where(.base-badge[aria-invalid="true"]) {
         border-color: var(--destructive);
-        box-shadow: 0 0 0 3px color-mix(in srgb, var(--destructive) 20%, transparent);
+        @responsive { box-shadow: 0 0 0 3px color-mix(in srgb, var(--destructive) 20%, transparent); }
     }
 
     /* :where(.dark .base-badge[aria-invalid="true"]) {
         box-shadow: 0 0 0 3px color-mix(in srgb, var(--destructive) 40%, transparent);
     } */
+
+    /* =========================================================
+       Sizes
+       ========================================================= */
+
+       :where(.base-badge--size-sm) {
+        @responsive {
+            border-radius: min(var(--radius-md), 8px);
+            padding: 5px 7px;
+         }
+    }
+    :where(.base-badge--size-sm) .badge-text {
+        @responsive { @text p4; }
+    }
+
+    :where(.base-badge--size-default) {
+        @responsive {
+            padding: 7.5px 9.5px;
+         }
+    }
+
+    :where(.base-badge--size-lg) {
+        @responsive {
+            padding: 10.5px 12.5px;
+         }
+    }
+    :where(.base-badge--size-lg) .badge-text {
+        @responsive { @text p2; }
+    }
 
     /* =========================================================
        Variants - colors only (no @responsive needed)
@@ -97,79 +124,24 @@
         background-color: var(--primary);
         color: var(--primary-foreground);
     }
-    :where(a.base-badge--default:hover) {
-        background-color: color-mix(in srgb, var(--primary) 80%, transparent);
-    }
 
     :where(.base-badge--secondary) {
         background-color: var(--secondary);
         color: var(--secondary-foreground);
-    }
-    :where(a.base-badge--secondary:hover) {
-        background-color: color-mix(in srgb, var(--secondary) 80%, transparent);
     }
 
     :where(.base-badge--destructive) {
         background-color: color-mix(in srgb, var(--destructive) 10%, transparent);
         color: var(--destructive);
     }
-    :where(.base-badge--destructive:focus-visible) {
-        box-shadow: 0 0 0 3px color-mix(in srgb, var(--destructive) 20%, transparent);
-    }
-    :where(a.base-badge--destructive:hover) {
-        background-color: color-mix(in srgb, var(--destructive) 20%, transparent);
-    }
-    /* :where(.dark .base-badge--destructive) {
-        background-color: color-mix(in srgb, var(--destructive) 20%, transparent);
-    }
-    :where(.dark .base-badge--destructive:focus-visible) {
-        box-shadow: 0 0 0 3px color-mix(in srgb, var(--destructive) 40%, transparent);
-    } */
 
     :where(.base-badge--outline) {
         border-color: var(--border);
         color: var(--foreground);
     }
-    :where(a.base-badge--outline:hover) {
-        background-color: var(--muted);
-        color: var(--muted-foreground);
-    }
 
     :where(.base-badge--ghost) {
         color: var(--foreground);
     }
-    :where(.base-badge--ghost:hover) {
-        background-color: var(--muted);
-        color: var(--muted-foreground);
-    }
-    /* :where(.dark .base-badge--ghost:hover) {
-        background-color: color-mix(in srgb, var(--muted) 50%, transparent);
-    } */
 
-    /* =========================================================
-       Sizes
-       ========================================================= */
-
-    :where(.base-badge--size-sm) {
-        height: 16px;
-        padding: 0 var(--space-xs);
-        @responsive {
-            font-size: 10px;
-            line-height: 14px;
-        }
-    }
-
-    :where(.base-badge--size-default) {
-        height: 20px;
-        padding: 2px var(--space-sm);
-    }
-
-    :where(.base-badge--size-lg) {
-        height: 28px;
-        padding: var(--space-xs) var(--space-md);
-        @responsive {
-            font-size: 18px;
-            line-height: 27px;
-        }
-    }
 </style>

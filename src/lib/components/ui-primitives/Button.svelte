@@ -69,7 +69,7 @@
       tabindex={disabled ? -1 : undefined}
       {...restProps}
     >
-      {@render children?.()}
+      <span class="button-text">{@render children?.()}</span>
     </a>
   {:else}
     <button
@@ -78,7 +78,7 @@
       {disabled}
       {...restProps}
     >
-      {@render children?.()}
+      <span class="button-text">{@render children?.()}</span>
     </button>
   {/if}
 
@@ -101,18 +101,21 @@
         @responsive {
             border-radius: var(--radius-md);
             border: 1px solid transparent;
-            @text p4;
         }
+    }
+
+    .button-text {
+        @responsive { @text p3; }
     }
 
     :where(.base-button:focus-visible) {
         border-color: var(--ring);
-        box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
+        @responsive { box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent); }
     }
 
     :where(.base-button[aria-invalid]) {
         border-color: var(--destructive);
-        box-shadow: 0 0 0 3px color-mix(in srgb, var(--destructive) 20%, transparent);
+        @responsive { box-shadow: 0 0 0 3px color-mix(in srgb, var(--destructive) 20%, transparent); }
     }
     /* :where(.dark .base-button[aria-invalid]) {
         border-color: color-mix(in srgb, var(--destructive) 50%, transparent);
@@ -127,6 +130,76 @@
     :where(.base-button svg) {
         pointer-events: none;
         flex-shrink: 0;
+    }
+
+   /* =========================================================
+       Sizes
+       ========================================================= */
+
+    /* default */
+    :where(.base-button--size-default) {
+        gap: var(--space-sm);
+        padding-left: var(--space-md);
+        padding-right: var(--space-md);
+        @responsive { height: 40px; }
+    }
+
+    /* xs */
+    :where(.base-button--size-xs) {
+        gap: var(--space-xs);
+        padding-left: max(var(--space-xs), 8px);
+        padding-right: max(var(--space-xs), 8px);
+        @responsive {
+            height: 27px;
+            border-radius: min(var(--radius-md), 8px);
+        }
+    }
+    :where(.base-button--size-xs) .button-text {
+        @responsive { @text p4; }
+    }
+
+    /* sm */
+    :where(.base-button--size-sm) {
+        gap: var(--space-xs);
+        padding-left: var(--space-md);
+        padding-right: var(--space-md);
+        @responsive {
+            height: 34px;
+            border-radius: min(var(--radius-md), 10px);
+        }
+    }
+
+    /* lg */
+    :where(.base-button--size-lg) {
+        gap: var(--space-sm);
+        padding-left: var(--space-lg);
+        padding-right: var(--space-lg);
+        @responsive {
+            height: 46px;
+        }
+    }
+    :where(.base-button--size-lg) .button-text {
+        @responsive { @text p1; }
+    }
+
+    /* icon */
+    :where(.base-button--size-icon) {
+        @responsive {
+            width: 36px;
+            height: 36px;
+            border-radius: min(var(--radius-md), 10px);
+        }
+    }
+
+    /* Reset size styles to be inline like a span for "link" variant (after sizes so it wins) */
+    :where(.base-button--link) {
+        @responsive {
+            height: auto;
+            padding: 0;
+            gap: 0;
+            border: none;
+            border-radius: 0;
+        }
     }
 
     /* =========================================================
@@ -147,7 +220,7 @@
     :where(.base-button--outline) {
         border-color: var(--border);
         background-color: var(--background);
-        box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+        @responsive { box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05); }
     }
     :where(.base-button--outline:hover),
     :where(.base-button--outline[aria-expanded="true"]) {
@@ -205,7 +278,7 @@
     }
     :where(.base-button--destructive:focus-visible) {
         border-color: color-mix(in srgb, var(--destructive) 40%, transparent);
-        box-shadow: 0 0 0 3px color-mix(in srgb, var(--destructive) 20%, transparent);
+        @responsive { box-shadow: 0 0 0 3px color-mix(in srgb, var(--destructive) 20%, transparent); }
     }
     /* :where(.dark .base-button--destructive) {
         background-color: color-mix(in srgb, var(--destructive) 20%, transparent);
@@ -222,67 +295,12 @@
 
     :where(.base-button--link) {
         color: var(--primary);
-        text-underline-offset: 4px;
+        @responsive { text-underline-offset: 4px; }
+    }
+    :where(.base-button--link) .button-text {
+        @responsive { @text link1; }
     }
     :where(.base-button--link:hover) {
         text-decoration: underline;
-    }
-
-    /* =========================================================
-       Sizes
-       ========================================================= */
-
-    /* default */
-    :where(.base-button--size-default) {
-        height: 36px;
-        gap: var(--space-sm);
-        padding-left: var(--space-md);
-        padding-right: var(--space-md);
-    }
-
-    /* xs */
-    :where(.base-button--size-xs) {
-        @responsive {
-            border-radius: min(var(--radius-md), 8px);
-            @text p4;
-            font-weight: 500;
-        }
-        height: 24px;
-        gap: var(--space-xs);
-        padding-left: var(--space-sm);
-        padding-right: var(--space-sm);
-    }
-
-    /* sm */
-    :where(.base-button--size-sm) {
-        border-radius: min(var(--radius-md), 10px);
-        height: 32px;
-        gap: var(--space-xs);
-        padding-left: var(--space-md);
-        padding-right: var(--space-md);
-    }
-
-    /* lg */
-    :where(.base-button--size-lg) {
-        height: 40px;
-        gap: var(--space-sm);
-        padding-left: var(--space-md);
-        padding-right: var(--space-md);
-    }
-
-    /* icon */
-    :where(.base-button--size-icon) {
-        border-radius: min(var(--radius-md), 10px);
-        width: 36px;
-        height: 36px;
-    }
-
-    /* Reset size styles to be inline like a span for "link" variant (after sizes so it wins) */
-    :where(.base-button--link) {
-        @responsive {
-            height: auto;
-            padding: 0;
-            gap: 0;
-        }
     }
   </style>

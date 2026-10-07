@@ -29,7 +29,7 @@
     }: CheckboxProps = $props();
 </script>
 
-<div class="flex align-center gap-md">
+<div class="flex items-center gap-md">
     <CheckboxPrimitive.Root
         {id}
         bind:ref
@@ -58,7 +58,6 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
         flex-shrink: 0;
         position: relative;
         outline: none;
@@ -69,6 +68,7 @@
             height: 16px;
             border-radius: 4px;
             border: 1px solid var(--input);
+            box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
         }
     }
 
@@ -86,7 +86,7 @@
 
     :global(:where(.base-checkbox:focus-visible)) {
         border-color: var(--ring);
-        box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
+        @responsive { box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent); }
     }
 
     /* Checked state */
@@ -104,7 +104,7 @@
 
     :global(:where(.base-checkbox[aria-invalid="true"])) {
         border-color: var(--destructive);
-        box-shadow: 0 0 0 3px color-mix(in srgb, var(--destructive) 20%, transparent);
+        @responsive { box-shadow: 0 0 0 3px color-mix(in srgb, var(--destructive) 20%, transparent); }
     }
     :global(:where(.base-checkbox[aria-invalid="true"][data-state="checked"])) {
         border-color: var(--primary);

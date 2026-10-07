@@ -18,17 +18,17 @@
 </script>
 
 {#if htmlFor}
-    <label for={htmlFor} class={cn("base-label", className)}>
+    <label for={htmlFor} class={cn("base-label label-text", className)}>
         {@render children?.()}
     </label>
 {:else}
-    <span class={cn("base-label", className)}>
+    <span class={cn("base-label label-text", className)}>
         {@render children?.()}
     </span>
 {/if}
 
 <style>
-    .base-label { @responsive { @text p3; } }
+    .label-text { @responsive { @text p3; } }
 
     :global(:where([data-disabled="true"] .base-label)),
     :global(:where(:disabled + .base-label)),

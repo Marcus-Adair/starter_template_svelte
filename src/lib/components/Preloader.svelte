@@ -19,12 +19,10 @@
 	class="fixed inset-0 z-9999 flex items-center justify-center bg-primary opacity-0"
 	class:disable={!preloaderController.visible}
 >
-	<!-- ADD ANIMATED ELEMENTS HERE -->
-	 <span class="text-primary-foreground">Page transition ...</span>
+	<span class="preloader-text text-primary-foreground">Page transition ...</span>
 </div>
 
 <style>
-	.disable {
-		pointer-events: none;
-	}
+	.disable { pointer-events: none; }
+	.preloader-text { @responsive { @text p2; } }
 </style>

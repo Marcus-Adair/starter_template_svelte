@@ -1,14 +1,12 @@
 <script>
 	import { resolve } from "$app/paths";
 	import Button from "./ui-primitives/Button.svelte";
-	import GridFullBleed from "./ui-primitives/GridFullBleed.svelte";
-	import GridMain from "./ui-primitives/GridMain.svelte";
-	import GridParent from "./ui-primitives/GridParent.svelte";
+	import { GridFullBleed, GridMain, GridParent } from "./ui-primitives/Grid";
 </script>
 
 <footer>
     <GridParent>
-        <GridFullBleed class="footer-bg">
+        <GridFullBleed class="bg-muted z-1">
             <GridParent>
                 <GridMain class="footer-content">
                     <div class="footer-columns">
@@ -21,7 +19,7 @@
                         <!-- Col 1 -->
                         <div class="footer-col">
                             <h4 class="footer-heading">Pages</h4>
-                            <div class="footer-links">
+                            <div class="footer-links flex flex-col items-start">
                                 <Button href={resolve("/")} variant="link" class="footer-link">Home</Button>
                                 <Button href={resolve("/about")} variant="link" class="footer-link">About</Button>
                                 <Button href={resolve("/ui-catalog")} variant="link" class="footer-link">UI Catalog</Button>
@@ -31,7 +29,7 @@
                         <!-- Col 2 -->
                         <div class="footer-col">
                             <h4 class="footer-heading">Column</h4>
-                            <div class="footer-links">
+                            <div class="footer-links flex flex-col items-start">
                                 <Button href="/" variant="link" class="footer-link">Home</Button>
                             </div>
                         </div>
@@ -39,13 +37,15 @@
                         <!-- Col 3 -->
                         <div class="footer-col">
                             <h4 class="footer-heading">Legal</h4>
-                            <span>TODO</span>
+                            <div class="footer-links flex flex-col items-start">
+                                <span class="footer-temp">TODO</span>
+                            </div>
                         </div>
                     </div>
 
                     <!-- Bottom row -->
                     <div class="footer-bottom">
-                        <span class="text-muted-foreground">© {new Date().getFullYear()} Acme Corp. All rights reserved ✧✧✧</span>
+                        <span class="footer-tagline text-muted-foreground">© {new Date().getFullYear()} Acme Corp. All rights reserved ✧✧✧</span>
                         <div class="footer-social">
                             <Button href="https://www.instagram.com/marcusadairdigital/" variant="link" class="footer-link">Instagram</Button>
                             <Button href="https://github.com/Marcus-Adair/" variant="link" class="footer-link">GitHub</Button>
@@ -60,11 +60,6 @@
 
 <style>
     /* Base styles */
-    :global(.footer-bg) {
-        background-color: var(--muted);
-        z-index: 1;
-    }
-
     :global(.footer-content) {
         @responsive {
             @text p3;
@@ -75,7 +70,7 @@
         }
     }
 
-    /* Layout */
+    /* Top */
     .footer-columns {
         @responsive {
             display: grid;
@@ -88,23 +83,45 @@
         }
     }
 
+    .footer-logo { @responsive { @text h4; } }
+    .footer-tagline { @responsive { @text p3; } }
+
     .footer-col {
         @responsive {
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            gap: 12px;
         }
     }
 
     .footer-col--brand {
         @responsive {
-            gap: 12px;
+            gap: 16px;
         }
         @small {
             grid-column: span 2;
         }
     }
+    
+    .footer-heading { @responsive { @text p3; } }
 
+    .footer-temp { @responsive { @text p3; } }
+
+    .footer-links {
+        @responsive {
+            @text p3;
+            gap: 16px;
+        }
+    }
+    :global(.footer-link) {
+        @responsive { color: var(--muted-foreground); }
+    }
+    :global(.footer-link:hover) {
+        @responsive { color: var(--foreground); }
+    }
+
+
+    /* Bottom */
     .footer-bottom {
         @responsive {
             display: flex;
@@ -116,8 +133,8 @@
         }
         @small {
             flex-direction: column;
-            gap: 16px;
             align-items: flex-start;
+            gap: 16px;
         }
     }
 
@@ -125,45 +142,6 @@
         @responsive {
             display: flex;
             gap: 16px;
-        }
-    }
-
-    /* Typography */
-    .footer-logo {
-        @responsive {
-            @text h4;
-        }
-    }
-
-    .footer-heading {
-        @responsive {
-            @text label;
-        }
-    }
-
-    .footer-tagline {
-        color: var(--muted-foreground);
-    }
-
-    /* Links */
-    .footer-links {
-        @responsive {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 8px;
-        }
-    }
-
-    :global(.footer-link) {
-        @responsive {
-            color: var(--muted-foreground);
-        }
-    }
-
-    :global(.footer-link:hover) {
-        @responsive {
-            color: var(--foreground);
         }
     }
 </style>

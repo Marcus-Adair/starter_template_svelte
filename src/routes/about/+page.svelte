@@ -2,7 +2,7 @@
 	import { resolve } from "$app/paths";
 	import Hero100vh from "$lib/components/sections/Hero100vh.svelte";
 	import Button from "$lib/components/ui-primitives/Button.svelte";
-	import GridParent from "$lib/components/ui-primitives/GridParent.svelte";
+	import { GridParent } from "$lib/components/ui-primitives/Grid";
 </script>
 
 <Hero100vh

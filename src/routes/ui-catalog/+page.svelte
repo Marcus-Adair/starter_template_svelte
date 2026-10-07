@@ -5,10 +5,10 @@
 	import Button from "$lib/components/ui-primitives/Button.svelte";
 	import Card from "$lib/components/ui-primitives/Card.svelte";
 	import Checkbox from "$lib/components/ui-primitives/Checkbox.svelte";
-	import GridParent from "$lib/components/ui-primitives/GridParent.svelte";
-	import Input from "$lib/components/ui-primitives/Input.svelte";
+	import { RadioGroup, RadioItem } from "$lib/components/ui-primitives/Radio";
+	import { GridParent } from "$lib/components/ui-primitives/Grid";
+	import { Input, Textarea } from "$lib/components/ui-primitives/Form";
 	import Separator from "$lib/components/ui-primitives/Separator.svelte";
-	import Textarea from "$lib/components/ui-primitives/Textarea.svelte";
 
 	// Color utility functions
 	function parseRgb(str: string): [number, number, number] | null {
@@ -159,15 +159,6 @@
 			<h3 class="type-h8 mb-lg">Separator</h3>
 			<Separator orientation="horizontal"/>
 		</div>
-
-		<div class="subsection mb-2xl">
-			<h3 class="type-h8 mb-lg">Checkbox</h3>
-			<div class="flex flex-col gap-xl">
-				<Checkbox id="terms-checkbox" label="I agree to the terms and conditions" />
-				<Checkbox id="newsletter-checkbox" label="Subscribe to newsletter" checked />
-				<Checkbox id="disabled-checkbox" label="Disabled option" disabled />
-			</div>
-		</div>
 	</section>
 
 	<!-- Input & Textarea Section (side by side) -->
@@ -301,16 +292,7 @@
 				</div>
 			</div>
 
-			<!-- As Link -->
-			<div class="subsection mb-2xl">
-				<h3 class="type-h8 mb-lg">As Link</h3>
-				<div class="flex flex-wrap items-center gap-md">
-					<Badge variant="default" href="#">Clickable</Badge>
-					<Badge variant="secondary" href="#">Clickable</Badge>
-					<Badge variant="outline" href="#">Clickable</Badge>
-				</div>
-			</div>
-		</section>
+			</section>
 	</div>
 
 	<!-- Card Section -->
@@ -320,18 +302,43 @@
 
 		<div class="subsection mb-2xl">
 			<h3 class="type-h8 mb-lg">Sizes</h3>
-			<div class="grid desktop:grid-cols-2 gap-xl">
+			<div class="grid desktop:grid-cols-2 gap-xl items-start">
 				<Card>
-					<strong>Default Card</strong>
-					<p>This card uses the default spacing.</p>
+					<strong class="type-p2">Default Card</strong>
+					<p class="type-p3">This card uses the default spacing.</p>
 				</Card>
 				<Card size="sm">
-					<strong>Small Card</strong>
-					<p>This card uses smaller spacing ("sm").</p>
+					<strong class="type-p2">Small Card</strong>
+					<p class="type-p3">This card uses smaller spacing ("sm").</p>
 				</Card>
 			</div>
 		</div>
 	</section>
+
+	<!-- Checkbox & Radio Section (side by side) -->
+	<div class="two-col-section grid desktop:grid-cols-2 gap-3xl grid-main">
+		<section class="section py-3xl">
+			<h2 class="type-h5 mb-sm">Checkbox</h2>
+			<p class="type-p3 mb-2xl text-muted-foreground">Multi-select options.</p>
+
+			<div class="flex flex-col gap-md">
+				<Checkbox id="check1" label="Default checkbox" />
+				<Checkbox id="check2" label="Checked by default" checked={true} />
+				<Checkbox id="check3" label="Disabled checkbox" disabled />
+			</div>
+		</section>
+
+		<section class="section py-3xl">
+			<h2 class="type-h5 mb-sm">Radio</h2>
+			<p class="type-p3 mb-2xl text-muted-foreground">Single-select options.</p>
+
+			<RadioGroup value="option1">
+				<RadioItem value="option1" id="radio1" label="Option 1" />
+				<RadioItem value="option2" id="radio2" label="Option 2" />
+				<RadioItem value="option3" id="radio3" label="Option 3" />
+			</RadioGroup>
+		</section>
+	</div>
 
 	<!-- Colors Section -->
 	<section class="section py-3xl grid-main">
@@ -445,5 +452,4 @@
 	.type-kicker2 { @responsive { @text kicker2; } }
 	.type-link1 { @responsive { @text link1; } }
 	.type-link2 { @responsive { @text link2; } }
-	.type-label { @responsive { @text label; } }
 </style>

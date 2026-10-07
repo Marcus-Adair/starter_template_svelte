@@ -8,8 +8,9 @@
 
     function cardVariants({ size = "default" }: Pick<CardProps, "size">) {
         return cn(
-            "base-card",
-            size === "sm" && "base-card--sm",
+             "base-card-responsive",
+            "flex flex-col overflow-hidden bg-card text-card-foreground py-xl",
+            size === "sm" ? "gap-md p-xl" : "gap-lg p-2xl",
         );
     }
 </script>
@@ -31,25 +32,12 @@
 </div>
 
 <style>
-    :where(.base-card) {
-        display: flex;
-        flex-direction: column;
-        overflow: hidden;
-        background-color: var(--card);
-        color: var(--card-foreground);
-        box-shadow:
-            0 1px 2px 0 rgb(0 0 0 / 0.05),
-            0 0 0 1px color-mix(in srgb, var(--foreground) 10%, transparent);
-        gap: var(--space-md);
-        padding: var(--space-xl);
-        border-radius: 12px;
+    :where(.base-card-responsive) {
         @responsive {
-            @text p3;
+            border-radius: 12px;
+            box-shadow:
+                0 1px 2px 0 rgb(0 0 0 / 0.05),
+                0 0 0 1px color-mix(in srgb, var(--foreground) 10%, transparent);
         }
-    }
-
-    :where(.base-card--sm) {
-        gap: var(--space-sm);
-        padding: var(--space-lg);
     }
 </style>

@@ -5,8 +5,7 @@
 	// import { toggleMode, mode } from "mode-watcher";
 	// import { Lightbulb, LightbulbOff } from "@lucide/svelte";
 
-	import GridMain from "./ui-primitives/GridMain.svelte";
-	import GridParent from "./ui-primitives/GridParent.svelte";
+	import { GridMain, GridParent } from "./ui-primitives/Grid";
 	import { isSmall } from "$lib/utils/breakpoints.svelte";
 	gsap.registerPlugin(ScrollTrigger);
 
@@ -56,10 +55,10 @@
 		}
 	}
 
-	// Close menu when switching to desktop
+	// Reset menu state when switching to desktop
 	$effect(() => {
 		if (!small.matches && menuOpen) {
-			closeMobileMenu();
+			menuOpen = false; // Direct reset since menuEl is null when desktop
 		}
 	});
 
@@ -152,15 +151,7 @@
 		<GridMain>
 			<nav class="header">
 				<div class="flex items-center">
-					<!-- Theme toggle -->
-					<!-- <button onclick={toggleMode} class="header-size-container cursor-pointer">
-						{#if (mode.current === "light")}
-							<Lightbulb class="header-icon-size" />
-						{:else}
-							<LightbulbOff class="header-icon-size" />
-						{/if}
-					</button> -->
-					LEFT-SIDE
+					<span class="header-text">LEFT-SIDE</span>
 				</div>
 
 				<div class="flex items-center justify-center">
@@ -183,7 +174,7 @@
 							<span class="hamburger-line"></span>
 						</button>
 					{:else}
-						RIGHT-SIDE
+						<span class="header-text">RIGHT-SIDE</span>
 					{/if}
 				</div>
 			</nav>
@@ -214,11 +205,13 @@
 		left: 0;
 		width: 100%;
 		z-index: 100;
-		/* Use RGB variable for reliable backdrop-filter support */
+	}
+
+	.header-wrapper > :global(:first-child) {
 		background-color: rgb(var(--background-rgb) / 0.5);
+		-webkit-backdrop-filter: blur(12px);
+		backdrop-filter: blur(12px);
 		@responsive {
-			-webkit-backdrop-filter: blur(12px);
-			backdrop-filter: blur(12px);
 			border-bottom: 1px solid var(--border);
 		}
 	}
@@ -274,20 +267,20 @@
 		transform-origin: center;
 		@responsive {
 			width: 100%;
-			height: 2px;
+			height: 1.5px;
 			border-radius: 1px;
 		}
 	}
 
 	/* Animate to X - offset = gap + line-height */
 	.hamburger.open .hamburger-line:nth-child(1) {
-		@responsive { transform: translateY(7px) rotate(45deg); }
+		@responsive { transform: translateY(6.5px) rotate(45deg); }
 	}
 	.hamburger.open .hamburger-line:nth-child(2) {
 		opacity: 0;
 	}
 	.hamburger.open .hamburger-line:nth-child(3) {
-		@responsive { transform: translateY(-7px) rotate(-45deg); }
+		@responsive { transform: translateY(-6.5px) rotate(-45deg); }
 	}
 
 	/* Mobile menu - grid collapse technique */
@@ -295,11 +288,6 @@
 		display: grid;
 		grid-template-rows: 0fr;
 		pointer-events: none;
-		background-color: rgb(var(--background-rgb) / 0.95);
-		@responsive {
-			-webkit-backdrop-filter: blur(12px);
-			backdrop-filter: blur(12px);
-		}
 	}
 	.mobile-menu.open {
 		pointer-events: auto;
@@ -312,6 +300,9 @@
 	.mobile-menu-nav a { @responsive { @text link1; } }
 
 	.mobile-anchor {
+		background-color: rgb(var(--background-rgb) / 0.5);
+		-webkit-backdrop-filter: blur(12px);
+		backdrop-filter: blur(12px);
 		@responsive {
 			padding: 24px;
 			@text h10;
@@ -321,4 +312,5 @@
 		border-bottom: 1px solid var(--border);
 	}
 
+	.header-text { @responsive { @text p3; } }
 </style>

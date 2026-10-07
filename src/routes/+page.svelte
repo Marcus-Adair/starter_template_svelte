@@ -3,8 +3,7 @@
 	import { resolve } from "$app/paths";
 	import Hero100vh from "$lib/components/sections/Hero100vh.svelte";
 	import Button from "$lib/components/ui-primitives/Button.svelte";
-	import GridMain from "$lib/components/ui-primitives/GridMain.svelte";
-	import GridParent from "$lib/components/ui-primitives/GridParent.svelte";
+	import { GridMain, GridParent } from "$lib/components/ui-primitives/Grid";
 	import { isSmall } from "$lib/utils/breakpoints.svelte";
 
 	// Use isSmall reactive utility for conditional breakpoint behavior
