@@ -1,19 +1,24 @@
 <!--
     Input component for text, email, password, file, etc.
-    Supports validation states, dark mode, and file inputs.
-
-    Inspired by shadcn-svelte.
+    Supports validation states, hints, and file inputs.
 -->
 <script lang="ts" module>
     import { cn } from "$lib/utils/misc";
     import type { HTMLInputAttributes, HTMLInputTypeAttribute } from "svelte/elements";
-	import Label from "../Label.svelte";
+    import type { Snippet } from "svelte";
 
     type InputType = Exclude<HTMLInputTypeAttribute, "file">;
 
-    export type InputProps = Omit<HTMLInputAttributes, "type"> &
-        ({ type: "file"; files?: FileList; label?: string; }
-        |{ type?: InputType; files?: undefined; label?: string; });
+    export type InputProps = Omit<HTMLInputAttributes, "type"> & {
+        label?: string;
+        hint?: string;
+        required?: boolean;
+        // Content rendered inside the wrapper, after the input (for icons/buttons)
+        trailing?: Snippet;
+    } & (
+        | { type: "file"; files?: FileList }
+        | { type?: InputType; files?: undefined }
+    );
 </script>
 
 <script lang="ts">
@@ -24,112 +29,164 @@
         files = $bindable(),
         class: className,
         label,
+        hint,
+        required,
+        disabled,
+        trailing,
         ...restProps
     }: InputProps = $props();
 </script>
 
-<!-- TODO: build label into input ...  -->
-{#if type === "file"}
-    <div class="input-label-container">
-        {#if label}
-            <Label for={id ?? undefined}>
-                {label}
-            </Label>
+<div class="input-field" data-disabled={disabled || undefined}>
+    {#if label}
+        <label for={id ?? undefined} class="input-label">
+            <span class="input-label-text">{label}{#if required}<span class="input-required">*</span>{/if}</span>
+        </label>
+    {/if}
+
+    <div class="input-wrapper">
+        {#if type === "file"}
+            <input
+                {id}
+                name={restProps.name || id}
+                class={cn("input-control", className)}
+                type="file"
+                {disabled}
+                {required}
+                bind:files
+                bind:value
+                {...restProps}
+            />
+        {:else}
+            <input
+                {id}
+                name={restProps.name || id}
+                class={cn("input-control", trailing ? "has-trailing" : "", className)}
+                {type}
+                {disabled}
+                {required}
+                bind:value
+                {...restProps}
+            />
         {/if}
-        <input
-            id={id}
-            name={restProps.name || id}
-            class={cn("base-input", className)}
-            type="file"
-            bind:files
-            bind:value
-            {...restProps}
-        />
-    </div>
-{:else}
-    <div class="input-label-container">
-        {#if label}
-            <Label for={id ?? undefined}>
-                {label}
-            </Label>
+        {#if trailing}
+            <span class="input-trailing">
+                {@render trailing()}
+            </span>
         {/if}
-        <input
-            id={id}
-            name={restProps.name || id}
-            class={cn("base-input", className)}
-            {type}
-            bind:value
-            {...restProps}
-        />
     </div>
-{/if}
+
+    {#if hint}
+        <span class="input-hint">{hint}</span>
+    {/if}
+</div>
 
 <style>
-    .input-label-container {
+    .input-field {
         display: flex;
         flex-direction: column;
-        gap: var(--space-md);
+        align-items: flex-start;
+        gap: var(--space-sm);
+        width: 100%;
     }
 
-    :where(.base-input) {
+    .input-label {
+        display: block;
+    }
+    .input-label-text {
+        @responsive { @text p3; }
+    }
+    .input-required {
+        margin-left: 3px;
+    }
+
+    /* Wrapper for input + potential icons */
+    .input-wrapper {
+        position: relative;
+        width: 100%;
+    }
+    .input-trailing {
+        position: absolute;
+        right: var(--space-xs);
+        top: 50%;
+        transform: translateY(-50%);
+        display: flex;
+        align-items: center;
+        pointer-events: auto;
+    }
+
+    /* Input control */
+    :where(.input-control) {
         width: 100%;
         min-width: 0;
+        box-sizing: border-box;
         background-color: transparent;
         outline: none;
-        transition: color 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
-        padding: var(--space-xs) var(--space-md);
-        border-radius: var(--radius-md);
         border: 1px solid var(--input);
+        border-radius: var(--radius-sm);
+        color: var(--foreground);
+        font-family: inherit;
+        transition: color 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+        padding: 0 var(--space-lg);
         @responsive {
             @text p3;
-            height: 36px;
+            height: 40px;
             box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
         }
     }
 
-    :where(.base-input::placeholder) {
+    :where(.input-control)::placeholder {
         color: var(--muted-foreground);
     }
 
-    :where(.base-input:focus-visible) {
+    :where(.input-control):focus-visible {
         border-color: var(--ring);
-        @responsive { box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent); }
+        box-shadow: 0 0 0 3px color-mix(in srgb, var(--ring) 50%, transparent);
     }
 
-    :where(.base-input:disabled) {
+    :where(.input-control):disabled {
         pointer-events: none;
         cursor: not-allowed;
         opacity: 0.5;
     }
 
-    :where(.base-input[aria-invalid="true"]) {
+    :where(.input-control[aria-invalid="true"]) {
         border-color: var(--destructive);
-        @responsive { box-shadow: 0 0 0 3px color-mix(in srgb, var(--destructive) 20%, transparent); }
+        box-shadow: 0 0 0 3px color-mix(in srgb, var(--destructive) 20%, transparent);
     }
 
-    /* Dark mode */
-    /* :where(.dark .base-input) {
-        background-color: color-mix(in srgb, var(--input) 30%, transparent);
+    /* Extra padding when trailing content is present (tune as needed) */
+    .input-control.has-trailing {
+        padding-right: calc(var(--space-xl) + 4px);
     }
-    :where(.dark .base-input[aria-invalid="true"]) {
-        border-color: color-mix(in srgb, var(--destructive) 50%, transparent);
-        box-shadow: 0 0 0 3px color-mix(in srgb, var(--destructive) 40%, transparent);
-    } */
+
+    .input-hint {
+        color: var(--muted-foreground);
+        @responsive { @text p4; }
+    }
+
+    .input-field[data-disabled="true"] .input-label-text,
+    .input-field[data-disabled="true"] .input-hint {
+        opacity: 0.5;
+    }
 
     /* File input button */
-    /* Note: font props outside @responsive to avoid Capsize adding ::before/::after (can't chain with ::file-selector-button) */
-    :where(.base-input[type="file"])::file-selector-button {
+    :where(.input-control[type="file"]) {
+        padding: 0 var(--space-md);
+    }
+    :where(.input-control[type="file"])::file-selector-button {
         display: inline-flex;
         align-items: center;
         border: none;
         background-color: transparent;
         color: var(--foreground);
         cursor: pointer;
-        font-size: 14px;
-        line-height: 20px;
-        font-weight: 500;
+        font-family: inherit;
+        margin-right: var(--space-md);
         @responsive {
-            height: 28px;
+            @text p3;
+            font-weight: 500;
+            height: 32px;
         }
     }
 </style>

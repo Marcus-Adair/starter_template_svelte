@@ -10,6 +10,9 @@
 	import { Input, Textarea } from "$lib/components/ui-primitives/Form";
 	import Separator from "$lib/components/ui-primitives/Separator.svelte";
 
+	// Search input demo state
+	let searchValue = $state("");
+
 	// Color utility functions
 	function parseRgb(str: string): [number, number, number] | null {
 		const match = str.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
@@ -161,54 +164,98 @@
 		</div>
 	</section>
 
+	<!-- Checkbox & Radio Section (side by side) -->
+	<div class="two-col-section grid desktop:grid-cols-2 gap-3xl grid-main">
+		<section class="section py-3xl">
+			<h2 class="type-h5 mb-sm">Checkbox</h2>
+			<p class="type-p3 mb-2xl text-muted-foreground">Multi-select options.</p>
+
+			<div class="flex flex-col gap-md">
+				<Checkbox id="check1" label="Default checkbox" />
+				<Checkbox id="check2" label="Checked by default" checked={true} />
+				<Checkbox id="check3" label="Disabled checkbox" disabled />
+			</div>
+		</section>
+
+		<section class="section py-3xl">
+			<h2 class="type-h5 mb-sm">Radio</h2>
+			<p class="type-p3 mb-2xl text-muted-foreground">Single-select options.</p>
+
+			<RadioGroup value="option1">
+				<RadioItem value="option1" id="radio1" label="Option 1" />
+				<RadioItem value="option2" id="radio2" label="Option 2" />
+				<RadioItem value="option3" id="radio3" label="Option 3" />
+			</RadioGroup>
+		</section>
+	</div>
+
 	<!-- Input & Textarea Section (side by side) -->
 	<div class="two-col-section grid desktop:grid-cols-2 gap-3xl grid-main">
 		<section class="section py-3xl">
 			<h2 class="type-h5 mb-sm">Input</h2>
-			<p class="type-p3 mb-2xl text-muted-foreground">Text fields for user input (Labels use @text p3;).</p>
+			<p class="type-p3 mb-2xl text-muted-foreground">Text fields with capsize text, responsive px values.</p>
 
 			<div class="subsection mb-2xl">
-				<h3 class="type-h8 mb-lg">With Labels</h3>
+				<h3 class="type-h8 mb-lg">Basic</h3>
 				<div class="flex flex-col gap-xl">
-					<Input id="full-name-input" label="Full Name:" type="text" placeholder="John Doe" />
-					<Input id="email-addr-input" label="Email Address:" type="email" placeholder="you@example.com" />
-					<Input id="password-input" label="Password:" type="password" placeholder="••••••••" />
-				</div>
-			</div>
-
-			<div class="subsection mb-2xl">
-				<h3 class="type-h8 mb-lg">States</h3>
-				<div class="flex flex-col gap-xl">
-					<Input id="default-input" label="Default:" placeholder="Default input" />
-					<Input id="disabled-input" label="Disabled:" placeholder="Can't edit this" disabled />
-					<Input id="invalid-input" label="Invalid:" placeholder="Something's wrong" aria-invalid="true" />
+					<Input id="full-name-input" label="Full Name" type="text" placeholder="John Doe" />
+					<Input id="email-addr-input" label="Email Address" type="email" placeholder="you@example.com" hint="We'll never share your email." />
 				</div>
 			</div>
 
 			<div class="subsection mb-2xl">
 				<h3 class="type-h8 mb-lg">Required</h3>
 				<div class="flex flex-col gap-xl">
-					<Input id="required-name-input" label="Name:" type="text" placeholder="Required field" required />
-					<Input id="required-email-input" label="Email:" type="email" placeholder="you@example.com" required />
+					<Input id="required-name-input" label="Name" type="text" placeholder="Required field" required />
+					<Input id="required-email-input" label="Email" type="email" placeholder="you@example.com" required hint="Required fields are marked with *" />
+				</div>
+			</div>
+
+			<div class="subsection mb-2xl">
+				<h3 class="type-h8 mb-lg">States</h3>
+				<div class="flex flex-col gap-xl">
+					<Input id="default-input" label="Default" placeholder="Default input" />
+					<Input id="disabled-input" label="Disabled" placeholder="Can't edit this" disabled hint="This field is disabled." />
+					<Input id="invalid-input" label="Invalid" placeholder="Something's wrong" aria-invalid="true" hint="Please check this field." />
 				</div>
 			</div>
 
 			<div class="subsection mb-2xl">
 				<h3 class="type-h8 mb-lg">File</h3>
-				<Input id="upload-doc-input" label="Upload Document:" type="file" />
+				<Input id="upload-doc-input" label="Upload Document" type="file" hint="PNG, JPG up to 10MB" />
+			</div>
+
+			<div class="subsection mb-2xl">
+				<h3 class="type-h8 mb-lg">With Trailing (Search)</h3>
+				<Input id="search-input" type="search" placeholder="Search..." bind:value={searchValue}>
+					{#snippet trailing()}
+						{#if searchValue}
+							<Button size="icon" variant="ghost" onclick={() => searchValue = ''} aria-label="Clear search">
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+							</Button>
+						{/if}
+					{/snippet}
+				</Input>
 			</div>
 		</section>
 
 		<section class="section py-3xl">
 			<h2 class="type-h5 mb-sm">Textarea</h2>
-			<p class="type-p3 mb-2xl text-muted-foreground">Multi-line text input.</p>
+			<p class="type-p3 mb-2xl text-muted-foreground">Multi-line text input with auto-sizing.</p>
 
 			<div class="subsection mb-2xl">
-				<h3 class="type-h8 mb-lg">With Labels</h3>
+				<h3 class="type-h8 mb-lg">Basic</h3>
 				<div class="flex flex-col gap-xl">
-					<Textarea label="Bio:" placeholder="Tell us about yourself..." />
-					<Textarea label="Comments:" placeholder="Leave a comment..." />
-					<Textarea label="Disabled:" placeholder="Can't edit this" disabled />
+					<Textarea id="bio-textarea" label="Bio" placeholder="Tell us about yourself..." hint="Brief description of yourself." />
+					<Textarea id="comments-textarea" label="Comments" placeholder="Leave a comment..." required />
+				</div>
+			</div>
+
+			<div class="subsection mb-2xl">
+				<h3 class="type-h8 mb-lg">States</h3>
+				<div class="flex flex-col gap-xl">
+					<Textarea id="disabled-textarea" label="Disabled" placeholder="Can't edit this" disabled hint="This field is disabled." />
+					<Textarea id="invalid-textarea" label="Invalid" placeholder="Something's wrong" aria-invalid="true" />
 				</div>
 			</div>
 		</section>
@@ -314,31 +361,6 @@
 			</div>
 		</div>
 	</section>
-
-	<!-- Checkbox & Radio Section (side by side) -->
-	<div class="two-col-section grid desktop:grid-cols-2 gap-3xl grid-main">
-		<section class="section py-3xl">
-			<h2 class="type-h5 mb-sm">Checkbox</h2>
-			<p class="type-p3 mb-2xl text-muted-foreground">Multi-select options.</p>
-
-			<div class="flex flex-col gap-md">
-				<Checkbox id="check1" label="Default checkbox" />
-				<Checkbox id="check2" label="Checked by default" checked={true} />
-				<Checkbox id="check3" label="Disabled checkbox" disabled />
-			</div>
-		</section>
-
-		<section class="section py-3xl">
-			<h2 class="type-h5 mb-sm">Radio</h2>
-			<p class="type-p3 mb-2xl text-muted-foreground">Single-select options.</p>
-
-			<RadioGroup value="option1">
-				<RadioItem value="option1" id="radio1" label="Option 1" />
-				<RadioItem value="option2" id="radio2" label="Option 2" />
-				<RadioItem value="option3" id="radio3" label="Option 3" />
-			</RadioGroup>
-		</section>
-	</div>
 
 	<!-- Colors Section -->
 	<section class="section py-3xl grid-main">

@@ -103,7 +103,13 @@
         }
     }
     
-    .footer-heading { @responsive { @text p3; } }
+    .footer-heading { 
+        @responsive { 
+                text-decoration: underline;
+                text-underline-offset: 5px;
+                @text p3; 
+            } 
+    }
 
     .footer-temp { @responsive { @text p3; } }
 

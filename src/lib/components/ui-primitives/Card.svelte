@@ -10,7 +10,7 @@
         return cn(
              "base-card-responsive",
             "flex flex-col overflow-hidden bg-card text-card-foreground py-xl",
-            size === "sm" ? "gap-md p-xl" : "gap-lg p-2xl",
+            size === "sm" ? "gap-md p-xl" : "gap-xl p-2xl",
         );
     }
 </script>
