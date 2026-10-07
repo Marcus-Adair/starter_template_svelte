@@ -191,9 +191,20 @@
 	--shadow-lg: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 4px 6px -1px hsl(0 0% 0% / 0.1);
 	--shadow-xl: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 8px 10px -1px hsl(0 0% 0% / 0.1);
 	--shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
+
+	/* Form Controls (Input, Textarea, Select, etc.) */
+	--control-height: 36px;
+	--control-padding-x: var(--space-lg);
+	--control-padding-y: var(--space-sm);
+	--control-radius: var(--radius-sm);
+	--control-border: var(--input);
+	--control-bg: transparent;
+	--control-color: var(--foreground);
+	--control-placeholder: var(--muted-foreground);
+	--control-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
 }
 
-/* 
+/*
 	Note: Add this in to enable a dark theme.
 	Dark mode: swap light/dark primitives for semantic colors
 */
@@ -238,6 +249,8 @@
 	--shadow-lg: 0px 4px 8px -1px hsl(0 0% 0% / 0.1), 0px 4px 6px -2px hsl(0 0% 0% / 0.1);
 	--shadow-xl: 0px 4px 8px -1px hsl(0 0% 0% / 0.1), 0px 8px 10px -2px hsl(0 0% 0% / 0.1);
 	--shadow-2xl: 0px 4px 8px -1px hsl(0 0% 0% / 0.25);
+
+	.. TODO: add Form Controls
 } */
 
 @theme inline {

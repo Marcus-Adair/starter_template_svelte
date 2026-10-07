@@ -1,14 +1,14 @@
 <!-- Demo of responsive styling with @responsive, @small, @large preprocessor -->
 <script lang="ts">
-	import { resolve } from "$app/paths";
-	import Hero100vh from "$lib/components/sections/Hero100vh.svelte";
-	import Button from "$lib/components/ui-primitives/Button.svelte";
-	import { GridMain, GridParent } from "$lib/components/ui-primitives/Grid";
-	import { isSmall } from "$lib/utils/breakpoints.svelte";
+	import { resolve } from '$app/paths';
+	import Hero100vh from '$lib/components/sections/Hero100vh.svelte';
+	import Button from '$lib/components/ui-primitives/Button.svelte';
+	import { GridMain, GridParent } from '$lib/components/ui-primitives/Grid';
+	import { isSmall } from '$lib/utils/breakpoints.svelte';
 
 	// Use isSmall reactive utility for conditional breakpoint behavior
 	const small = isSmall();
-	let dynamicLabel = $derived(small.matches ? "Mobile" : "Desktop")
+	let dynamicLabel = $derived(small.matches ? 'Mobile' : 'Desktop');
 </script>
 
 <Hero100vh
@@ -23,15 +23,15 @@
 			<p class="section-text">
 				This section uses .grid-main so it respects the gutters. 8 columns on desktop, 4 on mobile.
 				Resize to see it change.
-				<br/>
-				<br/>
+				<br />
+				<br />
 				A max-width is applied to this text to showcase consistent line breaks across screen resizing.
 			</p>
 		</div>
 		<div class="grid-demo">
 			<!-- eslint-disable-next-line @typescript-eslint/no-unused-vars -->
 			{#each Array(8) as _, i (i)}
-				<div class="grid-item-col bg-secondary text-secondary-foreground rounded-lg">
+				<div class="grid-item-col rounded-lg bg-secondary text-secondary-foreground">
 					<p class="grid-item-text">Col {i + 1}</p>
 				</div>
 			{/each}
@@ -40,7 +40,8 @@
 		<div class="section-container">
 			<h2 class="section-title">Breakpoint Demo</h2>
 			<p class="section-text">
-				This box uses @small and @large to change layout per breakpoint (re-size screen to be small on desktop to view). 
+				This box uses @small and @large to change layout per breakpoint (re-size screen to be small
+				on desktop to view).
 			</p>
 
 			<div class="demo-box">
@@ -52,23 +53,22 @@
 
 		<div class="section-container">
 			<h2 class="section-title">Page Transitions</h2>
-			<p class="section-text">
-				Click the link below to test the preloader and fade transitions.
-			</p>
+			<p class="section-text">Click the link below to test the preloader and fade transitions.</p>
 
 			<div class="nav-links">
-				<Button href={resolve("/about")} variant="outline">Go to About Page</Button>
-				<Button href={resolve("/ui-catalog")} variant="outline">View UI Catalog</Button>
+				<Button href={resolve('/about')} variant="outline">Go to About Page</Button>
+				<Button href={resolve('/ui-catalog')} variant="outline">View UI Catalog</Button>
 			</div>
 		</div>
 
-		<div class="flex flex-col capsize-margin">
+		<div class="capsize-margin flex flex-col">
 			<h2 class="section-title">CapsizeCSS</h2>
 			<p class="section-text">
 				This shows the effect of CapsizeCSS when no gap exists added between containers.
 			</p>
 			<p class="section-text">
-				Notice the touching containers. CapsizeCSS cuts whitespace off the tops and bottoms of text, allowing for more precise/predictable design implementation.
+				Notice the touching containers. CapsizeCSS cuts whitespace off the tops and bottoms of text,
+				allowing for more precise/predictable design implementation.
 			</p>
 			<p class="section-text">
 				Use dev mode in Chrome and the Inspect tool to highlight text and see Capsize effect.
@@ -82,8 +82,12 @@
 
 <style>
 	.section-title {
-		@responsive { @text h8; }
-		@small { @text h9; }
+		@responsive {
+			@text h8;
+		}
+		@small {
+			@text h9;
+		}
 	}
 	.section-container {
 		@responsive {
@@ -91,7 +95,7 @@
 			flex-direction: column;
 			gap: 24px;
 
-			margin-top: 56px
+			margin-top: 56px;
 		}
 	}
 	.section-text {
@@ -123,7 +127,6 @@
 			@text p3;
 		}
 	}
-
 
 	.demo-box {
 		display: flex;
@@ -159,9 +162,9 @@
 		}
 	}
 	.capsize-margin {
-		@responsive { 
+		@responsive {
 			margin-top: 56px;
-			margin-bottom: 56px; 
+			margin-bottom: 56px;
 		}
 	}
 </style>

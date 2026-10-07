@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { resolve } from "$app/paths";
-	import gsap from "gsap";
-	import { ScrollTrigger } from "gsap/ScrollTrigger";
+	import { resolve } from '$app/paths';
+	import gsap from 'gsap';
+	import { ScrollTrigger } from 'gsap/ScrollTrigger';
 	// import { toggleMode, mode } from "mode-watcher";
 	// import { Lightbulb, LightbulbOff } from "@lucide/svelte";
 
-	import { GridMain, GridParent } from "./ui-primitives/Grid";
-	import { isSmall } from "$lib/utils/breakpoints.svelte";
+	import { GridMain, GridParent } from './ui-primitives/Grid';
+	import { isSmall } from '$lib/utils/breakpoints.svelte';
 	gsap.registerPlugin(ScrollTrigger);
 
 	// Scroll behavior config
@@ -16,9 +16,9 @@
 
 	// Animation config (customize eases independently)
 	const HIDE_DURATION = 0.3;
-	const HIDE_EASE = "power2.in";
+	const HIDE_EASE = 'power2.in';
 	const SHOW_DURATION = 0.3;
-	const SHOW_EASE = "power1.out";
+	const SHOW_EASE = 'power1.out';
 
 	let headerEl: HTMLElement;
 	let menuEl: HTMLElement;
@@ -36,9 +36,9 @@
 		if (!menuOpen || !menuEl) return;
 		menuOpen = false;
 		gsap.to(menuEl, {
-			gridTemplateRows: "0fr",
+			gridTemplateRows: '0fr',
 			duration: 0.2,
-			ease: "power1.in"
+			ease: 'power1.in'
 		});
 	}
 
@@ -48,9 +48,9 @@
 		} else {
 			menuOpen = true;
 			gsap.to(menuEl, {
-				gridTemplateRows: "1fr",
+				gridTemplateRows: '1fr',
 				duration: 0.3,
-				ease: "power1.out"
+				ease: 'power1.out'
 			});
 		}
 	}
@@ -63,8 +63,6 @@
 	});
 
 	$effect(() => {
-		
-
 		const trigger = ScrollTrigger.create({
 			onUpdate: (self) => {
 				const currentScrollY = self.scroll();
@@ -94,7 +92,7 @@
 						requestState(false);
 					}
 				}
-				
+
 				lastScrollY = currentScrollY;
 			}
 		});
@@ -119,7 +117,7 @@
 		if (wantsHidden) {
 			// Hide animation
 			gsap.to(headerEl, {
-				y: "-100%",
+				y: '-100%',
 				duration: HIDE_DURATION,
 				ease: HIDE_EASE,
 				onComplete: onAnimationComplete
@@ -156,7 +154,7 @@
 
 				<div class="flex items-center justify-center">
 					<!-- Logo -->
-					<a href={resolve("/")} class="header-h3">TODO</a>
+					<a href={resolve('/')} class="header-h3">TODO</a>
 				</div>
 
 				<div class="flex items-center justify-end">
@@ -183,15 +181,13 @@
 
 	<!-- Mobile menu -->
 	{#if small.matches}
-		<div
-			class="mobile-menu"
-			class:open={menuOpen}
-			bind:this={menuEl}
-		>
+		<div class="mobile-menu" class:open={menuOpen} bind:this={menuEl}>
 			<div class="overflow-hidden">
 				<nav class="mobile-menu-nav">
-					<a href={resolve("/")} class="mobile-anchor" onclick={toggleMobileMenu}>Home</a>
-					<a href={resolve("/ui-catalog")} class="mobile-anchor" onclick={toggleMobileMenu}>UI Catalog</a>
+					<a href={resolve('/')} class="mobile-anchor" onclick={toggleMobileMenu}>Home</a>
+					<a href={resolve('/ui-catalog')} class="mobile-anchor" onclick={toggleMobileMenu}
+						>UI Catalog</a
+					>
 				</nav>
 			</div>
 		</div>
@@ -263,7 +259,9 @@
 	.hamburger-line {
 		display: block;
 		background-color: var(--foreground);
-		transition: transform 0.3s ease, opacity 0.3s ease;
+		transition:
+			transform 0.3s ease,
+			opacity 0.3s ease;
 		transform-origin: center;
 		@responsive {
 			width: 100%;
@@ -274,13 +272,17 @@
 
 	/* Animate to X - offset = gap + line-height */
 	.hamburger.open .hamburger-line:nth-child(1) {
-		@responsive { transform: translateY(6.5px) rotate(45deg); }
+		@responsive {
+			transform: translateY(6.5px) rotate(45deg);
+		}
 	}
 	.hamburger.open .hamburger-line:nth-child(2) {
 		opacity: 0;
 	}
 	.hamburger.open .hamburger-line:nth-child(3) {
-		@responsive { transform: translateY(-6.5px) rotate(-45deg); }
+		@responsive {
+			transform: translateY(-6.5px) rotate(-45deg);
+		}
 	}
 
 	/* Mobile menu - grid collapse technique */
@@ -297,7 +299,11 @@
 		display: flex;
 		flex-direction: column;
 	}
-	.mobile-menu-nav a { @responsive { @text link1; } }
+	.mobile-menu-nav a {
+		@responsive {
+			@text link1;
+		}
+	}
 
 	.mobile-anchor {
 		background-color: rgb(var(--background-rgb) / 0.5);
@@ -312,5 +318,9 @@
 		border-bottom: 1px solid var(--border);
 	}
 
-	.header-text { @responsive { @text p3; } }
+	.header-text {
+		@responsive {
+			@text p3;
+		}
+	}
 </style>

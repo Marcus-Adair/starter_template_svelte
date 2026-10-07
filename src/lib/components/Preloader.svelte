@@ -4,12 +4,12 @@
 	import { preloaderController } from '$lib/stores/preloaderController.svelte';
 	import gsap from 'gsap';
 
-	const ANIM_DURATION: gsap.TweenVars = { duration : TRANS_DURATION / 1000 }
+	const ANIM_DURATION: gsap.TweenVars = { duration: TRANS_DURATION / 1000 };
 	$effect(() => {
-		if (preloaderController.visible) { 
-			gsap.to("#preloader", { opacity: 1, ...ANIM_DURATION})
+		if (preloaderController.visible) {
+			gsap.to('#preloader', { opacity: 1, ...ANIM_DURATION });
 		} else {
-			gsap.to("#preloader", { opacity: 0, ...ANIM_DURATION})
+			gsap.to('#preloader', { opacity: 0, ...ANIM_DURATION });
 		}
 	});
 </script>
@@ -23,6 +23,12 @@
 </div>
 
 <style>
-	.disable { pointer-events: none; }
-	.preloader-text { @responsive { @text p2; } }
+	.disable {
+		pointer-events: none;
+	}
+	.preloader-text {
+		@responsive {
+			@text p2;
+		}
+	}
 </style>

@@ -30,5 +30,5 @@ export const text: Record<string, string> = {
 
 	// Link
 	link1: `font-size: 15px; line-height: 1.67; font-weight: 500; letter-spacing: -0.02em;`,
-	link2: `font-size: 14px; line-height: 1.29; font-weight: 500; letter-spacing: -0.04em;`,
+	link2: `font-size: 14px; line-height: 1.29; font-weight: 500; letter-spacing: -0.04em;`
 };

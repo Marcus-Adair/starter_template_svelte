@@ -7,24 +7,22 @@
 	- Page content after this component clips over the fixed content
 -->
 <script lang="ts">
-	import ScrolldownArrowSvg from "../svgs/ScrolldownArrowSvg.svelte";
-	import { GridParent } from "../ui-primitives/Grid";
+	import ScrolldownArrowSvg from '../svgs/ScrolldownArrowSvg.svelte';
+	import { GridParent } from '../ui-primitives/Grid';
 
 	let {
 		heroTitle,
-		heroSubTitle,
+		heroSubTitle
 	}: {
 		heroTitle: string;
-		heroSubTitle: string
-	} = $props()
-
-
+		heroSubTitle: string;
+	} = $props();
 </script>
 
 <!-- Fixed hero content - stays in center while page scrolls over -->
 <div class="hero-fixed-content">
 	<GridParent class="">
-		<div class="grid-main flex flex-col dashed-inner relative">
+		<div class="grid-main dashed-inner relative flex flex-col">
 			<h1 class="hero-100vh-title">{heroTitle}</h1>
 
 			<div class="flex justify-end">
@@ -34,7 +32,7 @@
 			</div>
 
 			<div class="arrow-svg-container grid-fullbleed absolute">
-				<ScrolldownArrowSvg/>
+				<ScrolldownArrowSvg />
 			</div>
 		</div>
 	</GridParent>
@@ -50,7 +48,7 @@
 		left: 0;
 		width: 100%;
 		height: 100vh;
-		
+
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -58,7 +56,8 @@
 		pointer-events: none;
 		@responsive {
 			min-height: 760px;
-		}@small {
+		}
+		@small {
 			min-height: 360px;
 		}
 	}
@@ -71,14 +70,20 @@
 	.hero-background {
 		height: 100vh;
 		background-color: var(--primary);
-		@responsive { min-height: 400px; }
+		@responsive {
+			min-height: 400px;
+		}
 	}
 
 	.hero-100vh-title {
 		color: var(--primary-foreground);
 		white-space: nowrap;
-		@responsive { @text h1; }
-		@small { @text h5; }
+		@responsive {
+			@text h1;
+		}
+		@small {
+			@text h5;
+		}
 	}
 
 	.hero-100vh-subtitle {

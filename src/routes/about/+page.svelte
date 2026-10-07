@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { resolve } from "$app/paths";
-	import Hero100vh from "$lib/components/sections/Hero100vh.svelte";
-	import Button from "$lib/components/ui-primitives/Button.svelte";
-	import { GridParent } from "$lib/components/ui-primitives/Grid";
+	import { resolve } from '$app/paths';
+	import Hero100vh from '$lib/components/sections/Hero100vh.svelte';
+	import Button from '$lib/components/ui-primitives/Button.svelte';
+	import { GridParent } from '$lib/components/ui-primitives/Grid';
 </script>
 
 <Hero100vh
@@ -13,23 +13,20 @@
 <GridParent class="page-content">
 	<section class="section grid-main">
 		<h2 class="section-title">Page Transition Test</h2>
-		
+
 		<p class="section-desc">
-			Navigate between pages to see the preloader fade transitions in action.
-			Clicking the current page link should not trigger a transition.
+			Navigate between pages to see the preloader fade transitions in action. Clicking the current
+			page link should not trigger a transition.
 		</p>
 
 		<p class="section-desc">
-			Other features in this starter include (but are not limited to): skeleton Header/Footer components, SmoothScroll, Tailwind integration, and light/dark theme support.
+			Other features in this starter include (but are not limited to): skeleton Header/Footer
+			components, SmoothScroll, Tailwind integration, and light/dark theme support.
 		</p>
 
 		<div class="button-row">
-			<Button href={resolve("/")} variant="outline">
-				Back to Home
-			</Button>
-			<Button href={resolve("/about")} variant="ghost">
-				Go To About (No Transition)
-			</Button>
+			<Button href={resolve('/')} variant="outline">Back to Home</Button>
+			<Button href={resolve('/about')} variant="ghost">Go To About (No Transition)</Button>
 		</div>
 	</section>
 </GridParent>

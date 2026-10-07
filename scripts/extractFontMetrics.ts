@@ -16,7 +16,9 @@ async function main() {
 
 	if (!fontPath) {
 		console.log('Usage: pnpm tsx scripts/extractFontMetrics.ts <font-file.woff2>');
-		console.log('Example: pnpm tsx scripts/extractFontMetrics.ts static/fonts/Aktura-Regular.woff2');
+		console.log(
+			'Example: pnpm tsx scripts/extractFontMetrics.ts static/fonts/Aktura-Regular.woff2'
+		);
 		process.exit(1);
 	}
 
@@ -27,11 +29,14 @@ async function main() {
 		const metrics = await fromFile(fullPath);
 
 		// Generate TypeScript export
-		const varName = (metrics.familyName || 'font')
-			.replace(/[^a-zA-Z0-9]/g, '')
-			.replace(/^./, (c: string) => c.toLowerCase()) + 'Metrics';
+		const varName =
+			(metrics.familyName || 'font')
+				.replace(/[^a-zA-Z0-9]/g, '')
+				.replace(/^./, (c: string) => c.toLowerCase()) + 'Metrics';
 
-		console.log('export const ' + varName + ': FontMetrics = ' + JSON.stringify(metrics, null, '\t') + ';');
+		console.log(
+			'export const ' + varName + ': FontMetrics = ' + JSON.stringify(metrics, null, '\t') + ';'
+		);
 		console.log('\n// Add this to src/lib/utils/capsize.ts');
 	} catch (error) {
 		console.error('Error extracting metrics:', error);
