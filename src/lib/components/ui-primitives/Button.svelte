@@ -1,4 +1,4 @@
-<!-- 
+<!--
     Responsive-styled Button component with different variants and sizes
     Comes with CSS for accessibility, dark theme, and SVG handling.
 
@@ -141,7 +141,7 @@
 		padding-left: var(--space-md);
 		padding-right: var(--space-md);
 		@responsive {
-			height: 40px;
+			height: 36px;
 		}
 	}
 
@@ -151,7 +151,7 @@
 		padding-left: max(var(--space-xs), 8px);
 		padding-right: max(var(--space-xs), 8px);
 		@responsive {
-			height: 27px;
+			height: 26px;
 			border-radius: min(var(--radius-md), 8px);
 		}
 	}
@@ -167,7 +167,7 @@
 		padding-left: var(--space-md);
 		padding-right: var(--space-md);
 		@responsive {
-			height: 34px;
+			height: 30px;
 			border-radius: min(var(--radius-md), 10px);
 		}
 	}

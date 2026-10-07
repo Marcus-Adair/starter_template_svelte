@@ -302,7 +302,8 @@
 	--spacing-4xl: var(--space-4xl);
 
 	/* Breakpoints for Tailwind */
-	--breakpoint-desktop: 1025px;
+	--breakpoint-desktop: 700px;
+	--breakpoint-fullbleed: 1440px;
 }
 
 @layer base {

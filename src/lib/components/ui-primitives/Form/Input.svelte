@@ -16,6 +16,8 @@
 		required?: boolean;
 		// Content rendered inside the wrapper, after the input (for icons/buttons)
 		trailing?: Snippet;
+		// Show a clear button when input has a value
+		clearButton?: boolean;
 	} & ({ type: 'file'; files?: FileList } | { type?: InputType; files?: undefined });
 </script>
 
@@ -31,8 +33,11 @@
 		required,
 		disabled,
 		trailing,
+		clearButton,
 		...restProps
 	}: InputProps = $props();
+
+	const showClearButton = $derived(clearButton && value);
 
 	let fileInputRef: HTMLInputElement;
 </script>
@@ -78,16 +83,41 @@
 			<input
 				{id}
 				name={restProps.name || id}
-				class={cn('input-control', trailing ? 'has-trailing' : '', className)}
+				class={cn('input-control', trailing || showClearButton ? 'has-trailing' : '', className)}
 				{type}
 				{disabled}
 				{required}
 				bind:value
 				{...restProps}
 			/>
-			{#if trailing}
+			{#if trailing || showClearButton}
 				<span class="input-trailing">
-					{@render trailing()}
+					{#if showClearButton}
+						<Button
+							variant="ghost"
+							size="icon"
+							class="input-clear-btn"
+							onclick={() => (value = '')}
+							aria-label="Clear input"
+						>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="16"
+								height="16"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+							>
+								<path d="M18 6 6 18" /><path d="m6 6 12 12" />
+							</svg>
+						</Button>
+					{/if}
+					{#if trailing}
+						{@render trailing()}
+					{/if}
 				</span>
 			{/if}
 		</div>
@@ -236,6 +266,11 @@
 	}
 
 	:global(.file-input-btn) {
+		height: 26px;
+	}
+
+	:global(.input-clear-btn) {
+		width: 26px;
 		height: 26px;
 	}
 </style>

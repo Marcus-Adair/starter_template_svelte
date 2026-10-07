@@ -262,7 +262,7 @@ function processStyleContent(content: string): string {
 			}
 
 			// Split by engine: calc for most properties, media queries for font-size etc.
-			const { calcCss, mediaCss } = splitByEngine(expandedCss);
+			const { mediaCss } = splitByEngine(expandedCss);
 
 			// Generate media queries for media-preferred properties (e.g., font-size)
 			// These override the calc fallback for browsers that support range syntax

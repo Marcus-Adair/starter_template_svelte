@@ -10,8 +10,10 @@
 	import { Input, Textarea } from '$lib/components/ui-primitives/Form';
 	import Separator from '$lib/components/ui-primitives/Separator.svelte';
 
-	// Search input demo state
+	// Input demo state
 	let searchValue = $state('');
+	let passwordValue = $state('');
+	let showPassword = $state(false);
 
 	// Color utility functions
 	function parseRgb(str: string): [number, number, number] | null {
@@ -419,16 +421,33 @@
 			</div>
 
 			<div class="subsection mb-2xl">
-				<h3 class="type-h8 mb-lg">With Trailing (Search)</h3>
-				<Input id="search-input" type="search" placeholder="Search..." bind:value={searchValue}>
+				<h3 class="type-h8 mb-lg">Clear Button</h3>
+				<Input
+					id="search-input"
+					type="search"
+					placeholder="Search..."
+					clearButton
+					bind:value={searchValue}
+				/>
+			</div>
+
+			<div class="subsection mb-2xl">
+				<h3 class="type-h8 mb-lg">With Trailing</h3>
+				<Input
+					id="password-input"
+					label="Password"
+					type={showPassword ? 'text' : 'password'}
+					placeholder="Enter password"
+					bind:value={passwordValue}
+				>
 					{#snippet trailing()}
-						{#if searchValue}
-							<Button
-								size="icon"
-								variant="ghost"
-								onclick={() => (searchValue = '')}
-								aria-label="Clear search"
-							>
+						<Button
+							size="icon"
+							variant="ghost"
+							onclick={() => (showPassword = !showPassword)}
+							aria-label={showPassword ? 'Hide password' : 'Show password'}
+						>
+							{#if showPassword}
 								<svg
 									xmlns="http://www.w3.org/2000/svg"
 									width="16"
@@ -438,10 +457,30 @@
 									stroke="currentColor"
 									stroke-width="2"
 									stroke-linecap="round"
-									stroke-linejoin="round"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg
+									stroke-linejoin="round"
 								>
-							</Button>
-						{/if}
+									<path
+										d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"
+									/>
+									<line x1="1" y1="1" x2="23" y2="23" />
+								</svg>
+							{:else}
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="16"
+									height="16"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								>
+									<path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+									<circle cx="12" cy="12" r="3" />
+								</svg>
+							{/if}
+						</Button>
 					{/snippet}
 				</Input>
 			</div>
