@@ -1,12 +1,7 @@
 import { onMount } from 'svelte';
 import gsap from 'gsap';
-import {
-	preloaderController
-} from '$lib/stores/preloaderController.svelte';
-import {
-	INTRO_DURATION,
-	TRANS_DURATION
-} from '$lib/consts';
+import { preloaderController } from '$lib/stores/preloaderController.svelte';
+import { INTRO_DURATION, TRANS_DURATION } from '$lib/consts';
 
 type AnimationCallback = (ctx: gsap.Context) => void;
 

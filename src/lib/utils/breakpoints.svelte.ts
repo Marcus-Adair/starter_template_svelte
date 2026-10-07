@@ -1,7 +1,6 @@
 import { browser } from '$app/environment';
 import { MOBILE_BREAKPOINT } from '$lib/consts';
 
-
 let matches = $state<boolean>(false);
 
 /**

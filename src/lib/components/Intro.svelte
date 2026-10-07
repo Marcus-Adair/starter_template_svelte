@@ -8,7 +8,7 @@
 	let introEl = $state<HTMLDivElement>();
 
 	onMount(() => {
-		if (!introEl) return; 
+		if (!introEl) return;
 
 		// Fade out after intro duration (total = INTRO_DURATION (800ms))
 		gsap.to(introEl, {
@@ -33,9 +33,13 @@
 {/if}
 
 <style>
-	.intro-words { 
-		@responsive { @text h1; } 
-		@small { @text h5; } 
+	.intro-words {
+		@responsive {
+			@text h1;
+		}
+		@small {
+			@text h5;
+		}
 	}
 	.intro-div {
 		@responsive {
@@ -58,5 +62,4 @@
 			transform: rotate(360deg);
 		}
 	}
-	
 </style>

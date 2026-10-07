@@ -6,7 +6,7 @@ const config = {
 	preprocess: [responsivePreprocess()],
 	compilerOptions: {
 		// Force runes mode for the project, except for node_modules
-		runes: ({ filename }) => filename.split(/[/\\]/).includes('node_modules') ? undefined : true
+		runes: ({ filename }) => (filename.split(/[/\\]/).includes('node_modules') ? undefined : true)
 	},
 	kit: {
 		adapter: adapter({

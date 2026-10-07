@@ -16,19 +16,19 @@
   3. Use a plain <div class="grid-fullbleed hero"> in parent (element is in parent, scoping works)
 -->
 <script lang="ts">
-	import { cn } from "$lib/utils/misc";
-	import type { Snippet } from "svelte";
-	import type { ClassValue } from "svelte/elements";
+	import { cn } from '$lib/utils/misc';
+	import type { Snippet } from 'svelte';
+	import type { ClassValue } from 'svelte/elements';
 
 	let {
-        children,
-        class: className
-    }: {
-        children?: Snippet;
-        class?: ClassValue | null | undefined
-    } = $props();
+		children,
+		class: className
+	}: {
+		children?: Snippet;
+		class?: ClassValue | null | undefined;
+	} = $props();
 </script>
 
-<div class={cn("grid-fullbleed", className)}>
-    {@render children?.()}
+<div class={cn('grid-fullbleed', className)}>
+	{@render children?.()}
 </div>

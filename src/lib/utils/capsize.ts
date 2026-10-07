@@ -11,17 +11,17 @@ export const satoshiMetrics: FontMetrics = {
 	descent: -240,
 	lineGap: 100,
 	unitsPerEm: 1000,
-	familyName: "Satoshi Variable",
-	fullName: "Satoshi Variable Bold",
-	postscriptName: "SatoshiVariable-Bold",
+	familyName: 'Satoshi Variable',
+	fullName: 'Satoshi Variable Bold',
+	postscriptName: 'SatoshiVariable-Bold',
 	xHeight: 500,
-	xWidthAvg: 486,
+	xWidthAvg: 486
 };
 
 export const akturaMetrics: FontMetrics = {
-	familyName: "Aktura",
-	fullName: "Aktura Regular",
-	postscriptName: "Aktura-Regular",
+	familyName: 'Aktura',
+	fullName: 'Aktura Regular',
+	postscriptName: 'Aktura-Regular',
 	capHeight: 668,
 	ascent: 940,
 	descent: -400,
@@ -42,7 +42,7 @@ export const akturaMetrics: FontMetrics = {
 // Default font metrics (Satoshi)
 export const fontMetrics = satoshiMetrics;
 
-// TODO: do so for new font ... 
+// TODO: do so for new font ...
 
 /**
  * Generates Capsize styles that trim extra space above/below text.
