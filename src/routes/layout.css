@@ -166,8 +166,16 @@
 	--font-serif: ui-serif, Georgia, Cambria, 'Times New Roman', Times, serif;
 	--font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
-	/* md */
-	--radius: 10px;
+	/* ==========================================================================
+	   Radius System
+
+	   Responsive border-radius that scales with viewport.
+	   Base value: 10px at desktop design size.
+	   Mobile vw = px / 375 * 100, Desktop vw = px / 1440 * 100
+	   ========================================================================== */
+	--radius: calc(
+		(2.667vw * var(--is-mobile)) + (0.694vw * var(--is-desktop)) + (10px * var(--is-full))
+	);
 
 	--shadow-x: 0;
 	--shadow-y: 1px;
@@ -183,9 +191,20 @@
 	--shadow-lg: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 4px 6px -1px hsl(0 0% 0% / 0.1);
 	--shadow-xl: 0 1px 3px 0px hsl(0 0% 0% / 0.1), 0 8px 10px -1px hsl(0 0% 0% / 0.1);
 	--shadow-2xl: 0 1px 3px 0px hsl(0 0% 0% / 0.25);
+
+	/* Form Controls (Input, Textarea, Select, etc.) */
+	--control-height: 36px;
+	--control-padding-x: var(--space-lg);
+	--control-padding-y: var(--space-sm);
+	--control-radius: var(--radius-sm);
+	--control-border: var(--input);
+	--control-bg: transparent;
+	--control-color: var(--foreground);
+	--control-placeholder: var(--muted-foreground);
+	--control-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
 }
 
-/* 
+/*
 	Note: Add this in to enable a dark theme.
 	Dark mode: swap light/dark primitives for semantic colors
 */
@@ -230,6 +249,8 @@
 	--shadow-lg: 0px 4px 8px -1px hsl(0 0% 0% / 0.1), 0px 4px 6px -2px hsl(0 0% 0% / 0.1);
 	--shadow-xl: 0px 4px 8px -1px hsl(0 0% 0% / 0.1), 0px 8px 10px -2px hsl(0 0% 0% / 0.1);
 	--shadow-2xl: 0px 4px 8px -1px hsl(0 0% 0% / 0.25);
+
+	.. TODO: add Form Controls
 } */
 
 @theme inline {
@@ -281,7 +302,8 @@
 	--spacing-4xl: var(--space-4xl);
 
 	/* Breakpoints for Tailwind */
-	--breakpoint-desktop: 1025px;
+	--breakpoint-desktop: 700px;
+	--breakpoint-fullbleed: 1440px;
 }
 
 @layer base {

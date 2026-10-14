@@ -11,7 +11,7 @@
 	import Lenis from 'lenis';
 	import Footer from '$lib/components/Footer.svelte';
 	import Header from '$lib/components/Header.svelte';
-	import { ModeWatcher } from "mode-watcher";
+	import { ModeWatcher } from 'mode-watcher';
 
 	gsap.registerPlugin(ScrollTrigger);
 
@@ -24,7 +24,7 @@
 		const lenis = new Lenis({
 			// Customize as needed
 			duration: 2,
-			easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+			easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
 		});
 
 		// Sync Lenis with GSAP ticker
@@ -44,7 +44,6 @@
 
 	// Intercepts internal navigations to cancel them and show preloader first
 	beforeNavigate((navigation) => {
-
 		/*
 		 *	After the preloader is shown and we programmatically call goto(), beforeNavigate is triggered.
 		 *	This line lets the programmatic goto() pass through without being intercepted and prevents an

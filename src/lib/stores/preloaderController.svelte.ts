@@ -2,7 +2,6 @@ import { browser } from '$app/environment';
 import { goto } from '$app/navigation';
 import { MIN_DURATION, TRANS_DURATION } from '$lib/consts';
 
-
 let active = $state(false);
 let minDurationMet = $state(true); // Skip initial preloader
 let isNavigatingInternally = false;
@@ -134,5 +133,5 @@ export const preloaderController = {
 	shouldIntercept,
 	waitFor,
 	waitForImages,
-	waitForFonts,
+	waitForFonts
 };

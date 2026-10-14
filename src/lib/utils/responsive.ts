@@ -1,4 +1,4 @@
-import { DESKTOP_DESIGN_SIZE, MOBILE_DESIGN_SIZE } from "$lib/consts";
+import { DESKTOP_DESIGN_SIZE, MOBILE_DESIGN_SIZE } from '$lib/consts';
 
 /**
  * Generates a CSS calc() string for a CSS variable that needs different values at mobile vs desktop.

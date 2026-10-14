@@ -93,6 +93,7 @@ Capsize-powered text styles with automatic whitespace trimming.
 ```
 
 **Available styles:**
+
 - **Headings (Aktura):** `h1`, `h2`, `h3`, `h4`, `h5`, `h6`, `h7`, `h8`, `h9`, `h10`
 - **Paragraph (Satoshi):** `p1`, `p2`, `p3`, `p4`
 - **Kicker (Satoshi):** `kicker1`, `kicker2`
